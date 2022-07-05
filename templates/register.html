@@ -7,7 +7,14 @@
     <script>
         function check()
         {
-
+            if(psw.value != psw_rep.value)
+            {
+            alert("Пароли не совпадают")
+             }
+             else
+             {
+             _psw.value = ""
+             }
         }
     </script>
 </head>
@@ -22,11 +29,11 @@
                     {% endfor %}
                     <label for="FIO"><b>ФИО</b></label>
                     <input id = "l_name" type="text" placeholder="Введите фамилию" name="surname" value="" required>
-                    <p id = "_l_name"></p>
+                    <font color="red"></font><p id = "_l_name"></p></font>
                     <input id = "f_name" type="text" placeholder="Введите имя" name="name" value="" required>
-                    <p id = "_f_name"></p>
+                    <font color="red"></font><p id = "_f_name"></p></font>
                     <input id = "s_name" type="text" placeholder="Введите отчество" name="second_name" value="" required>
-                    <p id = "_s_name"></p>
+                    <font color="red"></font><p id = "_s_name"></p></font>
 
 
                     <label for="login"><b>Логин</b></label>
@@ -34,14 +41,15 @@
 
                     <label for="email"><b>Email</b></label>
                     <input id = "email" type="text" placeholder="Введите Email" name="email" value="" required>
-                    <p id = "_email"></p>
+                    <font color="red"></font><p id = "_email"></p></font>
 
                     <label for="psw"><b>Пароль</b></label>
                     <input id = "psw" type="password" placeholder="Введите пароль" name="psw" value="" required>
 
                     <label for="psw"><b>Повторите пароль</b></label>
                     <input id = "psw_rep" type="password" placeholder="Повторите пароль" name="psw-repeat" value="" required>
-                    <p id = "_psw"></p>
+                    <font color="red"></font><p id = "_psw"></p></font>
+
 
                     <label for="city"><b>Город</b></label>
                     <input id = "city" type="text" placeholder="Введите город проживания" name="city" value="" required>
