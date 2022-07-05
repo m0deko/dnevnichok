@@ -30,7 +30,7 @@ def get_db():
 
 datetime.datetime.today()
 datetime.datetime(2021, 3, 23, 23, 24, 55, 123456)
-data_num = datetime.datetime.today().weekday() - 1
+data_num = datetime.datetime.today().weekday()
 date_string = ''
 if data_num == 0:
     date_string = 'Понедельник'
@@ -46,17 +46,6 @@ elif data_num == 5:
     date_string = 'Суббота'
 else:
     date_string = 'Воскресение'
-
-all_lessons = {1: ['Математика', 'Русский язык', 'Английский язык', 'Окружающий мир', 'ИЗО', 'Физ-ра', 'Технология']}
-student_marks = {
-    4: {'Русский_язык': [5,5,5,5,5,5,5,5,5,5,5,5], 'Алгебра': [4, 4, 5, 5], 'Физкультура': [5, 5, 5, 5, 5]},
-    6: {'Русский_язык': [5,5,5,5,5,5,5,5,5,5,5,5], 'Алгебра': [4, 4, 5, 5], 'Физкультура': [5, 5, 5, 5, 5]},
-}
-
-sred_marks = {}
-
-for lesson in student_marks[6].keys():
-    sred_marks[lesson] = (sum(student_marks[6][lesson])) / len(student_marks[6][lesson])
 
 uroki = {'Понедельник': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
          'Вторник': {0: '-', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
