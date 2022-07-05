@@ -5,9 +5,21 @@
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="../static/css/styles_for_reg.css">
     <script>
-        function check()
+        function check(str)
         {
-           alert(psw.value);
+           var x = "1234567890"
+           if(str = "email" && email.value.indexOf("@") == -1)
+           {
+             alert("!");
+           }
+           if(str = "name" && (x.indexOf(s_name.value) != -1 or x.indexOf(f_name.value) != -1 or x.indexOf(l_name.value) != -1))
+           {
+             alert("!");
+           }
+           if(str = "email" && email.value.indexOf("@") == -1)
+           {
+             alert("!");
+           }
         }
     </script>
 </head>
@@ -21,11 +33,11 @@
                     <div class="flash {{cat}}">{{msg}}</div>
                     {% endfor %}
                     <label for="FIO"><b>ФИО</b></label>
-                    <input id = "l_name" type="text" placeholder="Введите фамилию" name="surname" value="" required>
+                    <input onblur = check("name") id = "l_name" type="text" placeholder="Введите фамилию" name="surname" value="" required>
                     <font color="red"></font><p id = "_l_name"></p></font>
-                    <input id = "f_name" type="text" placeholder="Введите имя" name="name" value="" required>
+                    <input onblur = check("name") id = "f_name" type="text" placeholder="Введите имя" name="name" value="" required>
                     <font color="red"></font><p id = "_f_name"></p></font>
-                    <input id = "s_name" type="text" placeholder="Введите отчество" name="second_name" value="" required>
+                    <input onblur = check("name") id = "s_name" type="text" placeholder="Введите отчество" name="second_name" value="" required>
                     <font color="red"></font><p id = "_s_name"></p></font>
 
 
@@ -33,7 +45,7 @@
                     <input id = "u_name" type="text" placeholder="Введите логин" name="username" value="" required>
 
                     <label for="email"><b>Email</b></label>
-                    <input id = "email" type="text" placeholder="Введите Email" name="email" value="" required>
+                    <input onblur = check("email") id = "email" type="text" placeholder="Введите Email" name="email" value="" required>
                     <font color="red"></font><p id = "_email"></p></font>
 
                     <label for="psw"><b>Пароль</b></label>
@@ -54,7 +66,7 @@
                     <label for="class_school"><b>Класс</b></label>
                     <input id = "grade" type="text" placeholder="Введите номер и букву класса" name="school_class" value="" required>
                 <hr>
-            <input type="submit" class="registerbtn" value="Отправить" onclick="check">
+            <input type="button" class="registerbtn" value="Отправить" onclick="check">
         </div>
 
         <div class="container signin">
