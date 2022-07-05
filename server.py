@@ -1,8 +1,6 @@
 from flask import *
 import sqlite3 as sq
 import datetime
-import random
-import functools
 import os
 from FDataBase import FDataBase
 
