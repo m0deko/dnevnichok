@@ -1,4 +1,4 @@
-def middle_marks(cur_id, stud_marks):
+def middle_marks(stud_marks):
     sred_marks = {}
     for lesson in stud_marks.keys():
         try:

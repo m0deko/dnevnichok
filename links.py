@@ -181,7 +181,7 @@ def marks():
     for les in session['lesson'][1].split():
         mark_res = dbase.getMark(les, session['id'])
         student_mark[les] = mark_res
-    sred_marks = middle_marks(session['id'], student_mark)
+    sred_marks = middle_marks(student_mark)
     if session.get('logged_in'):
         return render_template('page_with_mark.html', name=session["ddata"][5],
                                lessons=session['lesson'][1].split(),
