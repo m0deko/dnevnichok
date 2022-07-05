@@ -171,9 +171,9 @@ def register_for_teacher():
         db = get_db()
         dbase = FDataBase(db)
         if request.form['psw'] != request.form['psw-repeat']:
-            flash('Пароли не совпадают', category='error')
+            flash('', category='error')
         elif not ('@' in request.form['email']):
-            flash('Неверный формат почты', category='error')
+            flash('', category='error')
         elif dbase.getMenuForTeacher(request.form['username']) != []:
             flash('Аккаунт с данной почтой или логином уже существует', category='error')
         else:
