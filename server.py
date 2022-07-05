@@ -10,8 +10,6 @@ app.config.from_object(__name__)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
 
-x = 4
-
 def connect_db():
     conn = sq.connect(app.config['DATABASE'])
     conn.row_factory = sq.Row
