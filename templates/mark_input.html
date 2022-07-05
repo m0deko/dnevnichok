@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выставление оценок</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles_for_mark_input.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main_bar.css')}}">
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="page">
+    <div class="header">
+        <div class="mainmenu">
+
+        </div>
+
+            <div class="loggined">
+                <ul>
+                    <li><a href="/logout" id="logout">Выйти</a></li>
+                    <li id="name">{{ name }}</li>
+                </ul>
+            </div>
+
+        </div>
+        <span class="glav">{{ glav }}</span>
+        {% for children in children_list %}
+        <div class="visual_marks">
+            <span class="text">{{ children }}</span>
+            <ul class="marks">
+                   {% for mark in marks %}
+                   <li class="mark">{{ mark }}</li>
+                   {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+        <form action="/mark_input" method="post">
+            <div class="console">
+                <textarea name="command" rows="100" cols="100"></textarea>
+            </div>
+        </form>
+    </div>
+    {% include 'footer.html' %}
+</div>
+
+</body>
+</html>

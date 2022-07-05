@@ -1,0 +1,56 @@
+.glav {
+    font-size: 50px;
+    margin: 40%;
+}
+
+.page {
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.console, textarea {
+    margin: 30px auto;
+    width: 600px;
+    height: 300px;
+    border-color: black;
+    resize: none;
+    overflow: auto;
+    font-size: 25px;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.marks {
+    display: inline;
+    margin-left: 150px;
+
+}
+.mark {
+    display: inline;
+    width: 45px;
+    margin: 3px;
+}
+.visual_marks {
+    float: left;
+    font-size: 25px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #cccccc;
+}
+.text {
+    float: left;
+}
+.console {
+    margin-top: 300px;
+}
+#logout {
+    text-align: right;
+}
+
+.visual_marks {
+    display: table;
+}
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ЭЖД</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles_for_marks.css')}}">
+    <link rel="icon" type="image/png" sizes="96x96" href="../static/css/images/favicon-96x96.png">
+</head>
+<body>
+<div class='wrapper'>
+    <div class="page">
+{% include 'main_bar.html' %}
+
+        <div class="content">
+
+                    {% for lesson in lessons %}
+                    <div class="mark_in">
+
+                        <h1 class="les">{{ lesson }}</h1>
+                        <h1 class="sred">{{ sred[lesson] }}</h1>
+                        <br>
+                        <ul>
+                            {% for mark in marks[lesson] %}
+                            <li>{{ mark }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% include 'footer.html' %}
+
+</div>
+</body>
+</html>

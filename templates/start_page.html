@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ЭЖД</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="../static/css/images/favicon-96x96.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles_for_main.css')}}">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="page">
+{% include 'main_bar.html' %}
+        <div class="content">
+            <div class="text">
+                <h2>Расписание на сегодняшний день({{day}})</h2>
+            </div>
+                {% if length > 1 %}
+                    <div class="d-table">
+                    {% for i in range(0, length) %}
+                        {% if day_ras[i] != '-' %}
+                        <div class="d-tr">
+                            <div class = 'first'><p>Урок {{i + 1}}
+                            <p>({{time[i]}})</div>
+                            <div class = 'second'>
+                            {{day_ras[i]}}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="d-tr"><h2>{{day_ras[0]}}</h2></div>
+                {% endif %}
+
+        </div>
+    </div>
+{% include 'footer.html' %}
+</div>
+</body>
+</html>

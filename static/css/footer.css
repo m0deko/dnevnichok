@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+.page {
+    min-height: calc(100vh - 72px);
+    box-sizing: border-box;
+
+}
+.footer {
+    background: #000000;
+    box-sizing: border-box;
+    color: #cccccc;
+}
+#logout {
+    color: red;
+    border-style: ridge;
+    border-color: white;
+    border-width: initial;
+    background: white;
+}
+#logout:hover{
+    color: white;
+    border-style: ridge;
+    border-color: red;
+    border-width: initial;
+    background: red;
+}
