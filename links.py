@@ -118,13 +118,13 @@ def register():
         db = get_db()
         dbase = FDataBase(db)
         if request.form['psw'] != request.form['psw-repeat']:
-            flash('Пароли не совпадают', category='error')
+            flash('', category='error')
         elif not ('@' in request.form['email']):
-            flash('Неверный формат почты', category='error')
+            flash('', category='error')
         elif dbase.getMenu(request.form['username']) != [] or dbase.getMenu(request.form['email']) != []:
             flash('Аккаунт с данной почтой или логином уже существует', category='error')
         elif request.form['name'].isdigit() or request.form['second_name'].isdigit() or request.form['surname'].isdigit():
-            flash('Введите корректно свое ФИО', category='error')
+            flash('', category='error')
         elif len(request.form['psw']) < 4:
             pass
         else:
@@ -152,9 +152,9 @@ def register_for_teacher():
         db = get_db()
         dbase = FDataBase(db)
         if request.form['psw'] != request.form['psw-repeat']:
-            flash('Пароли не совпадают', category='error')
+            flash('', category='error')
         elif not ('@' in request.form['email']):
-            flash('Неверный формат почты', category='error')
+            flash('', category='error')
         elif dbase.getMenuForTeacher(request.form['username']) != []:
             flash('Аккаунт с данной почтой или логином уже существует', category='error')
         else:
