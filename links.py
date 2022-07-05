@@ -15,7 +15,6 @@ def connect_db():
     conn.row_factory = sq.Row
     return conn
 
-
 def create_db():
     db = connect_db()
     with app.open_resource('sq_db.sql', mode='r') as f:
@@ -28,7 +27,6 @@ def get_db():
     if not hasattr(g, 'link_db'):
         g.link_db = connect_db()
     return g.link_db
-
 
 datetime.datetime.today()
 datetime.datetime(2021, 3, 23, 23, 24, 55, 123456)
@@ -101,12 +99,6 @@ def login():
                 session['id'] = session['ddata'][0]
                 session['username'] = request.form['uname']
                 session['lesson'] = dbase.getLes(int(session['ddata'][9][0]))
-
-                global student_marks
-                student_marks[session['id']] = {}
-                for les in dbase.getLes(int(session['ddata'][9][0])):
-                    # student_marks[session['id']][les] =
-                    pass
 
                 return redirect(url_for('start_page'))
 
@@ -194,10 +186,15 @@ def register_for_teacher():
 
 @app.route('/marks', methods=['GET', 'POST'])
 def marks():
+    db = get_db()
+    dbase = FDataBase(db)
+
+    mark_res = dbase.getMark('Алгебра', 6)
+    student_mark = {'Алгебра': mark_res}
     if session.get('logged_in'):
         return render_template('page_with_mark.html', name=session["ddata"][5],
                                lessons=session['lesson'][1].split(),
-                               marks=student_marks[value], sred=sred_marks)
+                               marks=student_mark, sred=sred_marks)
     else:
         return redirect(url_for("login"))
 

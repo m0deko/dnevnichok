@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class FDataBase():
     def __init__(self, db):
         self.__db = db
@@ -77,20 +76,20 @@ class FDataBase():
         except Exception as ex:
             print('Ошибка чтения бд', ex)
         return []
-    def getMarks(self, class_num, subject):
+    # def getMarks(self, class_num, subject):
+    #     try:
+    #         self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {class_num} AND lesson = "{subject}"''')
+    #         res = self.__cur.fetchall()
+    #         result = []
+    #         for x in range(len(res)):
+    #             result += res[x]
+    #         return result
+    #     except Exception as ex:
+    #         print('Ошибка чтения бд', ex)
+    #     return []
+    def getID(self, username):
         try:
-            self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {class_num} AND lesson = "{subject}"''')
-            res = self.__cur.fetchall()
-            result = []
-            for x in range(len(res)):
-                result += res[x]
-            return result
-        except Exception as ex:
-            print('Ошибка чтения бд', ex)
-        return []
-    def getID(self, surname):
-        try:
-            self.__cur.execute(f'''SELECT id FROM maintable WHERE surname = "{surname}"''')
+            self.__cur.execute(f'''SELECT id FROM maintable WHERE username = "{username}"''')
             res = self.__cur.fetchall()
             result = []
             for x in range(len(res)):
@@ -101,3 +100,13 @@ class FDataBase():
             print('Ошибка чтения бд', ex)
         return []
 
+    def getMark(self, les, cur_id):
+        try:
+            self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {cur_id} AND lesson = "{les}"''')
+            res = self.__cur.fetchall()
+            result = []
+            for x in range(len(res)):
+                result += res[x]
+            return result
+        except Exception as ex:
+            return []
