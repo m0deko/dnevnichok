@@ -3,6 +3,7 @@ import sqlite3 as sq
 import datetime
 import os
 from FDataBase import FDataBase
+from algoritms import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'qwerhjhgfbgtrf12345rf4h1jn3k7'
@@ -15,7 +16,6 @@ def connect_db():
     conn.row_factory = sq.Row
     return conn
 
-
 def create_db():
     db = connect_db()
     with app.open_resource('sq_db.sql', mode='r') as f:
@@ -23,12 +23,10 @@ def create_db():
     db.commit()
     db.close()
 
-
 def get_db():
     if not hasattr(g, 'link_db'):
         g.link_db = connect_db()
     return g.link_db
-
 
 datetime.datetime.today()
 datetime.datetime(2021, 3, 23, 23, 24, 55, 123456)
@@ -71,7 +69,7 @@ uroki = {'Понедельник': {0: 'Русский язык', 1: 'Англи
 times1 = ['9:00-9:40', '9:50-10:30', '10:45:11:25', '11:40-12:20', '12:40-13:20', '13:40-14:20', '14:40-15:20',
           '15:30-16:10', '16:20-17:00']
 
-value = 6
+
 day_times = times1[0:len(uroki[date_string])]
 
 
@@ -101,12 +99,6 @@ def login():
                 session['id'] = session['ddata'][0]
                 session['username'] = request.form['uname']
                 session['lesson'] = dbase.getLes(int(session['ddata'][9][0]))
-
-                global student_marks
-                student_marks[session['id']] = {}
-                for les in dbase.getLes(int(session['ddata'][9][0])):
-                    # student_marks[session['id']][les] =
-                    pass
 
                 return redirect(url_for('start_page'))
 
@@ -194,27 +186,35 @@ def register_for_teacher():
 
 @app.route('/marks', methods=['GET', 'POST'])
 def marks():
+    db = get_db()
+    dbase = FDataBase(db)
+    student_mark = {}
+    for les in session['lesson'][1].split():
+        mark_res = dbase.getMark(les, session['id'])
+        student_mark[les] = mark_res
+    sred_marks = middle_marks(session['id'], student_mark)
     if session.get('logged_in'):
         return render_template('page_with_mark.html', name=session["ddata"][5],
                                lessons=session['lesson'][1].split(),
-                               marks=student_marks[value], sred=sred_marks)
+                               marks=student_mark, sred=sred_marks)
     else:
         return redirect(url_for("login"))
 
-@app.route('/mark_input', methods=['GET', 'POST'])
-def mark_input():
-    if session.get('logged_in') and 'ddata' in session and 'class' in session:
-        db = get_db()
-        dbase = FDataBase(db)
-        result = dbase.getClass(session['class'])
-        mark = {}
-        for child in result:
-            print(child, dbase.getID(child[0]))
-            child_id = dbase.getID(child[0])
-            mark[child] = dbase.getMarks(child_id, session['class'])
-        return render_template('mark_input.html', children_list = result, marks = mark, glav = session['subject'])
-    else:
-        return redirect(url_for("login"))
+# @app.route('/mark_input', methods=['GET', 'POST'])
+# def mark_input():
+#     if session.get('logged_in') and 'ddata' in session and 'class' in session:
+#         db = get_db()
+#         dbase = FDataBase(db)
+#         result = dbase.getClass(session['class'])
+#         mark = {}
+#         for child in result:
+#             print(child, dbase.getID(child[0]))
+#             child_id = dbase.getID(child[0])
+#             mark[child] = dbase.getMarks(child_id, session['class'])
+#         return render_template('mark_input.html', children_list = result, marks = mark, glav = session['subject'])
+#     else:
+#         return redirect(url_for("login"))
+
 @app.route('/lessons', methods=['GET', 'POST'])
 def lessons():
     if session.get('logged_in'):
