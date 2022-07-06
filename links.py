@@ -125,8 +125,6 @@ def register():
             flash('Аккаунт с данной почтой или логином уже существует', category='error')
         elif request.form['name'].isdigit() or request.form['second_name'].isdigit() or request.form['surname'].isdigit():
             flash('', category='error')
-        elif len(request.form['psw']) < 4:
-            pass
         else:
             flash('Регистрация прошла успешно!', category='success')
             surname = ''
