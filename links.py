@@ -67,7 +67,7 @@ def start_page():
     if session.get('logged_in') and ('ddata' in session):
         return render_template('start_page.html', name=session["ddata"][5],
                                day_ras=uroki[date_string], time=day_times,
-                               length=len(uroki[date_string]), day=date_string)
+                               length=len(uroki[date_string]), day=date_string, surname = session['ddata'][4])
     else:
         session['logged_in'] = False
         return redirect(url_for("login"))
@@ -183,7 +183,7 @@ def marks():
     if session.get('logged_in'):
         return render_template('page_with_mark.html', name=session["ddata"][5],
                                lessons=session['lesson'][1].split(),
-                               marks=student_mark, sred=sred_marks)
+                               marks=student_mark, sred=sred_marks, surname = session['ddata'][4])
     else:
         return redirect(url_for("login"))
 
@@ -207,7 +207,7 @@ def lessons():
     if session.get('logged_in'):
         return render_template('page_with_lessons.html', name=session["ddata"][5], times=times1,
                                raspis=uroki,
-                               length=len(times1))
+                               length=len(times1), surname = session['ddata'][4])
     else:
         return redirect(url_for('login'))
 
