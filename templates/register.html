@@ -19,8 +19,17 @@
 
         function check_l_name()
         {
-           var x = "1234567890";
-           if(x.indexOf(l_name.value) != -1)
+           var x = "АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЫыЪъЭэЮюЯя";
+           var k = false;
+           var str = l_name.value;
+           for(let i = 0; i < str.length; i++)
+           {
+             if(x.indexOf(str[i]) == -1)
+             {
+               k = true;
+             }
+           }
+           if(k)
            {
              _l_name.innerHTML = "Use correct surname";
            }
@@ -32,8 +41,17 @@
 
         function check_f_name()
         {
-           var x = "1234567890";
-           if(x.indexOf(f_name.value) != -1)
+           var x = "АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЫыЪъЭэЮюЯя";
+           var k = false;
+           var str = f_name.value;
+           for(let i = 0; i < str.length; i++)
+           {
+             if(x.indexOf(str[i]) == -1)
+             {
+               k = true;
+             }
+           }
+           if(k)
            {
              _f_name.innerHTML = "Use correct name";
            }
@@ -45,8 +63,17 @@
 
         function check_s_name()
         {
-           var x = "1234567890";
-           if(x.indexOf(s_name.value) != -1)
+           var x = "АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЫыЪъЭэЮюЯя";
+           var k = false;
+           var str = s_name.value;
+           for(let i = 0; i < str.length; i++)
+           {
+             if(x.indexOf(str[i]) == -1)
+             {
+               k = true;
+             }
+           }
+           if(k)
            {
              _s_name.innerHTML = "Use correct second name";
            }
@@ -116,7 +143,7 @@
                     <label for="class_school"><b>Класс</b></label>
                     <input id = "grade" type="text" placeholder="Введите номер и букву класса" name="school_class" value="" required>
                 <hr>
-            <input type="button" class="registerbtn" value="Отправить" onclick="check">
+            <input type="submit" class="registerbtn" value="Отправить" onclick="check">
         </div>
 
         <div class="container signin">
