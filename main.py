@@ -1,14 +1,17 @@
 from flask import *
 import sqlite3 as sq
 import datetime
+
 import os
 from FDataBase import FDataBase
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'qwerhjhgfbgtrf12345rf4h1jn3k7'
 app.config.from_object(__name__)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
+
 
 def connect_db():
     conn = sq.connect(app.config['DATABASE'])
