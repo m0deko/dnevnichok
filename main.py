@@ -5,7 +5,7 @@ import datetime
 import os
 from FDataBase import FDataBase
 
-
+abc = 1
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'qwerhjhgfbgtrf12345rf4h1jn3k7'
 app.config.from_object(__name__)
