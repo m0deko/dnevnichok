@@ -1,126 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Регистрация</title>
+<title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="../static/css/styles_for_reg.css">
     <script>
-        function check_email()
+        function check(str)
         {
-           if(email.value.indexOf("@") == -1)
+           var x = "1234567890"
+           if(str = "email" && email.value.indexOf("@") == -1)
            {
-             _email.innerHTML = "Use correct e-mail";
+             alert("!");
            }
-           else
+           if(str = "name" && (x.indexOf(s_name.value) != -1 or x.indexOf(f_name.value) != -1 or x.indexOf(l_name.value) != -1))
            {
-            _email.innerHTML = "";
-            }
-        }
-
-        function check_l_name()
-        {
-           var x = "1234567890";
-           if(x.indexOf(l_name.value) != -1)
-           {
-             _l_name.innerHTML = "Use correct surname";
+             alert("!");
            }
-           else
+           if(str = "email" && email.value.indexOf("@") == -1)
            {
-            _l_name.innerHTML = "";
-            }
-        }
-
-        function check_f_name()
-        {
-           var x = "1234567890";
-           if(x.indexOf(f_name.value) != -1)
-           {
-             _f_name.innerHTML = "Use correct name";
-           }
-           else
-           {
-            _f_name.innerHTML = "";
-            }
-        }
-
-        function check_s_name()
-        {
-           var x = "1234567890";
-           if(x.indexOf(s_name.value) != -1)
-           {
-             _s_name.innerHTML = "Use correct second name";
-           }
-           else
-           {
-            _s_name.innerHTML = "";
-            }
-        }
-
-        function check_psw()
-        {
-           if(psw.value != psw_rep.value)
-           {
-             _psw.innerHTML = "Passwords does not match";
-           }
-           else
-           {
-            _psw.innerHTML = "";
+             alert("!");
            }
         }
     </script>
-    <style>
-        .style_text
-        {
-
-        }
-    </style>
 </head>
 <body>
     <form action="/register" method="post" class="form_contact">
-        <div class="container">
-            <h1>Регистрация</h1>
-            <p>Заполните форму для регистрации</p>
-                <hr>
-                    {% for cat, msg in get_flashed_messages(True) %}
+	@@ -33,28 +85,26 @@ <h1>Регистрация</h1>
                     <div class="flash {{cat}}">{{msg}}</div>
                     {% endfor %}
                     <label for="FIO"><b>ФИО</b></label>
-                    <input onblur = check_l_name() id = "l_name" type="text" placeholder="Введите фамилию" name="surname" value="" required>
-                    <p id = "_l_name"></p>
-                    <input onblur = check_f_name() id = "f_name" type="text" placeholder="Введите имя" name="name" value="" required>
-                    <p id = "_f_name"></p>
-                    <input onblur = check_s_name() id = "s_name" type="text" placeholder="Введите отчество" name="second_name" value="" required>
-                    <p id = "_s_name"></p>
+                    <input onblur = check("name") id = "l_name" type="text" placeholder="Введите фамилию" name="surname" value="" required>
+                    <font color="red"></font><p id = "_l_name"></p></font>
+                    <input onblur = check("name") id = "f_name" type="text" placeholder="Введите имя" name="name" value="" required>
+                    <font color="red"></font><p id = "_f_name"></p></font>
+                    <input onblur = check("name") id = "s_name" type="text" placeholder="Введите отчество" name="second_name" value="" required>
+                    <font color="red"></font><p id = "_s_name"></p></font>
+
 
                     <label for="login"><b>Логин</b></label>
                     <input id = "u_name" type="text" placeholder="Введите логин" name="username" value="" required>
 
                     <label for="email"><b>Email</b></label>
-                    <input onblur = check_email() id = "email" type="text" placeholder="Введите Email" name="email" value="" required>
-                    <p id = "_email"></p>
+                    <input onblur = check("email") id = "email" type="text" placeholder="Введите Email" name="email" value="" required>
+                    <font color="red"></font><p id = "_email"></p></font>
 
                     <label for="psw"><b>Пароль</b></label>
                     <input id = "psw" type="password" placeholder="Введите пароль" name="psw" value="" required>
 
                     <label for="psw"><b>Повторите пароль</b></label>
-                    <input onblur = check_psw() id = "psw_rep" type="password" placeholder="Повторите пароль" name="psw-repeat" value="" required>
-                    <p id = "_psw"></p>
+                    <input id = "psw_rep" type="password" placeholder="Повторите пароль" name="psw-repeat" value="" required>
+                    <font color="red"></font><p id = "_psw"></p></font>
+
 
                     <label for="city"><b>Город</b></label>
                     <input id = "city" type="text" placeholder="Введите город проживания" name="city" value="" required>
-
-
-                    <label for="school"><b>Школа</b></label>
-                    <input id = "school" type="text" placeholder="Введите школу" name="school_num" value="" required>
-
-                    <label for="class_school"><b>Класс</b></label>
-                    <input id = "grade" type="text" placeholder="Введите номер и букву класса" name="school_class" value="" required>
-                <hr>
-            <input type="button" class="registerbtn" value="Отправить" onclick="check">
-        </div>
-
-        <div class="container signin">
-            <p>Уже зарегистрированы? <a href="/login">Вход</a>.</p>
+	@@ -74,4 +124,4 @@ <h1>Регистрация</h1>
         </div>
     </form>
 </body>
