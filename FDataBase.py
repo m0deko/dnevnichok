@@ -71,7 +71,6 @@ class FDataBase():
             result = []
             for x in range(len(res)):
                 result += res[x]
-
             return result
         except Exception as ex:
             print('Ошибка чтения бд', ex)
