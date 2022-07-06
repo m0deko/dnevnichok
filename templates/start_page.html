@@ -12,6 +12,17 @@
     <div class="page">
 {% include 'main_bar.html' %}
         <div class="content">
+            <div class="day_panel">
+
+                {% for x in range(7) %}
+                <button class="panel_button">
+                    <span>
+                        <p>ПН 4</p>
+                    </span>
+                </button>
+                {% endfor %}
+
+            </div>
             <div class="text">
                 <h2>Расписание на сегодняшний день({{day}})</h2>
             </div>
@@ -32,7 +43,6 @@
                 {% else %}
                     <div class="d-tr"><h2>{{day_ras[0]}}</h2></div>
                 {% endif %}
-
         </div>
     </div>
 {% include 'footer.html' %}

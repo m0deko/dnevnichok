@@ -1,4 +1,5 @@
 from configurations import *
+
 @app.route('/', methods=['GET', 'POST'])
 def start_page():
     if session.get('logged_in') and ('ddata' in session):
