@@ -16,7 +16,6 @@ img {
     height: auto;
 }
 
-
 /*===========================header==============================*/
 nav {
     background-color: #ffffff;
@@ -78,98 +77,63 @@ header {
     border-radius: 50%;
     border: 1px solid black;
 }
-/*=================================date-bar======================================*/
 
-.date_bar {
-    background-color: #dddddd;
-}
+/*==================================quarter=====================================*/
 
-.bar {
-    background-color: #ffffff;
-    border-radius: 3px;
+.custom-quarter-btn {
+    width: 100%;
+    background-color: #555555;
+    color: #ffffff;
 }
-
-/*.wrap .date_bar .container button {*/
-/*    width: 60px;*/
-/*}*/
-.wrap .date_bar .container .day-week {
-    margin-right: 2px;
-}
-.wrap .date_bar .container button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.wrap .date_bar .container .second-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.custom-quarter-btn:hover {
+    background-color: #444444;
 }
 
-/*.wrap .date_bar .container button {*/
-/*    margin: 0 3px;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-.calendar form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+.quarter-bar form .col-3 {
+    margin: 0;
+    padding: 0;
 }
-.calendar p {
-    margin: 3px;
+section.quarter-bar {
+    margin-bottom: 40px;
+    font-size: 23px;
 }
-
-.date-submit {
-    margin-top: 3px;
-}
-
-section.date_bar {
+section.quarter-bar .quarter-row {
     margin-bottom: 30px;
 }
 
-/*================================lesson=====================================*/
-.lessons {
-    background-color: #cccccc;
+
+/*===================================mark-info==================================*/
+section.marks .row {
+    margin-bottom: 15px;
 }
 
-.lessons .lesson-table .row{
-    display: flex;
-    justify-content: space-between;
+section.marks .container .mark-info {
+    background-color: #444444;
+    color: white;
+    font-size: 24px;
+    padding: 15px;
 }
 
-section.lessons .lesson-table .lesson-info {
-    background-color: #fff;
-    border: 1px solid #000;
+section.marks .container .mark-info .sred-bal {
+    padding: 5px;
+    color: #eeeeee;
+    border-radius: 50%;
 }
 
-section.lessons .lesson-table .lesson-info .les-num {
-    display: flex;
-    flex-direction: row;
+section.marks .container .mark-info .sred-bal.good {
+    background-color: #00cc00;
 }
 
-section.lessons .lesson-table .lesson-info .les-num span {
-    margin: 3px;
+section.marks .container .mark-info .sred-bal.normal {
+    background-color: #cccc00;
 }
 
-section.lessons .lesson-table .lessons-menu .lesson-info {
-    margin-bottom: 20px;
-    border-radius: 5px;
+section.marks .container .mark-info .sred-bal.bad {
+    background-color: #cc0000;
 }
-section.lessons .lesson-table .lessons-menu .lesson-info:hover {
+
+section.marks .container .mark-info:hover {
     cursor: pointer;
-}
-
-
-section.lessons .lesson-table .lessons-menu {
-    padding-top: 10px;
-}
-
-section.lessons .lesson-table .col-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #eee;
 }
 
 /*=================================footer=====================================*/
@@ -182,10 +146,14 @@ footer .row a i {
     font-size: 32px;
 }
 
+
 /*=================================media======================================*/
 @media screen and (max-width: 992px) {
     .navbar {
         padding: 0 !important;
+    }
+    .container-fluid {
+        height: 76px;
     }
 
     .container-fluid .notCollapseSecond .navbar-nav {
@@ -210,25 +178,8 @@ footer .row a i {
     .container-fluid {
         z-index: 9;
     }
-    .inactive {
-        display: none !important;
-    }
-
-    .date_bar .row {
-        flex-direction: column !important;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .date_bar .calendar {
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .container-fluid {
-        height: 76px;
-    }
 }
+
 
 @media screen and (min-width: 992px) {
     .navbar .container-fluid .active {

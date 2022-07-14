@@ -16,7 +16,6 @@ img {
     height: auto;
 }
 
-
 /*===========================header==============================*/
 nav {
     background-color: #ffffff;
@@ -66,7 +65,7 @@ header {
 header {
     margin-bottom: 50px;
 }
-.container-fluid {
+header .container-fluid {
     height: 60px;
 }
 .avatar-img {
@@ -78,99 +77,16 @@ header {
     border-radius: 50%;
     border: 1px solid black;
 }
-/*=================================date-bar======================================*/
 
-.date_bar {
-    background-color: #dddddd;
-}
-
-.bar {
-    background-color: #ffffff;
-    border-radius: 3px;
-}
-
-/*.wrap .date_bar .container button {*/
-/*    width: 60px;*/
-/*}*/
-.wrap .date_bar .container .day-week {
-    margin-right: 2px;
-}
-.wrap .date_bar .container button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.wrap .date_bar .container .second-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/*.wrap .date_bar .container button {*/
-/*    margin: 0 3px;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-.calendar form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.calendar p {
-    margin: 3px;
-}
-
-.date-submit {
-    margin-top: 3px;
-}
-
-section.date_bar {
+/*==================================timetable=================================*/
+section.timetable .timetable-week {
     margin-bottom: 30px;
 }
-
-/*================================lesson=====================================*/
-.lessons {
-    background-color: #cccccc;
-}
-
-.lessons .lesson-table .row{
-    display: flex;
-    justify-content: space-between;
-}
-
-section.lessons .lesson-table .lesson-info {
-    background-color: #fff;
-    border: 1px solid #000;
-}
-
-section.lessons .lesson-table .lesson-info .les-num {
-    display: flex;
-    flex-direction: row;
-}
-
-section.lessons .lesson-table .lesson-info .les-num span {
-    margin: 3px;
-}
-
-section.lessons .lesson-table .lessons-menu .lesson-info {
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-section.lessons .lesson-table .lessons-menu .lesson-info:hover {
-    cursor: pointer;
+section.timetable h2 {
+    margin-bottom: 50px;
 }
 
 
-section.lessons .lesson-table .lessons-menu {
-    padding-top: 10px;
-}
-
-section.lessons .lesson-table .col-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #eee;
-}
 
 /*=================================footer=====================================*/
 
@@ -275,5 +191,5 @@ footer .row a i {
 }
 
 .custom-tooltip {
-  --bs-tooltip-bg: var(--bs-primary);
+    --bs-tooltip-bg: var(--bs-primary);
 }
