@@ -1,0 +1,211 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*===========================header==============================*/
+nav {
+    background-color: #ffffff;
+    height: 60px;
+}
+
+header .navbar .container-fluid {
+    padding: 0;
+    background-color: #eeeeee;
+}
+
+header {
+    height: 60px !important;
+}
+
+.navbar .container-fluid img {
+    margin-right: 30px;
+}
+
+.avatar {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.navbar .container-fluid svg {
+    position: relative;
+    top: 12px;
+}
+
+.navbar .container-fluid ul.collapse-left li {
+    margin-right: 30px;
+}
+
+.navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {
+    justify-content: center !important;
+}
+
+.nav-item {
+    display: flex;
+}
+
+header {
+    margin-bottom: 50px;
+}
+header .container-fluid {
+    height: 60px;
+}
+.avatar-img {
+    position: relative;
+    right: -15px;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+/*================================homework====================================*/
+.accordion-text, .accordion-files {
+    background-color: #ccc;
+    border-radius: 10px;
+    border: 3px solid #fff;
+}
+.accordion-files button {
+    margin-bottom: 10px;
+}
+.homework-table {
+    background-color: #dddddd;
+}
+.accordion {
+    width: 90%;
+}
+.homework-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+section.homework-table {
+    padding-bottom: 30px;
+}
+
+
+/*=================================footer=====================================*/
+
+footer {
+    background-color: #000;
+}
+
+footer .row a i {
+    font-size: 32px;
+}
+
+/*=================================media======================================*/
+@media screen and (max-width: 992px) {
+    .navbar {
+        padding: 0 !important;
+    }
+
+    .container-fluid .notCollapseSecond .navbar-nav {
+        flex-direction: row !important;
+        margin-left: 30px;
+    }
+
+    .container-fluid .navbar-collapse li {
+        transition: background-color .3s;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+    }
+
+    .container-fluid .navbar-collapse li:hover {
+        background-color: #aaa;
+    }
+
+    .navbar .container-fluid ul.collapse-left li {
+        margin-right: 0;
+    }
+    .container-fluid {
+        z-index: 9;
+    }
+    .inactive {
+        display: none !important;
+    }
+
+    .date_bar .row {
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .date_bar .calendar {
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .container-fluid {
+        height: 76px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .navbar .container-fluid .active {
+        background: #cccccc;
+        border-radius: 20px;
+        padding-bottom: 0;
+    }
+    .navbar .container-fluid .active h5 {
+        position: relative;
+        top: -3px;
+    }
+
+    .navbar .container-fluid .collapse .navbar-nav {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/*==========================modal&tooltip====================================*/
+
+.modal .modal-content .modal-body .mark {
+    background-color: #00cc00;
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.profile-form {
+    width: 100%;
+}
+
+.profile-modal .avatar-change button {
+    position: relative;
+    z-index: 11;
+    top: -20px;
+    right: -400px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    height: 48px;
+    width: 48px;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}

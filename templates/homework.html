@@ -2,9 +2,354 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ЭЖД</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="../static/css/images/favicon-96x96.png">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles_for_homework.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/fontello.css">
 </head>
 <body>
 
+<div class="wrap">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="notCollapseFirst">
+                    <img src="../static/css/images/logo.png" alt="logo">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="notCollapseSecond order-lg-1">
+                    <ul class="navbar-nav right-nav">
+                        <li class="nav-item bell">
+                            <a href="#" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="32" fill="currentColor"
+                                     class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    <img src="../static/css/images/puding.jpg" alt="" class="avatar-img">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse order-lg-0" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-lg-0 collapse-left">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <h5>Главная страница</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active disabled" href="#">
+                                <h5>Домашняя работа</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <h5>Успеваемость</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <h5>Расписание</h5>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="homework-table">
+        <div class="homework-label">
+            <h2>Домашняя работа на 15.07.2022</h2>
+            <div class="accordion" id="accodion1">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading1_1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel1_1" aria-expanded="false"
+                                aria-controls="collapsePanel1_1">
+                            Физика
+                        </button>
+                    </h2>
+                    <div id="collapsePanel1_1" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading1_1">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading2_1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel2_1" aria-expanded="false"
+                                aria-controls="collapsePanel2_1">
+                            Алгебра
+                        </button>
+                    </h2>
+                    <div id="collapsePanel2_1" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading2_1">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading3_1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel3_1" aria-expanded="false"
+                                aria-controls="collapsePanel3_1">
+                            Русский язык
+                        </button>
+                    </h2>
+                    <div id="collapsePanel3_1" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading3_1">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="homework-label">
+            <h2>Домашняя работа на 16.07.2022</h2>
+            <div class="accordion" id="accodion2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading1_2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel1_2" aria-expanded="false"
+                                aria-controls="collapsePanel1_2">
+                            Физика
+                        </button>
+                    </h2>
+                    <div id="collapsePanel1_2" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading1_2">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading2_2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel2_2" aria-expanded="false"
+                                aria-controls="collapsePanel2_2">
+                            Алгебра
+                        </button>
+                    </h2>
+                    <div id="collapsePanel2_2" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading2_2">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="collapseHeading3_2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePanel3_2" aria-expanded="false"
+                                aria-controls="collapsePanel3_2">
+                            Русский язык
+                        </button>
+                    </h2>
+                    <div id="collapsePanel3_2" class="accordion-collapse collapse"
+                         aria-labelledby="collapseHeading3_2">
+                        <div class="accordion-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-9 accordion-text">
+                                        Задачи в приложенном файле
+                                    </div>
+                                    <div class="col-3 text-center accordion-files">
+                                        <h5>Приложенные файлы</h5>
+                                        <p></p>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                        <button class="btn btn-primary">
+                                            Задачник.xls
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="#"><i class="icon-vkontakte"></i></a>
+                <a href="#"><i class="icon-twitter"></i></a>
+                <a href="#"><i class="icon-paper-plane"></i></a>
+                <a href="#"><i class="icon-facebook"></i></a>
+                <a href="#"><i class="icon-github-circled"></i></a>
+                <a href="#"><i class="icon-youtube-play"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ваш профиль</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-modal">
+                    <div class="avatar-change">
+                        <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
+                        <button class="text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                 class="bi bi-file-plus-fill" viewBox="0 0 16 16">
+                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <p>ФИО:</p>
+                        <p>Стерлягов Сергей Дмитриевич</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <p>Логин: MasSter</p>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <p>Пароль: ***********</p>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <p>Почта: sterlygovs@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container-fluid">
+                    <div class="row text-center">
+                        <div class="col-8 offset-2">
+                            <button class="btn btn-danger">Выйти</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
