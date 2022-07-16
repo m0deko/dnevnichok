@@ -1,17 +1,11 @@
 from configurations import *
 
 
-# @app.route('/', methods=['GET', 'POST'])
-# def start_page():
-#     if session.get('logged_in') and ('ddata' in session):
-#         return render_template('start_page.html', name=session["ddata"][5],
-#                                day_ras=uroki[date_string], time=day_times,
-#                                length=len(uroki[date_string]), day=date_string, surname=session['ddata'][4])
-#     else:
-#         session['logged_in'] = False
-#         return redirect(url_for("login"))
-# 
-# 
+@app.route('/', methods=['GET', 'POST'])
+def mainpage():
+    return render_template('new_mainpage.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # if session['logged_in']:
@@ -29,7 +23,13 @@ def login():
     #             session['lesson'] = dbase.getLes(int(session['ddata'][9][0]))
     #
     #             return redirect(url_for('start_page'))
-
+    if request.method == 'POST':
+        db = get_db()
+        dbase = FDataBase(db)
+        print(dbase.getAccess(request.form['identification'], request.form['password']))
+        if dbase.getAccess(request.form['identification'], request.form['password']) == 1:
+            print(1)
+            # return redirect(url_for('/'))
     return render_template('login.html')
 
 
@@ -61,10 +61,6 @@ def register():
         dbase.addStudent(request.form['username'], request.form['password'], request.form['email'],
                          request.form['surname'], request.form['name'], request.form['name'],
                          request.form['second_name'], request.form['school'], request.form['grade'])
-        # school_class += request.form['school_class']
-        # res = dbase.addPost(request.form['username'], request.form['psw'], request.form['email'],
-        #                     surname, name, second_name,
-        #                     city, school_num, school_class)
         return redirect(url_for('login'))
     return render_template('new_register.html')
 

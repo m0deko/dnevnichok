@@ -1,4 +1,7 @@
-import sqlite3
+import hashlib
+import os
+
+salt = os.urandom(32)
 
 class FDataBase():
     def __init__(self, db):
@@ -126,10 +129,22 @@ class FDataBase():
     def addStudent(self, username, password, email, surname, name, second_name, city, school, grade):
         try:
             group_id = self.getGroupID(school, grade)
-            self.__cur.execute('''INSERT into users_data(group_id, username, password, email, surname, name, second_name, city, law) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', (group_id, username, password, email, surname, name, second_name, city, 0))
+            key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000, dklen=128)
+            self.__cur.execute('''INSERT into users_data(group_id, username, password, email, surname, name, second_name, city, law) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', (group_id, username, key, email, surname, name, second_name, city, 0))
             self.__db.commit()
             print('successful')
             # self.__cur.execute(f'''INSERT into users_data()
             # ''')
+        except Exception as ex:
+            print(ex)
+    def getAccess(self, identify, password):
+        try:
+            self.__cur.execute(f'''SELECT password FROM users_data WHERE username = "{identify}" OR email = "{identify}"''')
+            preres = self.__cur.fetchone()
+            key = [x for x in preres][0]
+            new_key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000, dklen=128)
+            if key == new_key:
+                return 1
+            return 0
         except Exception as ex:
             print(ex)
