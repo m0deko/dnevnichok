@@ -29,7 +29,7 @@ def login():
         print(dbase.getAccess(request.form['identification'], request.form['password']))
         if dbase.getAccess(request.form['identification'], request.form['password']) == 1:
             print(1)
-            # return redirect(url_for('/'))
+            return redirect(url_for('mainpage'))
     return render_template('login.html')
 
 
