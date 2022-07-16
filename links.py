@@ -3,7 +3,7 @@ from configurations import *
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
-    return render_template('new_mainpage.html')
+    return render_template('new_mainpage.html', date_info=date_mas)
 
 
 @app.route('/login', methods=['GET', 'POST'])
