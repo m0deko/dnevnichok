@@ -5,6 +5,36 @@
 }
 
 
+.tip
+{
+ position: relative;
+ width: 50px;
+ height: 50px;
+ cursor: pointer;
+}
+
+.tip::after
+{
+ content: attr(data-text);
+ position: absolute;
+ top: -5%;
+ left: -20%;
+ font-size: 10px;
+ background-color: #333333;
+ padding: 10px;
+ border-radius: 10px;
+ color: #FFFFFF;
+ opacity: 0;
+ visibility: hidden;
+}
+
+.tip:hover::after
+{
+ opacity: 1;
+ visibility: visible;
+}
+
+
 .mark_in {
     margin-top: 40px;
     width: 70%;
@@ -19,9 +49,10 @@
     /*background-color: cyan;*/
     /*margin-left: auto;*/
     /*margin-right: auto;*/
-    /*height: 300px;*/
-
+    /*height: 300px;*/    
+    
 }
+
 .mark_in li {
     list-style-type: none;
     float: left;
@@ -43,6 +74,7 @@
     margin-left: 30%;
     float: left;
 }
+
 .sred {
     text-align: right;
     margin-right: 20%;
