@@ -98,24 +98,12 @@
 
     <section class="marks">
         <div class="container">
+            {% for subject in all_les %}
             <div class="row">
                 <div class="col-6 offset-3">
                     <div class="row mark-info" data-bs-toggle="modal" data-bs-target="#markModal">
                         <div class="col-6 offset-1">
-                            <span>Русский</span>
-                            <span>язык</span>
-                        </div>
-                        <div class="col-4 text-center">
-                            <span class="sred-bal good">4.5</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 offset-3">
-                    <div class="row mark-info" data-bs-toggle="modal" data-bs-target="#markModal">
-                        <div class="col-6 offset-1">
-                            <span>Информатика</span>
+                            <span>{{subject}}</span>
                         </div>
                         <div class="col-4 text-center">
                             <span class="sred-bal normal">3.5</span>
@@ -123,18 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 offset-3">
-                    <div class="row mark-info" data-bs-toggle="modal" data-bs-target="#markModal">
-                        <div class="col-6 offset-1">
-                            <span>Биология</span>
-                        </div>
-                        <div class="col-4 text-center">
-                            <span class="sred-bal bad">2.5</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 </div>

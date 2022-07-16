@@ -3,7 +3,10 @@ from configurations import *
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
-    return render_template('new_mainpage.html', date_info=date_mas)
+    with open('timetable.json', encoding='utf-8') as f:
+        timetable = json.load(f)['class_id']['1']['timetable']
+        print(timetable)
+    return render_template('new_mainpage.html', date_info=date_mas, cur_day_time = timetable[week_string])
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,48 +95,54 @@ def register():
 #     return render_template('reg_teacher.html')
 #
 #
-# @app.route('/marks', methods=['GET', 'POST'])
-# def marks():
-#     db = get_db()
-#     dbase = FDataBase(db)
-#     student_mark = {}
-#     for les in session['lesson'][1].split():
-#         mark_res = dbase.getMark(les, session['id'])
-#         student_mark[les] = mark_res
-#     sred_marks = middle_marks(student_mark)
-#     if session.get('logged_in'):
-#         return render_template('page_with_mark.html', name=session["ddata"][5],
-#                                lessons=session['lesson'][1].split(),
-#                                marks=student_mark, sred=sred_marks, surname=session['ddata'][4])
+@app.route('/marks', methods=['GET', 'POST'])
+def marks():
+    db = get_db()
+    dbase = FDataBase(db)
+    with open('timetable.json', encoding='utf-8') as f:
+        all_lessons = json.load(f)['class_id']['1']['all_lessons']
+    # student_mark = {}
+    # for les in session['lesson'][1].split():
+    #     mark_res = dbase.getMark(les, session['id'])
+    #     student_mark[les] = mark_res
+    # sred_marks = middle_marks(student_mark)
+    # if session.get('logged_in'):
+    #     return render_template('page_with_mark.html', name=session["ddata"][5],
+    #                            lessons=session['lesson'][1].split(),
+    #                            marks=student_mark, sred=sred_marks, surname=session['ddata'][4])
+    # else:
+    #     return redirect(url_for("login"))
+    return render_template('new_markpage.html', all_les = all_lessons)
+
+
+# @app.route('/mark_input', methods=['GET', 'POST'])
+# def mark_input():
+#     if session.get('logged_in') and 'ddata' in session and 'class' in session:
+#         db = get_db()
+#         dbase = FDataBase(db)
+#         result = dbase.getClass(session['class'])
+#         mark = {}
+#         for child in result:
+#             print(child, dbase.getID(child[0]))
+#             child_id = dbase.getID(child[0])
+#             mark[child] = dbase.getMarks(child_id, session['class'])
+#         return render_template('mark_input.html', children_list = result, marks = mark, glav = session['subject'])
 #     else:
 #         return redirect(url_for("login"))
-#
-#
-# # @app.route('/mark_input', methods=['GET', 'POST'])
-# # def mark_input():
-# #     if session.get('logged_in') and 'ddata' in session and 'class' in session:
-# #         db = get_db()
-# #         dbase = FDataBase(db)
-# #         result = dbase.getClass(session['class'])
-# #         mark = {}
-# #         for child in result:
-# #             print(child, dbase.getID(child[0]))
-# #             child_id = dbase.getID(child[0])
-# #             mark[child] = dbase.getMarks(child_id, session['class'])
-# #         return render_template('mark_input.html', children_list = result, marks = mark, glav = session['subject'])
-# #     else:
-# #         return redirect(url_for("login"))
-#
-# @app.route('/lessons', methods=['GET', 'POST'])
-# def lessons():
-#     if session.get('logged_in'):
-#         return render_template('page_with_lessons.html', name=session["ddata"][5], times=times1,
-#                                raspis=uroki,
-#                                length=len(times1), surname=session['ddata'][4])
-#     else:
-#         return redirect(url_for('login'))
-#
-#
+
+@app.route('/lessons', methods=['GET', 'POST'])
+def lessons():
+    # if session.get('logged_in'):
+    #     return render_template('page_with_lessons.html', name=session["ddata"][5], times=times1,
+    #                            raspis=uroki,
+    #                            length=len(times1), surname=session['ddata'][4])
+    # else:
+    #     return redirect(url_for('login'))
+    with open('timetable.json', encoding='utf-8') as f:
+        timetable = json.load(f)['class_id']['1']['timetable']
+        print(timetable)
+    return render_template("timetable.html", week_timetable = timetable)
+
 # @app.route('/logout')
 # def logout():
 #     session['logged_in'] = False

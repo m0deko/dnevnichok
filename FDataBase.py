@@ -78,17 +78,16 @@ class FDataBase():
     #     except Exception as ex:
     #         print('Ошибка чтения бд', ex)
     #     return []
-    # def getMarks(self, class_num, subject):
-    #     try:
-    #         self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {class_num} AND lesson = "{subject}"''')
-    #         res = self.__cur.fetchall()
-    #         result = []
-    #         for x in range(len(res)):
-    #             result += res[x]
-    #         return result
-    #     except Exception as ex:
-    #         print('Ошибка чтения бд', ex)
-    #     return []
+    def getMarks(self, class_num, subject):
+        try:
+            self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {class_num} AND lesson = "{subject}"''')
+            res = self.__cur.fetchall()
+            result = []
+            for x in range(len(res)):
+                result += res[x]
+            return result
+        except Exception as ex:
+            print(ex)
     # def getID(self, username):
     #     try:
     #         self.__cur.execute(f'''SELECT id FROM maintable WHERE username = "{username}"''')

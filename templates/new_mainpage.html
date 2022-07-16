@@ -131,111 +131,21 @@
         <div class="container lesson-table">
             <div class="row lessons-menu">
                 <div class="col-lg-10 offset-lg-1">
+                    {% for x in range(cur_day_time|length) %}
                     <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
                         <div class="col-2">
                             <div class="les-num">
-                                <span>Урок</span><span>1</span>
+                                <span>Урок</span><span>{{x + 1}}</span>
                             </div>
                             <div class="les-time">
-                                9:00-9:40
+                                {{cur_day_time[(x + 1)|string()][1]}}
                             </div>
                         </div>
                         <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
+                            <h2 class="text-center">{{cur_day_time[(x + 1)|string()][0]}}</h2>
                         </div>
                     </div>
-
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>1</span>
-                            </div>
-                            <div class="les-time">
-                                9:00-9:40
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">Русский язык</h2>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
