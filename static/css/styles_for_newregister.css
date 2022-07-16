@@ -45,6 +45,12 @@ a {
     background: -moz-linear-gradient(135deg, rgb(255, 255, 255), rgb(51, 62, 62));
     background: linear-gradient(135deg, rgb(255, 255, 255), rgb(51, 62, 62));
 }
+.register-button a {
+    color: #000;
+}
+.register-button a:hover {
+    color: #000;
+}
 
 .choosing {
     display: flex;
