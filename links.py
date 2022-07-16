@@ -58,14 +58,15 @@ def register():
     if request.method == 'POST':
         db = get_db()
         dbase = FDataBase(db)
-        # dbase.addStudent("ste", '123', '@e', 'Стерлягов', 'Сергей', 'Дмитриевич', 'Москва', '1580', '8А')
+        dbase.addStudent(request.form['username'], request.form['password'], request.form['email'],
+                         request.form['surname'], request.form['name'], request.form['name'],
+                         request.form['second_name'], request.form['school'], request.form['grade'])
         # school_class += request.form['school_class']
         # res = dbase.addPost(request.form['username'], request.form['psw'], request.form['email'],
         #                     surname, name, second_name,
         #                     city, school_num, school_class)
-        print(request.form.get('username_form'))
+        return redirect(url_for('login'))
     return render_template('new_register.html')
-
 
 # @app.route('/register_teacher', methods=['POST', 'GET'])
 # def register_for_teacher():
