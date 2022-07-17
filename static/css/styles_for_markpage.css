@@ -225,6 +225,37 @@ footer .row a i {
     width: 48px;
 }
 
+
+.tip
+{
+ position: relative;
+ width: 50px;
+ height: 50px;
+ cursor: pointer;
+}
+
+.tip::after
+{
+ content: attr(data-text);
+ position: absolute;
+ top: -5%;
+ left: -20%;
+ font-size: 10px;
+ background-color: #333333;
+ padding: 10px;
+ border-radius: 10px;
+ color: #FFFFFF;
+ opacity: 0;
+ visibility: hidden;
+}
+
+.tip:hover::after
+{
+ opacity: 1;
+ visibility: visible;
+}
+
+
 .custom-tooltip {
   --bs-tooltip-bg: var(--bs-primary);
 }
