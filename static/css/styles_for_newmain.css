@@ -18,6 +18,10 @@ img {
 
 
 /*===========================header==============================*/
+.avatar:hover {
+    cursor: pointer;
+}
+
 nav {
     background-color: #ffffff;
     height: 60px;
@@ -79,6 +83,14 @@ header {
     border: 1px solid black;
 }
 /*=================================date-bar======================================*/
+
+.bell {
+    color: #999;
+}
+.bell:hover {
+    color: #444;
+    cursor: pointer;
+}
 
 .date_bar {
     background-color: #dddddd;
