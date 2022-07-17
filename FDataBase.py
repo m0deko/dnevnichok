@@ -30,13 +30,19 @@ class FDataBase:
 
     def getMarks(self, user_id, subject):
         try:
-            self.__cur.execute(
-                f'''SELECT mark, coefficient FROM mark_data WHERE user_id = {user_id} AND lesson = "{subject}"''')
-            res = self.__cur.fetchall()
             result = []
+            self.__cur.execute(
+                f'''SELECT mark FROM mark_data WHERE user_id = {user_id} AND lesson = "{subject}"''')
+            res = self.__cur.fetchall()
+            res = [x for x in res]
+            self.__cur.execute(
+                f'''SELECT coefficient FROM mark_data WHERE user_id = {user_id} AND lesson = "{subject}"''')
+            coefficient = self.__cur.fetchall()
+            coefficient = [y for y in coefficient]
+            # print(res, coefficient)
             for x in range(len(res)):
-                for y in range(res[x][1]):
-                    result += res[x][0]
+                for y in range(coefficient[x]):
+                    result += res[x]
                     print(result)
             return result
         except Exception as ex:
