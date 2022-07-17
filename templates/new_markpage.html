@@ -98,15 +98,15 @@
 
     <section class="marks">
         <div class="container">
-            {% for subject in all_les %}
+            {% for x in range(all_les|length()) %}
             <div class="row">
                 <div class="col-6 offset-3">
-                    <div class="row mark-info" data-bs-toggle="modal" data-bs-target="#markModal">
+                    <div class="row mark-info" data-bs-toggle="modal" data-bs-target="#markModal{{x}}">
                         <div class="col-6 offset-1">
-                            <span>{{subject}}</span>
+                            <span>{{all_les[x][0]}}</span>
                         </div>
                         <div class="col-4 text-center">
-                            <span class="sred-bal normal">3.5</span>
+                            <span class="sred-bal normal">{{all_les[x][1]}}</span>
                         </div>
                     </div>
                 </div>
@@ -130,30 +130,32 @@
         </div>
     </div>
 </footer>
-
-<div class="modal fade modal-dialog-scrollable show" id="markModal" tabindex="-1" aria-labelledby="markModalLabel"
+{% for x in range(all_marks|length()) %}
+<div class="modal fade modal-dialog-scrollable show" id="markModal{{x}}" tabindex="-1" aria-labelledby="markModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="markModalLabel">Оценки за первую четверть по предмету: русский язык</h5>
+                <h5 class="modal-title" id="markModalLabel{{x}}">Оценки за первую четверть по предмету: {{all_marks[x][0]}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
+                        {% for mark in all_marks[x][1] %}
                         <div class="col-lg-3">
                             <div class="mark text-center" data-bs-toggle="tooltip" title="Тултип по умолчанию">
-                                <div class="tip" data-text="контрольная работа 11.03.2022">4</div>
+                                <div class="tip" data-text="контрольная работа 11.03.2022">{{mark}}</div>
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
 
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

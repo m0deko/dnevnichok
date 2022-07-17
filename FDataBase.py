@@ -3,7 +3,7 @@ import os
 
 salt = os.urandom(32)
 
-class FDataBase():
+class FDataBase:
     def __init__(self, db):
         self.__db = db
         self.__cur = db.cursor()
@@ -27,60 +27,10 @@ class FDataBase():
     #         print('Ошибка чтения из БД', ex)
     #     return []
 
-    # def addPost(self, username, psw, email, surname, name, second_name, city, school_num, school_class):
-    #     try:
-    #         self.__cur.execute(
-    #             '''INSERT INTO users_data(group_id,username, password, email, surname, name, second_name, city, law)
-    #              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-    #             (username, psw, email, surname, name, second_name, city, school_num, school_class))
-    #         self.__db.commit()
-    #     except sqlite3.Error as ex:
-    #         print(str(ex))
-    #         return False
-    #     return True
-    #
-    # def getLes(self, num):
-    #     try:
-    #         self.__cur.execute(f'''SELECT * FROM lessons WHERE class = {num}''')
-    #         res = self.__cur.fetchall()
-    #         return [item for item in res[0]]
-    #     except Exception as ex:
-    #         print(ex)
-    #         return ''
-    # def addTeacher(self, username, psw, email, surname, name, second_name, city, school_num, school_class, subject):
-    #     try:
-    #         self.__cur.execute(
-    #             '''INSERT INTO teacher_maintable(username, password, email, surname, realname, second_name, city, school_num, school_class, subject)
-    #              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-    #             (username, psw, email, surname, name, second_name, city, school_num, school_class, subject))
-    #         self.__db.commit()
-    #     except sqlite3.Error as ex:
-    #         print(str(ex))
-    #         return False
-    #     return True
-    # def getMenuForTeacher(self, username):
-    #     sql = f'''SELECT * FROM teacher_maintable WHERE username = "{username}"'''
-    #     try:
-    #         self.__cur.execute(sql)
-    #         res = self.__cur.fetchall()
-    #         return [item for item in res[0]]
-    #     except Exception as ex:
-    #         print('Ошибка чтения из БД', ex)
-    #     return []
-    # def getClass(self, class_num):
-    #     try:
-    #         self.__cur.execute(f'''SELECT surname FROM maintable WHERE school_class = "{class_num}"''')
-    #         res = self.__cur.fetchall()
-    #         result = []
-    #         for x in range(len(res)):
-    #             result += res[x]
-    #         return result
-    #     except Exception as ex:
-    #         print('Ошибка чтения бд', ex)
-    #     return []
-    def getMarks(self, class_num, subject):
+
+    def getMarks(self, user_id, subject):
         try:
-            self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {class_num} AND lesson = "{subject}"''')
+            self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {user_id} AND lesson = "{subject}"''')
             res = self.__cur.fetchall()
             result = []
             for x in range(len(res)):

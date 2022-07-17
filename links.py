@@ -55,18 +55,19 @@ def marks():
     dbase = FDataBase(db)
     with open('timetable.json', encoding='utf-8') as f:
         all_lessons = json.load(f)['class_id']['1']['all_lessons']
-    # student_mark = {}
-    # for les in session['lesson'][1].split():
-    #     mark_res = dbase.getMark(les, session['id'])
-    #     student_mark[les] = mark_res
-    # sred_marks = middle_marks(student_mark)
+    student_mark = []
+    for les in all_lessons:
+        mark_res = dbase.getMarks(1, les)
+        student_mark.append([les, mark_res])
+    sred_marks = middle_marks(student_mark)
+    print(student_mark)
     # if session.get('logged_in'):
     #     return render_template('page_with_mark.html', name=session["ddata"][5],
     #                            lessons=session['lesson'][1].split(),
     #                            marks=student_mark, sred=sred_marks, surname=session['ddata'][4])
     # else:
     #     return redirect(url_for("login"))
-    return render_template('new_markpage.html', all_les = all_lessons)
+    return render_template('new_markpage.html', all_les = sred_marks, all_marks = student_mark)
 
 
 @app.route('/lessons', methods=['GET', 'POST'])
