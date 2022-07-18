@@ -3,10 +3,12 @@ from configurations import *
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
+    if request.method == "GET":
+        print(1)
     with open('timetable.json', encoding='utf-8') as f:
-        timetable = json.load(f)['class_id']['1']['timetable']
+        timetable = json.load(f)['class_id']['1']["date_activity"]["2022-07-18"]['timetable']
         print(timetable)
-    return render_template('new_mainpage.html', date_info=date_mas, cur_day_time = timetable[week_string])
+    return render_template('new_mainpage.html', date_info=date_mas, cur_day_time = timetable)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -60,7 +62,7 @@ def marks():
         mark_res = dbase.getMarks(1, les)
         student_mark.append([les, mark_res])
     sred_marks = middle_marks(student_mark)
-    print(student_mark)
+
     # if session.get('logged_in'):
     #     return render_template('page_with_mark.html', name=session["ddata"][5],
     #                            lessons=session['lesson'][1].split(),

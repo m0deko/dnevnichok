@@ -5,7 +5,7 @@ def middle_marks(stud_marks):
         for mark in lesson[1][0:]:
             sum_marks += mark
         try:
-            sred_marks.append([lesson[0], sum_marks / len(lesson[1])])
+            sred_marks.append([lesson[0], round(sum_marks / len(lesson[1]), 1)])
         except ZeroDivisionError:
             sred_marks += [[lesson[0], 0.0]]
         except Exception as ex:

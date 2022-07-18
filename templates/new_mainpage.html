@@ -73,7 +73,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-sm-6 calendar">
-                    <form action="#">
+                    <form action="#" method="post">
                         <p class="text-uppercase text-center">выберите дату</p>
                         <input type="date" name="calendar" value="2022-09-01"
                                max="2023-05-28" min="2022-09-01">
@@ -81,48 +81,50 @@
                     </form>
                 </div>
                 <div class="col-lg-6 offset-lg-1 second-col">
-                    <div class="btn-group bar" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                            </svg>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[0][1]}}">
-                            <span class="date-button day-week">ПН</span>
-                            <span class="date-button">{{date_info[0][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[1][1]}}">
-                            <span class="date-button day-week">ВТ</span>
-                            <span class="date-button">{{date_info[1][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[2][1]}}">
-                            <span class="date-button day-week">СР</span>
-                            <span class="date-button">{{date_info[2][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[3][1]}}">
-                            <span class="date-button day-week">ЧТ</span>
-                            <span class="date-button">{{date_info[3][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[4][1]}}">
-                            <span class="date-button day-week">ПН</span>
-                            <span class="date-button">{{date_info[4][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[5][1]}}">
-                            <span class="date-button day-week">СБ</span>
-                            <span class="date-button">{{date_info[5][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary {{date_info[6][1]}}">
-                            <span class="date-button day-week">ВС</span>
-                            <span class="date-button">{{date_info[6][0]}}</span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                            </svg>
-                        </button>
-                    </div>
+                    <form action="" method="get">
+                        <div class="btn-group bar" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[0][1]}}" value="2022-07-{{date_info[0][0]}}">
+                                <span class="date-button day-week">ПН</span>
+                                <span class="date-button">{{date_info[0][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[1][1]}}" value="2022-07-{{date_info[1][0]}}">
+                                <span class="date-button day-week">ВТ</span>
+                                <span class="date-button">{{date_info[1][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[2][1]}}" value="2022-07-{{date_info[2][0]}}">
+                                <span class="date-button day-week">СР</span>
+                                <span class="date-button">{{date_info[2][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[3][1]}}" value="2022-07-{{date_info[3][0]}}">
+                                <span class="date-button day-week">ЧТ</span>
+                                <span class="date-button">{{date_info[3][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[4][1]}}" value="2022-07-{{date_info[4][0]}}">
+                                <span class="date-button day-week">ПН</span>
+                                <span class="date-button">{{date_info[4][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary {{date_info[5][1]}}" value="2022-07-{{date_info[5][0]}}">
+                                <span class="date-button day-week">СБ</span>
+                                <span class="date-button">{{date_info[5][0]}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{date_info[6][1]}}" value="2022-07-{{date_info[6][0]}}"   >
+                                <span class="date-button day-week">ВС</span>
+                                <span class="date-button">{{date_info[6][0]}}</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
