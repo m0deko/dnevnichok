@@ -5,8 +5,10 @@ from FDataBase import FDataBase
 from algoritms import *
 from dateGet import *
 
+MAX_CONTENT_LENGTH = 1024 * 1024
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'qwerhjhgfbgtrf12345rf4h1jn3k7'
+app.config['SECRET_KEY'] = 'f0615609b11c2c41a136402df37ad24a31374d5a'
 app.config.from_object(__name__)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))

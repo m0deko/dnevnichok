@@ -54,12 +54,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/marks">
                                 <h5>Успеваемость</h5>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/timetable">
                                 <h5>Расписание</h5>
                             </a>
                         </li>
@@ -89,31 +89,38 @@
                                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                 </svg>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[0][1]}}" value="2022-07-{{date_info[0][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[0][1]}}"
+                                    value="2022-07-{{date_info[0][0]}}">
                                 <span class="date-button day-week">ПН</span>
                                 <span class="date-button">{{date_info[0][0]}}</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[1][1]}}" value="2022-07-{{date_info[1][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[1][1]}}"
+                                    value="2022-07-{{date_info[1][0]}}">
                                 <span class="date-button day-week">ВТ</span>
                                 <span class="date-button">{{date_info[1][0]}}</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[2][1]}}" value="2022-07-{{date_info[2][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[2][1]}}"
+                                    value="2022-07-{{date_info[2][0]}}">
                                 <span class="date-button day-week">СР</span>
                                 <span class="date-button">{{date_info[2][0]}}</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[3][1]}}" value="2022-07-{{date_info[3][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[3][1]}}"
+                                    value="2022-07-{{date_info[3][0]}}">
                                 <span class="date-button day-week">ЧТ</span>
                                 <span class="date-button">{{date_info[3][0]}}</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[4][1]}}" value="2022-07-{{date_info[4][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[4][1]}}"
+                                    value="2022-07-{{date_info[4][0]}}">
                                 <span class="date-button day-week">ПН</span>
                                 <span class="date-button">{{date_info[4][0]}}</span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[5][1]}}" value="2022-07-{{date_info[5][0]}}">
+                            <button type="button" class="btn btn-outline-primary {{date_info[5][1]}}"
+                                    value="2022-07-{{date_info[5][0]}}">
                                 <span class="date-button day-week">СБ</span>
                                 <span class="date-button">{{date_info[5][0]}}</span>
                             </button>
-                            <button type="submit" class="btn btn-outline-primary {{date_info[6][1]}}" value="2022-07-{{date_info[6][0]}}"   >
+                            <button type="submit" class="btn btn-outline-primary {{date_info[6][1]}}"
+                                    value="2022-07-{{date_info[6][0]}}">
                                 <span class="date-button day-week">ВС</span>
                                 <span class="date-button">{{date_info[6][0]}}</span>
                             </button>
@@ -197,31 +204,29 @@
             </div>
             <div class="modal-body">
                 <div class="profile-modal">
-                    <div class="avatar-change">
-                        <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
-                        <button class="text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                 class="bi bi-file-plus-fill" viewBox="0 0 16 16">
-                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="mb-3">
-                        <p>ФИО:</p>
-                        <p>Стерлягов Сергей Дмитриевич</p>
-                    </div>
-                    <hr>
-                    <div>
-                        <p>Логин: MasSter</p>
-                    </div>
-                    <hr>
-                    <div class="">
-                        <p>Пароль: ***********</p>
-                    </div>
-                    <hr>
-                    <div class="">
-                        <p>Почта: sterlygovs@gmail.com</p>
-                    </div>
+                    <form action="/">
+                        <div class="avatar-change">
+                            <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
+                            <input type="file" name="file">
+                            <input type="submit" value="Загрузить">
+                        </div>
+                        <div class="mb-3">
+                            <p>ФИО:</p>
+                            <p>Стерлягов Сергей Дмитриевич</p>
+                        </div>
+                        <hr>
+                        <div>
+                            <p>Логин: MasSter</p>
+                        </div>
+                        <hr>
+                        <div class="">
+                            <p>Пароль: ***********</p>
+                        </div>
+                        <hr>
+                        <div class="">
+                            <p>Почта: sterlygovs@gmail.com</p>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">

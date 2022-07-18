@@ -1,5 +1,10 @@
 from configurations import *
 
+@app.before_request
+def before_request():
+    global dbase
+    db = get_db()
+    dbase = FDataBase(db)
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
@@ -29,8 +34,6 @@ def login():
     #
     #             return redirect(url_for('start_page'))
     if request.method == 'POST':
-        db = get_db()
-        dbase = FDataBase(db)
         print(dbase.getAccess(request.form['identification'], request.form['password']))
         if dbase.getAccess(request.form['identification'], request.form['password']) == 1:
             print(1)
@@ -42,8 +45,6 @@ def login():
 @app.route('/register/', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
-        db = get_db()
-        dbase = FDataBase(db)
         dbase.addStudent(request.form['username'], request.form['password'], request.form['email'],
                          request.form['surname'], request.form['name'], request.form['name'],
                          request.form['second_name'], request.form['school'], request.form['grade'])
@@ -53,8 +54,6 @@ def register():
 
 @app.route('/marks', methods=['GET', 'POST'])
 def marks():
-    db = get_db()
-    dbase = FDataBase(db)
     with open('timetable.json', encoding='utf-8') as f:
         all_lessons = json.load(f)['class_id']['1']['all_lessons']
     student_mark = []
@@ -95,4 +94,4 @@ def logout():
     #     session.pop('lesson')
     # session.pop('username')
     # session.pop('id')
-    return redirect(url_for('logout'))
+    return redirect(url_for('login'))
