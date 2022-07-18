@@ -4,6 +4,67 @@
     border-radius: 10px 10px 10px 10px;
 }
 
+.tip
+{
+ position: relative;
+ width: 50px;
+ height: 50px;
+ cursor: pointer;
+}
+
+.tip::after
+{
+ content: attr(data-text);
+ position: absolute;
+ top: -5%;
+ left: -20%;
+ font-size: 10px;
+ background-color: #333333;
+ padding: 10px;
+ border-radius: 10px;
+ border: solid #FFFFFF 2px;
+ color: #FFFFFF;
+ opacity: 0;
+ visibility: hidden;
+}
+
+.tip:hover::after
+{
+ opacity: 1;
+ visibility: visible;
+}
+
+.modal
+{
+  width: 350px;
+  padding: 5px;
+  position: fixed;
+  top: 12%;
+  left: 40%;
+  background-color: #333333;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.cross
+{
+ position: absolute;
+ left: 94%;
+ top: 3%;
+ padding 20px;
+ border: solid #FFFFFF 2px;
+ border-radius: 3px;
+
+}
+
+.sub
+{
+ height: 15px;
+ text-align:center;
+ font-size: 15px;
+ margin-top: 2px;
+ color: #FFFFFF;
+}
 
 .mark_in {
     margin-top: 40px;
@@ -12,6 +73,77 @@
     margin-left: auto;
     margin-right: auto;
     height: 300px;
+}
+
+.modal_les
+{
+  width: 350px;
+  padding: 5px;
+  position: fixed;
+  top: 12%;
+  left: 40%;
+  background-color: #333333;
+  border-radius: 10px;
+  visibility: visible;
+}
+
+.mod_body
+{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.mod_body_m
+{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  visibility: hidden;
+}
+
+.txt
+{
+ font-size: 15px;
+ text-align: left;
+ margin: 3px;
+ color: #FFFFFF;
+}
+
+.break
+{
+ color: #FFFFFF;
+ background-color: #FFFFFF;
+ border: solid 1px #FFFFFF;
+ border-radius: 2px;
+}
+
+.l_mark {
+    position: relative;
+    list-style-type: none;
+    float: left;
+    font-size: 45px;
+    margin-right: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-style: solid;
+    width: 50px;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 10px 10px 10px 10px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.l_mark_area
+{
+  width: 100%;
+  height: 75px;
 }
 
 .mark_in ul {
@@ -23,12 +155,13 @@
 
 }
 .mark_in li {
+    position: relative;
     list-style-type: none;
     float: left;
     font-size: 45px;
     margin-right: 10px;
     margin-left: 20px;
-    border-color: #0000CC;
+    margin-top: 10px;
     border-style: solid;
     width: 50px;
     border-width: 1px 1px 1px 1px;
