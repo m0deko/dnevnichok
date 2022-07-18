@@ -33,11 +33,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-
                             <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
                                 <img src="../static/css/images/puding.jpg" alt="" class="avatar-img">
                             </div>
-
                         </li>
                     </ul>
                 </div>
@@ -49,7 +47,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/homework">
                                 <h5>Домашняя работа</h5>
                             </a>
                         </li>
@@ -59,7 +57,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/timetable">
+                            <a class="nav-link" href="/lessons">
                                 <h5>Расписание</h5>
                             </a>
                         </li>
@@ -172,7 +170,6 @@
                 <a href="#"><i class="icon-facebook"></i></a>
                 <a href="#"><i class="icon-github-circled"></i></a>
                 <a href="#"><i class="icon-youtube-play"></i></a>
-
             </div>
         </div>
     </div>
@@ -205,18 +202,18 @@
             <div class="modal-body">
                 <div class="profile-modal">
                     <form action="/">
-                        <div class="avatar-change">
+                        <div class="avatar-change mb-3">
                             <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
                             <input type="file" name="file">
                             <input type="submit" value="Загрузить">
                         </div>
                         <div class="mb-3">
                             <p>ФИО:</p>
-                            <p>Стерлягов Сергей Дмитриевич</p>
+                            <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
                         </div>
                         <hr>
                         <div>
-                            <p>Логин: MasSter</p>
+                            <p>Логин: {{data[0]}}</p>
                         </div>
                         <hr>
                         <div class="">
@@ -224,7 +221,7 @@
                         </div>
                         <hr>
                         <div class="">
-                            <p>Почта: sterlygovs@gmail.com</p>
+                            <p>Почта: {{ data[1] }}</p>
                         </div>
                     </form>
                 </div>
@@ -233,7 +230,8 @@
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <button class="btn btn-danger">Выйти</button>
+                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
+                            <a class="btn btn-danger" href="/logout">Выйти</a>
                         </div>
                     </div>
                 </div>

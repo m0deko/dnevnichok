@@ -40,32 +40,8 @@ class FDataBase:
                     result.append(row[0])
                 print(row[0])
             return result
-
         except Exception as ex:
             print(ex)
-    # def getID(self, username):
-    #     try:
-    #         self.__cur.execute(f'''SELECT id FROM maintable WHERE username = "{username}"''')
-    #         res = self.__cur.fetchall()
-    #         result = []
-    #         for x in range(len(res)):
-    #             result += res[x]
-    #             print(result)
-    #         return res[0]
-    #     except Exception as ex:
-    #         print('Ошибка чтения бд', ex)
-    #     return []
-    #
-    # def getMark(self, les, cur_id):
-    #     try:
-    #         self.__cur.execute(f'''SELECT mark FROM marks WHERE id = {cur_id} AND lesson = "{les}"''')
-    #         res = self.__cur.fetchall()
-    #         result = []
-    #         for x in range(len(res)):
-    #             result += res[x]
-    #         return result
-    #     except Exception as ex:
-    #         return []
     def getGroupID(self, school, grade):
         try:
             self.__cur.execute(f'''SELECT ROWID FROM schoolGrade WHERE school = "{school}" AND grade = "{grade}"''')
@@ -80,6 +56,14 @@ class FDataBase:
                 return [x for x in preres][0]
         except Exception as ex:
             print(ex)
+    def getData(self, user_id):
+        try:
+            self.__cur.execute(f'''SELECT username, email, surname, name, second_name, city, group_id FROM user_data WHERE ROWID = "{user_id}"''')
+            preres = self.__cur.fetchone()
+            return [x for x in preres]
+        except Exception as ex:
+            print(ex)
+            return None
     def addStudent(self, username, password, email, surname, name, second_name, city, school, grade):
         try:
             group_id = self.getGroupID(school, grade)
@@ -93,13 +77,13 @@ class FDataBase:
             print(ex)
     def getAccess(self, identify, password):
         try:
-            self.__cur.execute(f'''SELECT key, salt FROM user_data WHERE username = "{identify}" OR email = "{identify}"''')
+            self.__cur.execute(f'''SELECT ROWID, key, salt FROM user_data WHERE username = "{identify}" OR email = "{identify}"''')
             preres = self.__cur.fetchone()
-            key = [x for x in preres][0]
-            user_salt = [x for x in preres][1]
+            key = [x for x in preres][1]
+            user_salt = [x for x in preres][2]
             new_key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), user_salt, 100000, dklen=128)
             if key == new_key:
-                return 1
+                return [x for x in preres][0]
             return 0
         except Exception as ex:
             print(ex)

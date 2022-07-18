@@ -1,6 +1,7 @@
 import datetime
 
 today_num = datetime.datetime.today().day
+today_string = str(datetime.datetime.today()).split()[0]
 datetime.datetime(2021, 3, 23, 23, 24, 55, 123456)
 week_num = datetime.datetime.today().weekday()
 week_string = ''

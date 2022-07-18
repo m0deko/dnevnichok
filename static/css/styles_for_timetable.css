@@ -17,6 +17,10 @@ img {
 }
 
 /*===========================header==============================*/
+.avatar:hover {
+    cursor: pointer;
+}
+
 nav {
     background-color: #ffffff;
     height: 60px;
@@ -65,7 +69,7 @@ header {
 header {
     margin-bottom: 50px;
 }
-header .container-fluid {
+.container-fluid {
     height: 60px;
 }
 .avatar-img {
@@ -77,7 +81,6 @@ header .container-fluid {
     border-radius: 50%;
     border: 1px solid black;
 }
-
 /*==================================timetable=================================*/
 section.timetable .timetable-week {
     margin-bottom: 30px;
