@@ -15,19 +15,14 @@ a {
     text-decoration: none;
 }
 
-/*===========================login===================================*/
+/*===========================register===================================*/
 
-section.login-form {
-    position: relative;
-    top: 100px;
-}
-
-.login-window {
+.register-window {
     background-color: #fff;
     border-radius: 10px;
 }
 
-.login-input {
+.register-input {
     background: none;
     border: none;
     border-bottom: 1px solid black;
@@ -41,12 +36,7 @@ section.login-form {
     flex-direction: column;
 }
 
-.form-check-input:checked {
-    background-color: #000000;
-    border-color: #000000;
-}
-
-.login-button {
+.register-button {
     width: 40%;
     border-radius: 20px;
     color: #000;
@@ -55,9 +45,11 @@ section.login-form {
     background: -moz-linear-gradient(135deg, rgb(255, 255, 255), rgb(51, 62, 62));
     background: linear-gradient(135deg, rgb(255, 255, 255), rgb(51, 62, 62));
 }
-
-.forgot-pas {
-    color: #000000;
+.register-button a {
+    color: #000;
+}
+.register-button a:hover {
+    color: #000;
 }
 
 .choosing {
@@ -96,10 +88,18 @@ section.login-form {
 }
 
 hr {
-    color: #000;
+    color: #fff;
 }
 
 .bottom-choosing:not([size]) {
     height: 1px;
     width: 90%;
+}
+
+/*error*/
+
+p.error_label {
+    margin-top: 5px;
+    background-color: #cc0000;
+    color: #000;
 }

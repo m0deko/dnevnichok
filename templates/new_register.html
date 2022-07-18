@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+
+    <link rel="icon" type="image/png" sizes="96x96" href="../static/css/images/favicon-96x96.png">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles_for_newregister.css">
+</head>
+<body>
+
+<section class="register-form">
+    <form action="/register" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4 col-sm-8 offset-sm-2 register-window">
+                    <div class="choosing">
+                        <div class="login text-center">
+                            <a href="/login" class="choosing-btn">Вход</a>
+                            <hr class="bottom-choosing d-none">
+                        </div>
+                        <div class="register text-center">
+                            <a href="#" class="choosing-btn">Регистрация</a>
+                            <hr class="bottom-choosing">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="surname_form" class="login-label">
+                            Фамилия
+                        </label>
+                        <input name="surname" onblur=check_surname() type="text" id="surname_form" class="register-input" value="">
+                        <p id="_surname" class="text-center error_label"></p>
+                    </div>
+                    <div class="mb-2">
+                        <label for="name_form" class="register-label">
+                            Имя
+                        </label>
+                        <input name="name" onblur=check_name() type="text" id="name_form" class="register-input" value="">
+                        <p id="_name" class="text-center error_label"></p>
+                    </div>
+                    <div class="mb-2">
+                        <label for="second_name_form" class="register-label">
+                            Отчество
+                        </label>
+                        <input name="second_name" onblur=check_second_name() type="text" id="second_name_form" class="register-input" value="">
+                        <p id="_second_name" class="text-center error_label"></p>
+                    </div>
+                    <div class="mb-2">
+                        <label for="username_form" class="register-label">
+                            Логин
+                        </label>
+                        <input name="username" type="text" id="username_form" class="register-input" value="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="email_form" class="register-label">
+                            Почта
+                        </label>
+                        <input name="email" type="text" id="email_form" class="register-input" value="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="password_form" class="register-label">
+                            Пароль
+                        </label>
+                        <input name="password" type="password" class="register-input" id="password_form" value="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="password_repeat_form" class="register-label">
+                            Повторите пароль
+                        </label>
+                        <input name="password_repeat" onblur=check_psw() type="password" class="register-input" id="password_repeat_form" value="">
+                        <p id="_password" class="text-center error_label"></p>
+                    </div>
+                    <div class="mb-2">
+                        <label for="city_form" class="register-label">
+                            Город
+                        </label>
+                        <input name="city" type="text" class="register-input" id="city_form" value="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="school_form" class="register-label">
+                            Школа
+                        </label>
+                        <input name="school" type="text" class="register-input" id="school_form" value="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="class_form" class="register-label">
+                            Класс
+                        </label>
+                        <input name="grade" type="text" class="register-input" id="class_form" value="">
+                    </div>
+                    <div class="mb-4 text-center">
+                        <button class="register-button" type="submit">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<script src="../js/register.js"></script>
+<script src="../static/css/bootstrap.bundle.min.js"></script>
+</body>
+</html>
