@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/homework">
+                            <a class="nav-link" href="#">
                                 <h5>Домашняя работа</h5>
                             </a>
                         </li>
@@ -85,7 +85,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/lessons">
+                            <a class="nav-link" href="#">
                                 <h5>Расписание</h5>
                             </a>
                         </li>
@@ -121,7 +121,20 @@
             </div>
         </div>
     </section>
-
+    <div id = "l_info" class="mod_body">
+                    <a class = "mod_body" onclick="hide_l()"></a>
+                    <div id = "l_info_cont" class = "modal_les">
+                       <svg class = "cross" onclick="hide_l()" width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="10" x2="10" y2="0" stroke-width="2" stroke="white"/><line x1="0" y1="0" x2="10" y2="10" stroke-width="2" stroke="white"/></svg>
+                       <p class = "txt">Тема урока: десятичные дроби</p>
+                       <hr class = "break">
+                       <p class="txt">Оценки за урок:</p>
+                       <ul class = "l_mark_area">
+                             <li class = "l_mark" class = "tip" data-text = "контрольная работа 11.03.2022">5{{l_mark}}</li>
+                       </ul>
+                       <hr class = "break">
+                       <p class="txt">Домашнее задание: прочитать параграф 11 и выполнить номера 123, 125, 126, 127, 130(а, в, д){{hometask}}</p>
+                    </div>
+                    </div>
     <section class="marks">
         <div class="container">
             {% for x in range(all_les|length()) %}
@@ -162,8 +175,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="markModalLabel{{x}}">Оценки за первую четверть по предмету:
-                    {{all_marks[x][0]}}</h5>
+                <h5 class="modal-title" id="markModalLabel{{x}}">Оценки за первую четверть по предмету: {{all_marks[x][0]}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
@@ -193,18 +205,22 @@
             </div>
             <div class="modal-body">
                 <div class="profile-modal">
-                    <div class="avatar-change mb-3">
+                    <div class="avatar-change">
                         <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
-                        <input type="file" name="file">
-                        <input type="submit" value="Загрузить">
+                        <button class="text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                 class="bi bi-file-plus-fill" viewBox="0 0 16 16">
+                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                        </button>
                     </div>
                     <div class="mb-3">
                         <p>ФИО:</p>
-                        <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
+                        <p>Стерлягов Сергей Дмитриевич</p>
                     </div>
                     <hr>
                     <div>
-                        <p>Логин: {{data[0]}}</p>
+                        <p>Логин: MasSter</p>
                     </div>
                     <hr>
                     <div class="">
@@ -212,7 +228,7 @@
                     </div>
                     <hr>
                     <div class="">
-                        <p>Почта: {{ data[1] }}</p>
+                        <p>Почта: sterlygovs@gmail.com</p>
                     </div>
                 </div>
             </div>
@@ -220,10 +236,10 @@
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
-                            <a class="btn btn-danger" href="/logout">Выйти</a>
+                            <button class="btn btn-danger">Выйти</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
