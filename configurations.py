@@ -10,7 +10,7 @@ MAX_CONTENT_LENGTH = 1024 * 1024
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'f0615609b11c2c41a136402df37ad24a31374d5a'
 app.config.from_object(__name__)
-app.permanent_session_lifetime = datetime.timedelta(hours=1)
+app.permanent_session_lifetime = datetime.timedelta(hours=4)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
 

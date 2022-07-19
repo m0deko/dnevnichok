@@ -12,6 +12,10 @@ def login():
         if request.method == 'POST':
             session['user_id'] = dbase.getAccess(request.form['identification'], request.form['password'])
             if session['user_id']:
+                if 'sessionCheckbox' in request.form:
+                    session.permanent = True
+                else:
+                    session.permanent = False
                 session['logged'] = True
                 session['data'] = dbase.getData(session['user_id'])
                 session['group_id'] = str(session['data'][6])
