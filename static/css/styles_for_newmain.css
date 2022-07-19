@@ -1,6 +1,7 @@
 html {
     height: 100%;
 }
+
 body {
     height: 100%;
     margin: 0;
@@ -40,15 +41,15 @@ header {
     margin-right: 30px;
 }
 
-.avatar {
-    border-radius: 50%;
-    height: 60px;
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
-}
+/*.avatar {*/
+/*    border-radius: 50%;*/
+/*    height: 60px;*/
+/*    width: 60px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin-left: 20px;*/
+/*}*/
 
 .navbar .container-fluid svg {
     position: relative;
@@ -70,27 +71,32 @@ header {
 header {
     margin-bottom: 50px;
 }
+
 .container-fluid {
     height: 60px;
 }
+
 .avatar-img {
     position: relative;
     right: -15px;
+    background-position: center center;
+    background-size: cover;
     width: 60px;
     height: 60px;
     margin: 0;
     border-radius: 50%;
-    border: 1px solid black;
 }
-/*=================================date-bar======================================*/
-
 .bell {
     color: #999;
 }
+
 .bell:hover {
     color: #444;
     cursor: pointer;
 }
+
+
+/*=================================date-bar======================================*/
 
 .date_bar {
     background-color: #dddddd;
@@ -107,11 +113,13 @@ header {
 .wrap .date_bar .container .day-week {
     margin-right: 2px;
 }
+
 .wrap .date_bar .container button {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .wrap .date_bar .container .second-col {
     display: flex;
     align-items: center;
@@ -128,6 +136,7 @@ header {
     justify-content: center;
     flex-direction: column;
 }
+
 .calendar p {
     margin: 3px;
 }
@@ -145,7 +154,7 @@ section.date_bar {
     background-color: #cccccc;
 }
 
-.lessons .lesson-table .row{
+.lessons .lesson-table .row {
     display: flex;
     justify-content: space-between;
 }
@@ -168,6 +177,7 @@ section.lessons .lesson-table .lessons-menu .lesson-info {
     margin-bottom: 20px;
     border-radius: 5px;
 }
+
 section.lessons .lesson-table .lessons-menu .lesson-info:hover {
     cursor: pointer;
 }
@@ -219,9 +229,11 @@ footer .row a i {
     .navbar .container-fluid ul.collapse-left li {
         margin-right: 0;
     }
+
     .container-fluid {
         z-index: 9;
     }
+
     .inactive {
         display: none !important;
     }
@@ -237,6 +249,7 @@ footer .row a i {
         align-items: center;
         margin-bottom: 20px;
     }
+
     .container-fluid {
         height: 76px;
     }
@@ -248,6 +261,7 @@ footer .row a i {
         border-radius: 20px;
         padding-bottom: 0;
     }
+
     .navbar .container-fluid .active h5 {
         position: relative;
         top: -3px;
@@ -286,37 +300,41 @@ footer .row a i {
     width: 48px;
 }
 
-.cross
-{
- position: absolute;
- left: 94%;
- top: 3%;
- padding: 20px;
- border: solid #FFFFFF 2px;
- border-radius: 3px;
+.profile-avatar {
+    background-position: center center;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
 }
 
-.modal_les
-{
-  width: 350px;
-  padding: 5px;
-  position: fixed;
-  top: 12%;
-  left: 40%;
-  background-color: #333333;
-  border-radius: 10px;
-  visibility: hidden;
+.cross {
+    position: absolute;
+    left: 94%;
+    top: 3%;
+    padding: 20px;
+    border: solid #FFFFFF 2px;
+    border-radius: 3px;
 }
 
-.mod_body
-{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.25);
-  visibility: hidden;
+.modal_les {
+    width: 350px;
+    padding: 5px;
+    position: fixed;
+    top: 12%;
+    left: 40%;
+    background-color: #333333;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+.mod_body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    visibility: hidden;
 }
 
 .l_mark {
@@ -335,28 +353,25 @@ footer .row a i {
     background-color: white;
 }
 
-.l_mark_area
-{
-  width: 100%;
-  height: 75px;
+.l_mark_area {
+    width: 100%;
+    height: 75px;
 }
 
-.txt
-{
- font-size: 15px;
- text-align: left;
- margin: 3px;
- color: #FFFFFF;
+.txt {
+    font-size: 15px;
+    text-align: left;
+    margin: 3px;
+    color: #FFFFFF;
 }
 
-.break
-{
- color: #FFFFFF;
- background-color: #FFFFFF;
- border: solid 1px #FFFFFF;
- border-radius: 2px;
+.break {
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+    border: solid 1px #FFFFFF;
+    border-radius: 2px;
 }
 
 .custom-tooltip {
-  --bs-tooltip-bg: var(--bs-primary);
+    --bs-tooltip-bg: var(--bs-primary);
 }

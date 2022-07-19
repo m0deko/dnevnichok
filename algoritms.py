@@ -11,3 +11,9 @@ def middle_marks(stud_marks):
         except Exception as ex:
             print(ex)
     return sred_marks
+
+def png_check(filename):
+    ext = filename.rsplit('.', 1)[1]
+    if ext == "png" or ext == "PNG":
+        return True
+    return False
