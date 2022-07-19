@@ -77,8 +77,34 @@ def homework():
         homework = json.load(f)['class_id'][session['group_id']]['homework']
     return render_template("homework.html", data=session['data'], homework=homework)
 
+@app.route('/userava')
+def userava():
+    if ('logged' not in session) or (not session['logged']):
+        return redirect(url_for('login'))
+
+    img = dbase.getAvatar(session['user_id'], app)
+    if not img:
+        return ""
+    h = make_response(img)
+    h.headers['Content-Type'] = 'image/png'
+    return h
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            try:
+                img = file.read()
+                dbase.updateAvatar(img, session['user_id'])
+            except Exception as ex:
+                print(ex)
+    return redirect(url_for('mainpage'))
+
 @app.route('/logout')
 def logout():
+    if ('logged' not in session) or (not session['logged']):
+        return redirect(url_for('login'))
     session['logged'] = False
     session['user_id'] = None
     session['data'] = None
