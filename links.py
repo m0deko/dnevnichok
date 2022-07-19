@@ -109,9 +109,7 @@ def upload():
 
 @app.route('/logout')
 def logout():
-    if ('logged' not in session) or (not session['logged']):
-        return redirect(url_for('login'))
-    session['logged'] = False
-    session['user_id'] = None
-    session['data'] = None
+    session.pop('logged')
+    session.pop('user_id')
+    session.pop('data')
     return redirect(url_for('login'))
