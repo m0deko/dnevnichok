@@ -68,7 +68,7 @@ class FDataBase:
         try:
             group_id = self.getGroupID(school, grade)
             key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000, dklen=128)
-            self.__cur.execute('''INSERT into user_data(group_id, username, key, salt, email, surname, name, second_name, city, law) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (group_id, username, key, salt, email, surname, name, second_name, city, 0))
+            self.__cur.execute('''INSERT into user_data(group_id, username, key, salt, email, surname, name, second_name, city, law, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)''', (group_id, username, key, salt, email, surname, name, second_name, city, 0))
             self.__db.commit()
             print('successful')
             # self.__cur.execute(f'''INSERT into users_data()

@@ -1,32 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <script>
-        function show()
-        {
-          document.getElementById("content").style.visibility = "visible";
-          document.getElementById("m_info").style.visibility = "visible";
-          document.body.style.overflow = "hidden";
-        }
-        function hide()
-        {
-          document.getElementById("content").style.visibility = "hidden";
-          document.getElementById("m_info").style.visibility = "hidden";
-          document.body.style.overflow = "";
-        }
-        function show_l()
-        {
-          document.getElementById("l_info").style.visibility = "visible";
-          document.getElementById("l_info_cont").style.visibility = "visible";
-          document.body.style.overflow = "hidden";
-        }
-        function hide_l()
-        {
-          document.getElementById("l_info").style.visibility = "hidden";
-          document.getElementById("l_info_cont").style.visibility = "hidden";
-          document.body.style.overflow = "";
-        }
-    </script>
     <meta charset="UTF-8">
     <title>ЭЖД</title>
     <link rel="icon" type="image/png" sizes="96x96" href="../static/css/images/favicon-96x96.png">
@@ -75,12 +49,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/homework">
+                            <a class="nav-link" href="#">
                                 <h5>Домашняя работа</h5>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active disabled" href="#">
+                            <a class="nav-link active disabled" href="/marks">
                                 <h5>Успеваемость</h5>
                             </a>
                         </li>
@@ -121,7 +95,6 @@
             </div>
         </div>
     </section>
-
     <section class="marks">
         <div class="container">
             {% for x in range(all_les|length()) %}
@@ -193,18 +166,22 @@
             </div>
             <div class="modal-body">
                 <div class="profile-modal">
-                    <div class="avatar-change mb-3">
+                    <div class="avatar-change">
                         <img src="../static/css/images/puding.jpg" alt="" class="profile-avatar">
-                        <input type="file" name="file">
-                        <input type="submit" value="Загрузить">
+                        <button class="text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                 class="bi bi-file-plus-fill" viewBox="0 0 16 16">
+                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                        </button>
                     </div>
                     <div class="mb-3">
                         <p>ФИО:</p>
-                        <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
+                        <p>Стерлягов Сергей Дмитриевич</p>
                     </div>
                     <hr>
                     <div>
-                        <p>Логин: {{data[0]}}</p>
+                        <p>Логин: MasSter</p>
                     </div>
                     <hr>
                     <div class="">
@@ -212,7 +189,7 @@
                     </div>
                     <hr>
                     <div class="">
-                        <p>Почта: {{ data[1] }}</p>
+                        <p>Почта: sterlygovs@gmail.com</p>
                     </div>
                 </div>
             </div>
@@ -220,15 +197,16 @@
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
-                            <a class="btn btn-danger" href="/logout">Выйти</a>
+                            <button class="btn btn-danger">Выйти</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script src="../static/js/bootstrap.bundle.min.js"></script>
+<script src="../static/js/markpage.js"></script>
 </body>
 </html>
