@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/css/fontello.css">
 </head>
 
-<body style='overflow-x:hidden; overflow-y:hidden;'>
+<body style='overflow-x:hidden;'>
 <div class="wrap">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -91,9 +91,9 @@
                                     <div class="col-3 text-center accordion-files">
                                         <h5>Приложенные файлы</h5>
                                         {% for z in homework[x][1][y][1]%}
-                                        <button class="btn btn-primary">
+                                        <a download href="../static/txt_files/{{z}}" class="btn btn-primary">
                                             {{z}}
-                                        </button>
+                                        </a>
                                         {% endfor %}
                                     </div>
                                 </div>
