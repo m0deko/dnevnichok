@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/fontello.css">
 </head>
-<body class="modal_open">
+<body style='overflow-x:hidden; overflow-y:hidden;'>
 
 <div class="wrap">
     <header>
@@ -24,8 +24,8 @@
                 </div>
                 <div class="notCollapseSecond order-lg-1">
                     <ul class="navbar-nav right-nav">
-                        <li class="nav-item bell">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item">
+                            <a href="#" class="bell">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="32" fill="currentColor"
                                      class="bi bi-bell-fill" viewBox="0 0 16 16">
                                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
@@ -33,11 +33,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                    <img src="../static/images/puding.jpg" alt="" class="avatar-img">
-                                </div>
-                            </a>
+                            <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                <img src="{{url_for('userava')}}" alt="" class="avatar-img">
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -166,22 +164,21 @@
             </div>
             <div class="modal-body">
                 <div class="profile-modal">
-                    <div class="avatar-change">
-                        <img src="../static/images/puding.jpg" alt="" class="profile-avatar">
-                        <button class="text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                 class="bi bi-file-plus-fill" viewBox="0 0 16 16">
-                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
-                            </svg>
-                        </button>
+                    <div class="avatar-change mb-3 text-center">
+                        <img src="{{url_for('userava')}}" alt="" class="profile-avatar">
+                        <form action="{{url_for('upload')}}" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file">
+                            <input type="submit" value="Загрузить">
+                        </form>
                     </div>
+
                     <div class="mb-3">
                         <p>ФИО:</p>
-                        <p>Стерлягов Сергей Дмитриевич</p>
+                        <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
                     </div>
                     <hr>
                     <div>
-                        <p>Логин: MasSter</p>
+                        <p>Логин: {{data[0]}}</p>
                     </div>
                     <hr>
                     <div class="">
@@ -189,18 +186,19 @@
                     </div>
                     <hr>
                     <div class="">
-                        <p>Почта: sterlygovs@gmail.com</p>
+                        <p>Почта: {{ data[1] }}</p>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <button class="btn btn-danger">Выйти</button>
+                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
+                            <a class="btn btn-danger" href="/logout">Выйти</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

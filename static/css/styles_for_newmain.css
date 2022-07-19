@@ -85,11 +85,7 @@ header {
     height: 60px;
     margin: 0;
     border-radius: 50%;
-    border: 1px solid black;
 }
-
-/*=================================date-bar======================================*/
-
 .bell {
     color: #999;
 }
@@ -98,6 +94,9 @@ header {
     color: #444;
     cursor: pointer;
 }
+
+
+/*=================================date-bar======================================*/
 
 .date_bar {
     background-color: #dddddd;

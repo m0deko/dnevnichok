@@ -5,6 +5,8 @@ def before_request():
     global dbase
     db = get_db()
     dbase = FDataBase(db)
+    global cur_page
+    cur_page = ''
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,6 +41,7 @@ def register():
 def mainpage():
     if ('logged' not in session) or (not session['logged']):
         return redirect(url_for('login'))
+    session['cur_page'] = 'mainpage'
     if request.method == "GET":
         print(1)
     with open('dnevnik.json', encoding='utf-8') as f:
@@ -50,6 +53,7 @@ def mainpage():
 def marks():
     if ('logged' not in session) or (not session['logged']):
         return redirect(url_for('login'))
+    session['cur_page'] = 'marks'
     with open('dnevnik.json', encoding='utf-8') as f:
         all_lessons = json.load(f)['class_id'][session['group_id']]['all_lessons']
     student_mark = []
@@ -64,6 +68,7 @@ def marks():
 def lessons():
     if ('logged' not in session) or (not session['logged']):
         return redirect(url_for('login'))
+    session['cur_page'] = 'lessons'
     with open('dnevnik.json', encoding='utf-8') as f:
         timetable = json.load(f)['class_id'][session['group_id']]['timetable']
 
@@ -73,6 +78,7 @@ def lessons():
 def homework():
     if ('logged' not in session) or (not session['logged']):
         return redirect(url_for('login'))
+    session['cur_page'] = 'homework'
     with open('dnevnik.json', encoding='utf-8') as f:
         homework = json.load(f)['class_id'][session['group_id']]['homework']
     return render_template("homework.html", data=session['data'], homework=homework)
@@ -93,13 +99,13 @@ def userava():
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        if file:
+        if file and png_check(file.filename):
             try:
                 img = file.read()
                 dbase.updateAvatar(img, session['user_id'])
             except Exception as ex:
                 print(ex)
-    return redirect(url_for('mainpage'))
+    return redirect(url_for(session['cur_page']))
 
 @app.route('/logout')
 def logout():

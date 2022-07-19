@@ -1,6 +1,7 @@
 html {
     height: 100%;
 }
+
 body {
     height: 100%;
     margin: 0;
@@ -15,6 +16,7 @@ img {
     max-width: 100%;
     height: auto;
 }
+
 
 /*===========================header==============================*/
 .avatar:hover {
@@ -39,15 +41,15 @@ header {
     margin-right: 30px;
 }
 
-.avatar {
-    border-radius: 50%;
-    height: 60px;
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
-}
+/*.avatar {*/
+/*    border-radius: 50%;*/
+/*    height: 60px;*/
+/*    width: 60px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin-left: 20px;*/
+/*}*/
 
 .navbar .container-fluid svg {
     position: relative;
@@ -69,18 +71,30 @@ header {
 header {
     margin-bottom: 50px;
 }
+
 .container-fluid {
     height: 60px;
 }
+
 .avatar-img {
     position: relative;
     right: -15px;
+    background-position: center center;
+    background-size: cover;
     width: 60px;
     height: 60px;
     margin: 0;
     border-radius: 50%;
-    border: 1px solid black;
 }
+.bell {
+    color: #999;
+}
+
+.bell:hover {
+    color: #444;
+    cursor: pointer;
+}
+
 /*================================homework====================================*/
 .accordion-text, .accordion-files {
     background-color: #ccc;
