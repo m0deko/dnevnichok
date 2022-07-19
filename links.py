@@ -10,7 +10,7 @@ def before_request():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         if request.method == 'POST':
             session['user_id'] = dbase.getAccess(request.form['identification'], request.form['password'])
             if session['user_id']:
@@ -39,7 +39,7 @@ def register():
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         return redirect(url_for('login'))
     session['cur_page'] = 'mainpage'
     if request.method == "GET":
@@ -51,7 +51,7 @@ def mainpage():
 
 @app.route('/marks', methods=['GET', 'POST'])
 def marks():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         return redirect(url_for('login'))
     session['cur_page'] = 'marks'
     with open('dnevnik.json', encoding='utf-8') as f:
@@ -66,7 +66,7 @@ def marks():
 
 @app.route('/lessons', methods=['GET', 'POST'])
 def lessons():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         return redirect(url_for('login'))
     session['cur_page'] = 'lessons'
     with open('dnevnik.json', encoding='utf-8') as f:
@@ -76,7 +76,7 @@ def lessons():
 
 @app.route('/homework', methods=['GET', 'POST'])
 def homework():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         return redirect(url_for('login'))
     session['cur_page'] = 'homework'
     with open('dnevnik.json', encoding='utf-8') as f:
@@ -85,9 +85,8 @@ def homework():
 
 @app.route('/userava')
 def userava():
-    if ('logged' not in session) or (not session['logged']):
+    if ('logged' not in session):
         return redirect(url_for('login'))
-
     img = dbase.getAvatar(session['user_id'], app)
     if not img:
         return ""
@@ -109,6 +108,8 @@ def upload():
 
 @app.route('/logout')
 def logout():
+    if 'logged' not in session:
+        return redirect(url_for('login'))
     session.pop('logged')
     session.pop('user_id')
     session.pop('data')
