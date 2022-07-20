@@ -1,9 +1,9 @@
+from flask_sqlalchemy import SQLAlchemy
 from flask import *
-import sqlite3 as sq
 import os
-from FDataBase import FDataBase
-from algoritms import *
+from algoritms import middle_marks, png_check
 from dateGet import *
+from werkzeug.security import generate_password_hash, check_password_hash
 
 MAX_CONTENT_LENGTH = 1024 * 1024
 
@@ -12,34 +12,61 @@ app.config['SECRET_KEY'] = 'f0615609b11c2c41a136402df37ad24a31374d5a'
 app.config.from_object(__name__)
 app.permanent_session_lifetime = datetime.timedelta(hours=4)
 
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dnevnik.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def connect_db():
-    conn = sq.connect(app.config['DATABASE'])
-    conn.row_factory = sq.Row
-    return conn
+db = SQLAlchemy(app)
 
-def create_db():
-    db = connect_db()
-    with app.open_resource('sq_db.sql', mode='r') as f:
-        db.cursor().executescript(f.read())
-    db.commit()
-    db.close()
+class Group_data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    school = db.Column(db.String(50), nullable=False)
+    grade = db.Column(db.String(10), nullable=False)
+    lessons = db.Column(db.LargeBinary)
+    timetable = db.Column(db.LargeBinary, nullable=True)
+    def __repr__(self):
+        return f"<group {self.id}>"
 
-def get_db():
-    if not hasattr(g, 'link_db'):
-        g.link_db = connect_db()
-    return g.link_db
+class User_data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(16), unique=True)
+    email = db.Column(db.String(50), unique=True)
+    psw = db.Column(db.String)
+    surname = db.Column(db.String(30))
+    name = db.Column(db.String(30))
+    patronymic = db.Column(db.String(30))
+    city = db.Column(db.String(30))
+    law = db.Column(db.Integer)
+    avatar = db.Column(db.LargeBinary, default=None)
+    date = db.Column(db.DateTime, default= datetime.datetime.utcnow)
 
+    group_id = db.Column(db.Integer, db.ForeignKey('group_data.id'), default=0)
 
-uroki = {'Понедельник': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
-         'Вторник': {0: '-', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
-         'Среда': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
-         'Четверг': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
-         'Пятница': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика',  3: 'Физ-ра'},
-         'Суббота': {0: 'Русский язык', 1: 'Английский язык', 2: 'Физика', 3: 'Физ-ра'},
-         'Воскресение': ['Уроков нет']
-         }
-times1 = ['9:00-9:40', '9:50-10:30', '10:45:11:25', '11:40-12:20', '12:40-13:20', '13:40-14:20', '14:40-15:20',
-          '15:30-16:10', '16:20-17:00']
+    def __repr__(self):
+        return f"<user {self.id}>"
 
+class Lesson(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    lesson = db.Column(db.String(30), unique=True)
+
+class Mark(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_data.id'))
+    lesson_id = db.Column(db.Integer)
+    mark = db.Column(db.Integer)
+    coefficient = db.Column(db.Integer, default=1)
+    reason = db.Column(db.String(100), default="")
+    date = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+class Homework(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('group_data.id'))
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'))
+    homeworkText = db.Column(db.String(500), default="")
+    homeworkFile = db.Column(db.LargeBinary, nullable=True)
+    date = db.Column(db.DateTime, nullable=False)
+
+class Timetable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('group_data.id'))
+    timetable_file = db.Column(db.LargeBinary, nullable=True)
+    data = db.Column(db.DateTime, nullable=False)

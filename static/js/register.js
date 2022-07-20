@@ -38,19 +38,19 @@ function check_name() {
     }
 }
 
-function check_second_name() {
+function check_patronymic() {
     var x = "АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЫыЪъЭэЮюЯя";
     var k = false;
-    var str = second_name_form.value;
+    var str = patronymic_form.value;
     for (let i = 0; i < str.length; i++) {
         if (x.indexOf(str[i]) == -1) {
             k = true;
         }
     }
     if (k) {
-        _second_name.innerHTML = "Use correct second name";
+        _patronymic.innerHTML = "Use correct second name";
     } else {
-        _second_name.innerHTML = "";
+        _patronymic.innerHTML = "";
     }
 }
 
