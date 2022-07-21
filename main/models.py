@@ -1,21 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask import *
-import os
-from algoritms import middle_marks, png_check
-from dateGet import *
-from werkzeug.security import generate_password_hash, check_password_hash
-
-MAX_CONTENT_LENGTH = 1024 * 1024
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'f0615609b11c2c41a136402df37ad24a31374d5a'
-app.config.from_object(__name__)
-app.permanent_session_lifetime = datetime.timedelta(hours=4)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dnevnik.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
+from database import db
 
 class Group_data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
