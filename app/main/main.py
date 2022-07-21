@@ -1,21 +1,23 @@
 from flask import request, session, redirect, url_for, render_template, Blueprint
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from .models import db
+from ..database import db
+from ..models.user_data import User_data
+from ..models.group_data import Group_data
+from ..models.lesson import Lesson
+from ..models.mark import Mark
+from ..models.timetable import Timetable
+from ..models.homework import Homework
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
-
-@main.route('/')
-def index():
-    print(db.session)
-    return "<h1>Hello</h1>"
 
 # @main.route('/login', methods=['GET', 'POST'])
 # def login():
 #     if ('logged' not in session):
 #         if request.method == 'POST':
 #             cur_id = base.getAccess(request.form['identification'], request.form['password'])
-#             cur_id = db.session.query(User_data).
+#             cur_id = User_data.query
 #             print(cur_id)
 #             if cur_id != None:
 #
@@ -41,35 +43,34 @@ def index():
 #     elif session['logged']:
 #         return redirect(url_for('.mainpage'))
 #     return render_template('login.html')
+
+
+@main.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        try:
+            hash = generate_password_hash(request.form['password'])
+            u = User_data(username=request.form['username'], email=request.form['email'], psw=hash,
+                          surname=request.form['surname'], name=request.form['name'],
+                          patronymic=request.form['patronymic'], city=request.form['city'], law=0)
+            db.session.add(u)
+            db.session.commit()
+        except Exception as ex:
+            db.session.rollback()
+            print(ex)
+    return render_template('main/register.html')
+
 #
-#
-# @app.route('/register/', methods=['POST', 'GET'])
-# def register():
-#     if request.method == 'POST':
-#         try:
-#             hash = generate_password_hash(request.form['password'])
-#             u = User_data(username=request.form['username'], email=request.form['email'], psw=hash,
-#                           surname=request.form['surname'], name=request.form['name'],
-#                           patronymic=request.form['patronymic'], city=request.form['city'], law=0)
-#             db.session.add(u)
-#             db.session.commit()
-#             return redirect(url_for('login'))
-#         except Exception as ex:
-#             db.session.rollback()
-#             print(ex)
-#     return render_template('new_register.html')
-#
-#
-@app.route('/', methods=['GET', 'POST'])
-def mainpage():
-    if ('logged' not in session):
-        return redirect(url_for('login'))
-    session['cur_page'] = 'mainpage'
+# @main.route('/', methods=['GET', 'POST'])
+# def mainpage():
+#     if ('logged' not in session):
+#         return redirect(url_for('login'))
+#     session['cur_page'] = 'mainpage'
     # if request.method == "GET":
     #     print(1)
     # with open('dnevnik.json', encoding='utf-8') as f:
     #     timetable = json.load(f)['class_id'][session['group_id']]['timetable'][week_string]
-    return render_template('new_mainpage.html')
+    # return render_template('new_mainpage.html')
     # return render_template('new_mainpage.html', date_info=date_mas, cur_day_time=timetable, data=session['data'])
 #
 #

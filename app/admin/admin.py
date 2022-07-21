@@ -1,6 +1,4 @@
-from flask import request, session, redirect, url_for, render_template, Blueprint
-
-from database import db
+from flask import render_template, Blueprint
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
