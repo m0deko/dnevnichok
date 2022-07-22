@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>ЭЖД</title>
     <link rel="icon" type="image/png" sizes="96x96" href="../../static/images/favicon-96x96.png">
-    <link rel="stylesheet" type="text/css" href="../../static/css/styles_for_newmain.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/styles_for_main.css">
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../static/css/fontello.css">
 </head>
@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item">
                             <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                <img src="{{url_for('userava')}}" alt="" class="avatar-img">
+                                <img src="{{url_for('.userava')}}" alt="" class="avatar-img">
                             </div>
                         </li>
                     </ul>
@@ -219,8 +219,8 @@
             <div class="modal-body">
                 <div class="profile-modal">
                     <div class="avatar-change mb-3 text-center">
-                        <img src="{{url_for('userava')}}" alt="" class="profile-avatar">
-                        <form action="{{url_for('upload')}}" method="post" enctype="multipart/form-data">
+                        <img src="{{url_for('.userava')}}" alt="" class="profile-avatar">
+                        <form action="{{url_for('.upload')}}" method="post" enctype="multipart/form-data">
                             <input type="file" name="file">
                             <input type="submit" value="Загрузить">
                         </form>
