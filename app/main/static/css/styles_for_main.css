@@ -98,6 +98,11 @@ header {
 
 /*=================================date-bar======================================*/
 
+section.date_bar .second-col form button:hover {
+    background: #eee;
+    color: blue;
+}
+
 .date_bar {
     background-color: #dddddd;
 }

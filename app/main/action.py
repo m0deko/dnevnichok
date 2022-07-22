@@ -1,3 +1,6 @@
+import datetime
+from dateutil.relativedelta import relativedelta
+
 def middle_marks(stud_marks):
     sred_marks = []
     for lesson in stud_marks:
@@ -30,3 +33,34 @@ def png_check(filename):
     if ext == "png" or ext == "PNG":
         return True
     return False
+
+def getDate():
+    return str(datetime.datetime.now())[:10]
+def getActives():
+    now = datetime.datetime.now()
+    active = ["inactive" for x in range(7)]
+    active[datetime.datetime.weekday(now)] = 'active'
+    return active
+def getWeekday(getting_date):
+    date = datetime.datetime(int(getting_date[0:4]), int(getting_date[5:7]), int(getting_date[8:10]))
+    return datetime.datetime.weekday(date)
+def generateWeekMas(getting_date, week_num):
+    date = datetime.datetime(int(getting_date[0:4]), int(getting_date[5:7]), int(getting_date[8:10]))
+    # date = datetime.datetime(2022, 7, 22)
+    res = date - relativedelta(days=week_num)
+    abc = []
+    for x in range(7):
+        preres = res + relativedelta(days=x)
+        string = str(preres)[:10]
+        abc.append(string)
+    return abc
+def minusDate(monday):
+    date = datetime.datetime(int(monday[0:4]), int(monday[5:7]), int(monday[8:10]))
+    date -= relativedelta(days=7)
+    string = str(date)[:10]
+    return string
+def plusDate(monday):
+    date = datetime.datetime(int(monday[0:4]), int(monday[5:7]), int(monday[8:10]))
+    date += relativedelta(days=7)
+    string = str(date)[:10]
+    return string

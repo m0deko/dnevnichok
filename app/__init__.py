@@ -1,6 +1,7 @@
 from flask import Flask
 from .database import db
 from .main.main import main
+from .admin.admin import admin
 
 
 def create_app():
@@ -15,5 +16,6 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(main, url_prefix='/main')
+    app.register_blueprint(admin)
 
     return app

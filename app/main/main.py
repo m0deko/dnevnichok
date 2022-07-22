@@ -9,7 +9,7 @@ from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
 
-from .action import middle_marks, png_check, getAvatar
+from .action import middle_marks, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
@@ -30,6 +30,7 @@ def login():
                         session.permanent = False
                     session['logged'] = 1
                     session['id'] = data.id
+                    session['group_id'] = data.group_id
                     # session['group_id'] = base.getGroupID(session['id'])
 
                     return redirect(url_for('.mainpage'))
@@ -59,13 +60,20 @@ def mainpage():
     if ('logged' not in session):
         return redirect(url_for('.login'))
     session['cur_page'] = 'mainpage'
-    if request.method == "GET":
-        print(1)
     data = User_data.query.filter(User_data.id == session['id']).first()
+    path = request.full_path
+    getting_date = getDate()
+    actives = ['inactive' for x in range(7)]
+    if len(path) > 17:
+        if request.method == "GET":
+            getting_date = path[16:]
+    weekday = getWeekday(getting_date)
+    actives[weekday] = 'active'
+    mas_date = generateWeekMas(getting_date, weekday)
 
     # with open('dnevnik.json', encoding='utf-8') as f:
     #     timetable = json.load(f)['class_id'][session['group_id']]['timetable'][week_string]
-    return render_template('main/mainpage.html', data=data)
+    return render_template('main/mainpage.html', data=data, activate = actives, days=mas_date, left=minusDate(mas_date[0]), right=plusDate(mas_date[0]))
     # return render_template('mainpage.html', date_info=date_mas, cur_day_time=timetable, data=session['data'])
 
 
@@ -142,4 +150,5 @@ def logout():
     session.pop('logged')
     session.pop('id')
     session.pop('cur_page')
+    session.pop('group_id')
     return redirect(url_for('.login'))

@@ -46,17 +46,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/homework">
+                            <a class="nav-link" href="./homework">
                                 <h5>Домашняя работа</h5>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/marks">
+                            <a class="nav-link" href="./marks">
                                 <h5>Успеваемость</h5>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/lessons">
+                            <a class="nav-link" href="./lessons">
                                 <h5>Расписание</h5>
                             </a>
                         </li>
@@ -66,7 +66,74 @@
         </nav>
     </header>
 
-
+    <section class="date_bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 calendar">
+                    <form action="./" method="get">
+                        <p class="text-uppercase text-center">выберите дату</p>
+                        <input type="date" name="calendar" value="2022-09-01"
+                               max="2023-05-28" min="2022-09-01">
+                        <input type="submit" value="Вывести" class="btn btn-primary date-submit">
+                    </form>
+                </div>
+                <div class="col-lg-6 offset-lg-1 second-col">
+                    <form action="./" method="get">
+                        <div class="btn-group bar" role="group" aria-label="Basic outlined example">
+                            <button type="submit" class="btn btn-outline-primary" name="date_btn" value="{{left}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                </svg>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[0]}}"
+                                    value="{{days[0]}}" name="date_btn">
+                                <span class="date-button day-week">ПН</span>
+                                <span class="date-button">{{days[0][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[1]}}"
+                                    value="{{days[1]}}" name="date_btn">
+                                <span class="date-button day-week">ВТ</span>
+                                <span class="date-button">{{days[1][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[2]}}"
+                                    value="{{days[2]}}" name="date_btn">
+                                <span class="date-button day-week">СР</span>
+                                <span class="date-button">{{days[2][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[3]}}"
+                                    value="{{days[3]}}" name="date_btn">
+                                <span class="date-button day-week">ЧТ</span>
+                                <span class="date-button">{{days[3][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[4]}}"
+                                    value="{{days[4]}}" name="date_btn">
+                                <span class="date-button day-week">ПН</span>
+                                <span class="date-button">{{days[4][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[5]}}"
+                                    value="{{days[5]}}" name="date_btn">
+                                <span class="date-button day-week">СБ</span>
+                                <span class="date-button">{{days[5][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary {{activate[6]}}"
+                                    value="{{days[6]}}" name="date_btn">
+                                <span class="date-button day-week">ВС</span>
+                                <span class="date-button">{{days[6][8:]|int()}}</span>
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary" value="{{right}}" name="date_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </button>
+                            <a href="./">Сегодня</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <footer>
