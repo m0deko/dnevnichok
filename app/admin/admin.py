@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, session, request, redirect, url_for, flash
+from flask import render_template, Blueprint, session, request, redirect, url_for, flash, g
 from flask_sqlalchemy import SQLAlchemy
 
 from ..database import db
@@ -35,6 +35,8 @@ menu = [
 ]
 
 
+# ====================Login&logout=======================
+
 @admin.route('/')
 def index():
     if not isLogged():
@@ -65,30 +67,73 @@ def logout():
     return redirect(url_for('.login'))
 
 
-@admin.route('/list-users')
+# ======================users=======================
+@admin.route('/list-users', methods=['GET', 'POST'])
 def list_users():
     if not isLogged():
         return redirect(url_for('.login'))
-    a = []
+    all_users = []
     if db:
         try:
-            a = User_data.query.all()
+            if request.method == 'POST':
+                dl = db.session.query(User_data).get(request.form['delete'])
+                db.session.delete(dl)
+                db.session.commit()
+                print('Successfully')
+                return redirect(url_for('.remake_user'))
+            all_users = User_data.query.all()
         except Exception as ex:
             print(ex)
-    return render_template('admin/listusers.html', menu=menu, title='Список пользователей', list=a)
+            db.session.rollback()
+
+    return render_template('admin/listusers.html', menu=menu, title='Список пользователей', list=all_users)
 
 
-@admin.route('/list-group')
+@admin.route('/remake-user', methods=['GET', 'POST'])
+def remake_user():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        try:
+            if request.method == 'POST':
+                db.session.query(User_data).filter(User_data.id == all_user_data.id).update(
+                    {User_data.username: request.form['username'], User_data.email: request.form['email'],
+                     User_data.group_id: request.form['group_id']})
+                db.session.commit()
+                return redirect(url_for('.list_users'))
+        except Exception as ex:
+            print(ex)
+            db.session.rollback()
+
+    return render_template('admin/remake_user.html', menu=menu, title='Переназначение пользователя', data=all_user_data)
+
+@admin.route('/commit-user', methods=['GET', 'POST'])
+def commit_user():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_user_data
+        all_user_data = User_data.query.filter(User_data.id == g.cur_id).first()
+
+    return redirect(url_for('.remake_user'))
+
+
+# ===================group=========================
+@admin.route('/list-group', methods=["GET", "POST"])
 def list_group():
     if not isLogged():
         return redirect(url_for('.login'))
-    a = []
+    all = []
     if db:
         try:
-            a = Group_data.query.all()
+            all = Group_data.query.all()
+            # if request.method == 'POST':
+            #     all.filter()
         except Exception as ex:
             print(ex)
-    return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=a)
+    return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=all)
+
 
 @admin.route('create-group', methods=['GET', 'POST'])
 def create_group():
@@ -113,6 +158,8 @@ def create_group():
 
         return render_template('admin/creategroup.html', menu=menu, title='Создание класса')
 
+
+# =============================Lesson==============================
 @admin.route('/list-lesson')
 def list_lesson():
     if not isLogged():
@@ -124,6 +171,7 @@ def list_lesson():
         except Exception as ex:
             print(ex)
     return render_template('admin/listlesson.html', menu=menu, title='Список уроков', list=a)
+
 
 @admin.route('/create-lesson', methods=['GET', 'POST'])
 def create_lesson():
@@ -142,5 +190,4 @@ def create_lesson():
                 print(ex)
                 flash('Упс... Возникла ошибка', category='error')
                 db.session.rollback()
-
     return render_template('admin/createlesson.html', menu=menu, title='Форма для создания урока')

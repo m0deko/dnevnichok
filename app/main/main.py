@@ -138,6 +138,7 @@ def upload():
                 img = file.read()
                 db.session.query(User_data).filter(User_data.id == session['id']).update({User_data.avatar: img})
                 db.session.flush()
+
                 db.session.commit()
             except Exception as ex:
                 print(ex)
