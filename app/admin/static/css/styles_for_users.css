@@ -1,0 +1,7 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #ccc;
+    margin-bottom: 10px;
+}

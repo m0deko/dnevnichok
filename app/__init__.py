@@ -16,6 +16,6 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(main, url_prefix='/main')
-    app.register_blueprint(admin)
+    app.register_blueprint(admin, url_prefix='/admin')
 
     return app

@@ -1,0 +1,25 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+
+<h1>{{title}}</h1>
+<div class="list-posts">
+    <div class="row">
+        <div class="title">Никнейм</div>
+        <div class="annonce">Email</div>
+        <div>Фамилия</div>
+        <div>Дата регистрации</div>
+        <div>ID класса</div>
+    </div>
+    {% for p in list %}
+    <div class="row">
+        <div class="title">{{p.username}}</div>
+        <div class="annonce">{{ p.email }}</div>
+        <div>{{p.surname}}</div>
+        <div>{{p.date}}</div>
+        <div>{{p.group_id}}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

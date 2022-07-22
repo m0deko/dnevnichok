@@ -1,0 +1,32 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/styles_for_users.css')}}">
+<h1>{{title}}</h1>
+
+<div class="list-user">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Юзернейм</th>
+            <th scope="col">Email</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Дата регистрации</th>
+            <th scope="col">ID группы</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in list %}
+        <tr>
+            <td>{{p.username}}</td>
+            <td>{{ p.email }}</td>
+            <td>{{p.surname}}</td>
+            <td>{{p.date}}</td>
+            <td>{{p.group_id}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
