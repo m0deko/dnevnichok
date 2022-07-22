@@ -31,7 +31,7 @@ def login():
                     session['logged'] = 1
                     session['id'] = data.id
                     session['group_id'] = data.group_id
-                    # session['group_id'] = base.getGroupID(session['id'])
+
 
                     return redirect(url_for('.mainpage'))
     elif session['logged']:

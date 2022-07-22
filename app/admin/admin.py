@@ -9,6 +9,8 @@ from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
 
+from .action import txt_check
+
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
 
@@ -88,6 +90,28 @@ def list_group():
             print(ex)
     return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=a)
 
+@admin.route('create-group', methods=['GET', 'POST'])
+def create_group():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            file = request.files['file']
+            if file and txt_check(file.filename):
+                try:
+                    les = file.read()
+                    group = Group_data(school=request.form['school'], grade=request.form['grade'], lessons=les)
+                    db.session.add(group)
+                    db.session.flush()
+
+                    db.session.commit()
+                    flash('Класс создан', category='success')
+                except Exception as ex:
+                    print(ex)
+                    flash('Упс... Возникла ошибка', category='error')
+                    db.session.rollback()
+
+        return render_template('admin/creategroup.html', menu=menu, title='Создание класса')
 
 @admin.route('/list-lesson')
 def list_lesson():
@@ -117,5 +141,6 @@ def create_lesson():
             except Exception as ex:
                 print(ex)
                 flash('Упс... Возникла ошибка', category='error')
+                db.session.rollback()
 
     return render_template('admin/createlesson.html', menu=menu, title='Форма для создания урока')
