@@ -12,6 +12,19 @@ def middle_marks(stud_marks):
             print(ex)
     return sred_marks
 
+def getAvatar(avatar):
+    img = None
+    if not avatar:
+        try:
+            with open('app/main/static/images/default.png', "rb") as f:
+                img = f.read()
+        except FileNotFoundError as e:
+            print("Не найден аватар по умолчанию: " + str(e))
+    else:
+        img = avatar
+
+    return img
+
 def png_check(filename):
     ext = filename.rsplit('.', 1)[1]
     if ext == "png" or ext == "PNG":

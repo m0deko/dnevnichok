@@ -9,7 +9,7 @@ from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
 
-from .action import middle_marks, png_check
+from .action import middle_marks, png_check, getAvatar
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
@@ -18,10 +18,10 @@ main = Blueprint('main', __name__, template_folder='templates', static_folder='s
 def login():
     if ('logged' not in session):
         if request.method == 'POST':
-            # cur_id = base.getAccess(request.form['identification'], request.form['password'])
+
             data = User_data.query.filter(
                 (User_data.username == request.form['identification']) and (
-                            User_data.email == request.form['identification'])).first()
+                        User_data.email == request.form['identification'])).first()
             if data:
                 if check_password_hash(data.psw, request.form['password']):
                     if 'sessionCheckbox' in request.form:
@@ -53,6 +53,7 @@ def register():
             print(ex)
     return render_template('main/register.html')
 
+
 @main.route('/', methods=['GET', 'POST'])
 def mainpage():
     if ('logged' not in session):
@@ -60,10 +61,13 @@ def mainpage():
     session['cur_page'] = 'mainpage'
     if request.method == "GET":
         print(1)
+    data = User_data.query.filter(User_data.id == session['id']).first()
+
     # with open('dnevnik.json', encoding='utf-8') as f:
     #     timetable = json.load(f)['class_id'][session['group_id']]['timetable'][week_string]
-    return render_template('main/mainpage.html')
+    return render_template('main/mainpage.html', data=data)
     # return render_template('mainpage.html', date_info=date_mas, cur_day_time=timetable, data=session['data'])
+
 
 #
 # @app.route('/marks', methods=['GET', 'POST'])
@@ -106,7 +110,8 @@ def mainpage():
 def userava():
     if ('logged' not in session):
         return redirect(url_for('login'))
-    img = User_data.query.filter(User_data.id == session['id']).first().avatar
+    avatar = User_data.query.filter(User_data.id == session['id']).first().avatar
+    img = getAvatar(avatar)
     if not img:
         return ""
     h = make_response(img)
@@ -121,16 +126,20 @@ def upload():
         if file and png_check(file.filename):
             try:
                 img = file.read()
-                User_data.querry.filter(User_data==session['id']).update({User_data.avatar:img})
+                db.session.query(User_data).filter(User_data.id == session['id']).update({User_data.avatar: img})
+                db.session.flush()
+                db.session.commit()
             except Exception as ex:
                 print(ex)
-    # return redirect(url_for(session['cur_page']))
-    return "Hi"
-#
+                db.session.rollback()
+    return redirect(url_for('.mainpage'))
+
+
 @main.route('/logout')
 def logout():
     if 'logged' not in session:
         return redirect(url_for('.login'))
     session.pop('logged')
     session.pop('id')
+    session.pop('cur_page')
     return redirect(url_for('.login'))

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ЭЖД</title>
-    <link rel="icon" type="image/png" sizes="96x96" href="../../static/images/favicon-96x96.png">
-    <link rel="stylesheet" type="text/css" href="../../static/css/styles_for_main.css">
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/fontello.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{url_for('.static', filename='images/favicon-96x96.png')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/fontello.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/styles_for_main.css')}}">
 </head>
 <body style='overflow-x:hidden;'>
 <div class="wrap">
@@ -14,7 +14,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <div class="notCollapseFirst">
-                    <img src="../../static/images/logo.png" alt="logo">
+                    <img src="{{url_for('.static', filename='images/logo.png')}}" alt="logo">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -66,96 +66,7 @@
         </nav>
     </header>
 
-    <section class="date_bar">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6 calendar">
-                    <form action="#" method="post">
-                        <p class="text-uppercase text-center">выберите дату</p>
-                        <input type="date" name="calendar" value="2022-09-01"
-                               max="2023-05-28" min="2022-09-01">
-                        <input type="submit" value="Вывести" class="btn btn-primary date-submit">
-                    </form>
-                </div>
-                <div class="col-lg-6 offset-lg-1 second-col">
-                    <form action="" method="get">
-                        <div class="btn-group bar" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                                </svg>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[0][1]}}"
-                                    value="2022-07-{{date_info[0][0]}}">
-                                <span class="date-button day-week">ПН</span>
-                                <span class="date-button">{{date_info[0][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[1][1]}}"
-                                    value="2022-07-{{date_info[1][0]}}">
-                                <span class="date-button day-week">ВТ</span>
-                                <span class="date-button">{{date_info[1][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[2][1]}}"
-                                    value="2022-07-{{date_info[2][0]}}">
-                                <span class="date-button day-week">СР</span>
-                                <span class="date-button">{{date_info[2][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[3][1]}}"
-                                    value="2022-07-{{date_info[3][0]}}">
-                                <span class="date-button day-week">ЧТ</span>
-                                <span class="date-button">{{date_info[3][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[4][1]}}"
-                                    value="2022-07-{{date_info[4][0]}}">
-                                <span class="date-button day-week">ПН</span>
-                                <span class="date-button">{{date_info[4][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary {{date_info[5][1]}}"
-                                    value="2022-07-{{date_info[5][0]}}">
-                                <span class="date-button day-week">СБ</span>
-                                <span class="date-button">{{date_info[5][0]}}</span>
-                            </button>
-                            <button type="submit" class="btn btn-outline-primary {{date_info[6][1]}}"
-                                    value="2022-07-{{date_info[6][0]}}">
-                                <span class="date-button day-week">ВС</span>
-                                <span class="date-button">{{date_info[6][0]}}</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="lessons">
-        <div class="container lesson-table">
-            <div class="row lessons-menu">
-                <div class="col-lg-10 offset-lg-1">
-                    {% for x in range(cur_day_time|length) %}
-                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal">
-                        <div class="col-2">
-                            <div class="les-num">
-                                <span>Урок</span><span>{{x + 1}}</span>
-                            </div>
-                            <div class="les-time">
-                                {{cur_day_time[(x + 1)|string()][1]}}
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <h2 class="text-center">{{cur_day_time[(x + 1)|string()][0]}}</h2>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </section>
+
 </div>
 
 <footer>
@@ -185,11 +96,11 @@
         <hr class="break">
         <p class="txt">Оценки за урок:</p>
         <ul class="l_mark_area">
-            <li class="l_mark tip" data-text="контрольная работа 11.03.2022">5{{l_mark}}</li>
+            <li class="l_mark tip" data-text="контрольная работа 11.03.2022">5</li>
         </ul>
         <hr class="break">
         <p class="txt">Домашнее задание: прочитать параграф 11 и выполнить номера 123, 125, 126, 127, 130(а, в,
-            д){{hometask}}</p>
+            д)</p>
     </div>
 </div>
 <div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
@@ -228,11 +139,11 @@
 
                     <div class="mb-3">
                         <p>ФИО:</p>
-                        <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
+                        <p>{{ data['surname'] }} {{ data['name'] }} {{ data['patronymic'] }}</p>
                     </div>
                     <hr>
                     <div>
-                        <p>Логин: {{data[0]}}</p>
+                        <p>Логин: {{data['username']}}</p>
                     </div>
                     <hr>
                     <div class="">
@@ -240,7 +151,7 @@
                     </div>
                     <hr>
                     <div class="">
-                        <p>Почта: {{ data[1] }}</p>
+                        <p>Почта: {{ data['email'] }}</p>
                     </div>
 
                 </div>
@@ -249,8 +160,8 @@
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
-                            <a class="btn btn-danger" href="/logout">Выйти</a>
+                            <a class="btn btn-warning" href="./changes">Внести изменения</a>
+                            <a class="btn btn-danger" href="./logout">Выйти</a>
                         </div>
                     </div>
                 </div>
@@ -258,7 +169,7 @@
         </div>
     </div>
 </div>
-<script async src="../../static/js/bootstrap.bundle.min.js"></script>
-<script async src="../../static/js/mainpage.js"></script>
+<script src="{{url_for('.static', filename='js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{url_for('.static', filename='js/mainpage.js')}}"></script>
 </body>
 </html>
