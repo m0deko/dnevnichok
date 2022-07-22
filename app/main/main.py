@@ -48,6 +48,8 @@ def register():
                           surname=request.form['surname'], name=request.form['name'],
                           patronymic=request.form['patronymic'], city=request.form['city'], law=0)
             db.session.add(u)
+            db.session.flush()
+
             db.session.commit()
         except Exception as ex:
             db.session.rollback()

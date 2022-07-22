@@ -27,7 +27,9 @@ def logout_admin():
 menu = [
     {'url': '.index', "title": 'Панель'},
     {'url': '.list_users', 'title': 'Список пользователей'},
-    {'url': '.logout', 'title': 'Выйти'}
+    {'url': '.list_group', 'title': 'Список классов'},
+    {'url': '.list_lesson', 'title': 'Список уроков'},
+    {'url': '.logout', 'title': 'Выйти'},
 ]
 
 
@@ -73,15 +75,47 @@ def list_users():
             print(ex)
     return render_template('admin/listusers.html', menu=menu, title='Список пользователей', list=a)
 
-@admin.route('/list-users')
-def list_users():
+
+@admin.route('/list-group')
+def list_group():
     if not isLogged():
         return redirect(url_for('.login'))
     a = []
     if db:
         try:
-            a = User_data.query.all()
+            a = Group_data.query.all()
         except Exception as ex:
             print(ex)
-    return render_template('admin/listusers.html', menu=menu, title='Список пользователей', list=a)
+    return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=a)
 
+
+@admin.route('/list-lesson')
+def list_lesson():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    a = []
+    if db:
+        try:
+            a = Lesson.query.all()
+        except Exception as ex:
+            print(ex)
+    return render_template('admin/listlesson.html', menu=menu, title='Список уроков', list=a)
+
+@admin.route('/create-lesson', methods=['GET', 'POST'])
+def create_lesson():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            try:
+                lesson = Lesson(lesson=request.form['lesson'])
+                db.session.add(lesson)
+                db.session.flush()
+
+                db.session.commit()
+                flash('Урок создан', category='success')
+            except Exception as ex:
+                print(ex)
+                flash('Упс... Возникла ошибка', category='error')
+
+    return render_template('admin/createlesson.html', menu=menu, title='Форма для создания урока')

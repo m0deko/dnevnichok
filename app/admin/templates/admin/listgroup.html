@@ -4,22 +4,26 @@
 {{ super() }}
 
 <h1>{{title}}</h1>
-<div class="list-posts">
-    <div class="row">
-        <div class="title">Никнейм</div>
-        <div class="annonce">Email</div>
-        <div>Фамилия</div>
-        <div>Дата регистрации</div>
-        <div>ID класса</div>
-    </div>
-    {% for p in list %}
-    <div class="row">
-        <div class="title">{{p.username}}</div>
-        <div class="annonce">{{ p.email }}</div>
-        <div>{{p.surname}}</div>
-        <div>{{p.date}}</div>
-        <div>{{p.group_id}}</div>
-    </div>
-    {% endfor %}
+<div class="list-user">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Школа</th>
+            <th scope="col">Класс</th>
+            <th scope="col">Уроки</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in list %}
+        <tr>
+            <td>{{p.id}}</td>
+            <td>{{ p.school }}</td>
+            <td>{{p.grade}}</td>
+            <td>{{p.lessons}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
