@@ -79,8 +79,7 @@ def list_users():
                 dl = db.session.query(User_data).get(request.form['delete'])
                 db.session.delete(dl)
                 db.session.commit()
-                print('Successfully')
-                return redirect(url_for('.remake_user'))
+
             all_users = User_data.query.all()
         except Exception as ex:
             print(ex)
@@ -107,6 +106,7 @@ def remake_user():
 
     return render_template('admin/remake_user.html', menu=menu, title='Переназначение пользователя', data=all_user_data)
 
+
 @admin.route('/commit-user', methods=['GET', 'POST'])
 def commit_user():
     if not isLogged():
@@ -127,6 +127,10 @@ def list_group():
     all = []
     if db:
         try:
+            if request.method == 'POST':
+                dl = db.session.query(Group_data).get(request.form['delete'])
+                db.session.delete(dl)
+                db.session.commit()
             all = Group_data.query.all()
             # if request.method == 'POST':
             #     all.filter()
@@ -159,14 +163,48 @@ def create_group():
         return render_template('admin/creategroup.html', menu=menu, title='Создание класса')
 
 
+@admin.route('/remake-group', methods=['GET', 'POST'])
+def remake_group():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        try:
+            if request.method == 'POST':
+                db.session.query(Group_data).filter(Group_data.id == all_group_data.id).update(
+                    {Group_data.school: request.form['school'], Group_data.grade: request.form['grade']})
+                db.session.commit()
+                return redirect(url_for('.list_group'))
+        except Exception as ex:
+            print(ex)
+            db.session.rollback()
+
+    return render_template('admin/remake_group.html', menu=menu, title='Переназначение класса', data=all_group_data)
+
+
+@admin.route('/commit-group', methods=['GET', 'POST'])
+def commit_group():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_group_data
+        all_group_data = Group_data.query.filter(Group_data.id == g.cur_id).first()
+
+    return redirect(url_for('.remake_group'))
+
+
 # =============================Lesson==============================
-@admin.route('/list-lesson')
+@admin.route('/list-lesson', methods=['GET', 'POST'])
 def list_lesson():
     if not isLogged():
         return redirect(url_for('.login'))
     a = []
     if db:
         try:
+            if request.method == 'POST':
+                dl = db.session.query(Lesson).get(request.form['delete'])
+                db.session.delete(dl)
+                db.session.commit()
             a = Lesson.query.all()
         except Exception as ex:
             print(ex)
@@ -191,3 +229,33 @@ def create_lesson():
                 flash('Упс... Возникла ошибка', category='error')
                 db.session.rollback()
     return render_template('admin/createlesson.html', menu=menu, title='Форма для создания урока')
+
+
+@admin.route('/remake-lesson', methods=['GET', 'POST'])
+def remake_lesson():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        try:
+            if request.method == 'POST':
+                db.session.query(Lesson).filter(Lesson.id == all_lesson_data.id).update(
+                    {Lesson.lesson: request.form['lesson']})
+                db.session.commit()
+                return redirect(url_for('.list_lesson'))
+        except Exception as ex:
+            print(ex)
+            db.session.rollback()
+
+    return render_template('admin/remake_lesson.html', menu=menu, title='Переназначение урока', data=all_lesson_data)
+
+
+@admin.route('/commit-lesson', methods=['GET', 'POST'])
+def commit_lesson():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_lesson_data
+        all_lesson_data = Lesson.query.filter(Lesson.id == g.cur_id).first()
+
+    return redirect(url_for('.remake_lesson'))
