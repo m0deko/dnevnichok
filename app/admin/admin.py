@@ -198,17 +198,17 @@ def commit_group():
 def list_lesson():
     if not isLogged():
         return redirect(url_for('.login'))
-    a = []
+    all = []
     if db:
         try:
             if request.method == 'POST':
                 dl = db.session.query(Lesson).get(request.form['delete'])
                 db.session.delete(dl)
                 db.session.commit()
-            a = Lesson.query.all()
+            all = Lesson.query.all()
         except Exception as ex:
             print(ex)
-    return render_template('admin/listlesson.html', menu=menu, title='Список уроков', list=a)
+    return render_template('admin/listlesson.html', menu=menu, title='Список уроков', list=all)
 
 
 @admin.route('/create-lesson', methods=['GET', 'POST'])
