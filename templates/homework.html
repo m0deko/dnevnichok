@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>ЭЖД</title>
+    <title>ГќГ†Г„</title>
     <script>
         function show_m(str)
         {
@@ -20,7 +20,7 @@
         {
             if (inp.value == "" || date.value == "")
             {
-                alert("Пожалуйста заполните необходимые поля");
+                alert("ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ  Г§Г ГЇГ®Г«Г­ГЁГІГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г»ГҐ ГЇГ®Г«Гї");
             }
             else
             {
@@ -155,16 +155,16 @@
 </head>
 <body>
     <div class="header">
-        <p class="logo">ЭЖД</p>
-        <a class="but" href="main_page.html">Главная</a>
-        <a class="but" href="table.html">Выставление оценок</a>
-        <a class="but" style="background-color: #333333; color: #FFFFFF">Домашнее задание</a>
+        <p class="logo">ГќГ†Г„</p>
+        <a class="but" href="main_page.html">Р“Р»Р°РІРЅР°СЏ</a>
+        <a class="but" href="table.html">Р’С‹СЃС‚Р°Р»РµРЅРёРµ РѕС†РµРЅРѕРє</a>
+        <a class="but" style="background-color: #333333; color: #FFFFFF">Р”РѕРјР°С€РЅРµРµ Р·Р°РґР°РЅРёРµ</a>
     </div>
 
     <div class="content">
         <!--{% for date in dates%}-->
         <div onclick=show_m("{{date}}") class="grade">
-        <p class="text">25 ноября<!--{{date}}--></p>
+        <p class="text">25 РЅРѕСЏР±СЂСЏ<!--{{date}}--></p>
     </div>
     <!--{% endfor %}-->
     </div>
@@ -177,18 +177,18 @@
                 <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" stroke="#333333" />
             </svg>
             <form id="hw">
-                <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Размещение домашнего задания</p>
-                <input type="text" id="date" style="margin-left: 10px; margin-bottom: 10px;" placeholder="Дата" required />
-                <input type="text" id="inp" style="margin-left: 10px;" margin-top="10px" ; placeholder="Домашнее задание" required />
-                <p style="color: #333333; font-size: 15px; margin-top: 10px; margin-left: 10px;">Прикрепить файл</p>
-                <!--прикрепить файл-->
+                <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Р Р°Р·РјРµС‰РµРЅРёРµ РґРѕРјР°С€РЅРµРіРѕ Р·Р°РґР°РЅРёСЏ</p>
+                <input type="text" id="date" style="margin-left: 10px; margin-bottom: 10px;" placeholder="Р”Р°С‚Р°" required />
+                <textarea type="text" id="inp" style="margin-left: 10px;" margin-top="10px" ; placeholder="Р”РѕРјР°С€РЅРµРµ Р·Р°РґР°РЅРёРµ"></textarea>
+                <p style="color: #333333; font-size: 15px; margin-top: 10px; margin-left: 10px;">ГЏГ°ГЁГЄГ°ГҐГЇГЁГІГј ГґГ Г©Г«</p>
+                <!--РџСЂРёРєСЂРµРїРёС‚СЊ С„Р°Р№Р»-->
             </form>
-            <button class="btn" onclick="submit()">Отправить</button>
+            <button class="btn" onclick="submit()">РћС‚РїСЂР°РІРёС‚СЊ</button>
         </div>
     </div>
 
         <div class="footer">
-            <p class="title" style="font-size: 15px">Все права защищены</p>
+            <p class="title" style="font-size: 15px">Р’СЃРµ РїСЂР°РІР° Р·Р°С‰РёС‰РµРЅС‹</p>
         </div>
 </body>
 </html>
