@@ -1,19 +1,20 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-def middle_marks(stud_marks):
-    sred_marks = []
-    for lesson in stud_marks:
-        sum_marks = 0
-        for mark in lesson[1][0:]:
-            sum_marks += mark
-        try:
-            sred_marks.append([lesson[0], round(sum_marks / len(lesson[1]), 1)])
-        except ZeroDivisionError:
-            sred_marks += [[lesson[0], 0.0]]
-        except Exception as ex:
-            print(ex)
-    return sred_marks
+def middle_mark(stud_marks):
+    summ = 0
+    leng = 0
+    for item in stud_marks:
+        summ += item[0] * item[1]
+        leng += item[1]
+    try:
+        sred_mark = round(summ / leng, 1)
+    except ZeroDivisionError:
+        sred_mark = 0.0
+    except Exception as ex:
+        sred_mark = 0.0
+        print(ex)
+    return sred_mark
 
 def getAvatar(avatar):
     img = None

@@ -9,7 +9,7 @@ from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
 
-from .action import middle_marks, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate
+from .action import middle_mark, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
@@ -79,43 +79,55 @@ def mainpage():
     # return render_template('mainpage.html', date_info=date_mas, cur_day_time=timetable, data=session['data'])
 
 
-#
-# @app.route('/marks', methods=['GET', 'POST'])
-# def marks():
-#     if ('logged' not in session):
-#         return redirect(url_for('login'))
-#     session['cur_page'] = 'marks'
-#     with open('dnevnik.json', encoding='utf-8') as f:
-#         all_lessons = json.load(f)['class_id'][session['group_id']]['all_lessons']
-#     student_mark = []
-#     # for les in all_lessons:
-#     #     mark_res = dbase.getMarks(1, les)
-#     #     student_mark.append([les, mark_res])
-#     # sred_marks = middle_marks(student_mark)
-#     # return render_template('markpage.html', all_les=sred_marks, all_marks=student_mark, data=session['data'])
-#
-#
-# @app.route('/lessons', methods=['GET', 'POST'])
-# def lessons():
-#     if ('logged' not in session):
-#         return redirect(url_for('login'))
-#     session['cur_page'] = 'lessons'
-#     with open('dnevnik.json', encoding='utf-8') as f:
-#         timetable = json.load(f)['class_id'][session['group_id']]['timetable']
-#
-#     return render_template("timetable.html", week_timetable=timetable, data=session['data'])
-#
-#
-# @app.route('/homework', methods=['GET', 'POST'])
-# def homework():
-#     if ('logged' not in session):
-#         return redirect(url_for('login'))
-#     session['cur_page'] = 'homework'
-#     with open('dnevnik.json', encoding='utf-8') as f:
-#         homework = json.load(f)['class_id'][session['group_id']]['homework']
-#     return render_template("homework.html", data=session['data'], homework=homework)
-#
-#
+@main.route('/marks', methods=['GET', 'POST'])
+def marks():
+    if ('logged' not in session):
+        return redirect(url_for('login'))
+    session['cur_page'] = 'marks'
+    all_les_data = Group_data.query.first()
+
+    all_les = all_les_data.lessons.decode().split('\n')
+    all_les = [line.rstrip() for line in all_les]
+    print(all_les)
+    all_les_dict = {}
+    for les in all_les:
+        les_id = Lesson.query.filter(Lesson.lesson == les).first().id
+        marks = Mark.query.filter(Mark.user_id == session['id'] or Mark.lesson_id == les_id).all()
+        mid_mark = middle_mark([[mark.mark, mark.coefficient] for mark in marks])
+        marks = [[mark.mark, mark.coefficient, mark.reason, mark.date] for mark in marks]
+        all_les_dict[les] = [marks, mid_mark]
+    print(all_les_dict)
+    data = User_data.query.filter(User_data.id == session['id']).first()
+    # with open('dnevnik.json', encoding='utf-8') as f:
+    #     all_lessons = json.load(f)['class_id'][session['group_id']]['all_lessons']
+    # student_mark = []
+    # for les in all_lessons:
+    #     mark_res = dbase.getMarks(1, les)
+    #     student_mark.append([les, mark_res])
+    # sred_marks = middle_marks(student_mark)
+    return render_template('main/markpage.html', data=data, all_les=all_les_dict)
+
+
+@main.route('/lessons', methods=['GET', 'POST'])
+def lessons():
+    if ('logged' not in session):
+        return redirect(url_for('login'))
+    session['cur_page'] = 'lessons'
+    data = User_data.query.filter(User_data.id == session['id']).first()
+    return render_template("main/timetable.html", data=data)
+
+
+@main.route('/homework', methods=['GET', 'POST'])
+def homework():
+    if ('logged' not in session):
+        return redirect(url_for('login'))
+    session['cur_page'] = 'homework'
+
+    data = User_data.query.filter(User_data.id == session['id']).first()
+
+    return render_template("main/homework.html", data=data)
+
+
 @main.route('/userava')
 def userava():
     if ('logged' not in session):

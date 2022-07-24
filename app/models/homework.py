@@ -6,4 +6,4 @@ class Homework(db.Model):
     lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'))
     homeworkText = db.Column(db.String(500), default="")
     homeworkFile = db.Column(db.LargeBinary, nullable=True)
-    date = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.String, nullable=False)

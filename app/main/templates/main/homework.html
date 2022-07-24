@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ЭЖД</title>
-    <link rel="icon" type="image/png" sizes="96x96" href="../../static/images/favicon-96x96.png">
-    <link rel="stylesheet" type="text/css" href="../../static/css/styles_for_homework.css">
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/fontello.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{url_for('.static', filename='images/favicon-96x96.png')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/fontello.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/styles_for_markpage.css')}}">
 </head>
 
 <body style='overflow-x:hidden;'>
@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <div class="notCollapseFirst">
-                    <img src="../../static/images/logo.png" alt="logo">
+                    <img src="{{url_for('.static', filename='images/logo.png')}}" alt="logo">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
                         </li>
                         <li class="nav-item">
                             <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                <img src="{{url_for('userava')}}" alt="" class="avatar-img">
+                                <img src="{{url_for('.userava')}}" alt="" class="avatar-img">
                             </div>
                         </li>
                     </ul>
@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse order-lg-0" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-lg-0 collapse-left">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">
+                            <a class="nav-link" href="./">
                                 <h5>Главная страница</h5>
                             </a>
                         </li>
@@ -52,12 +52,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/marks">
+                            <a class="nav-link" href="./marks">
                                 <h5>Успеваемость</h5>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/lessons">
+                            <a class="nav-link" href="./lessons">
                                 <h5>Расписание</h5>
                             </a>
                         </li>
@@ -132,8 +132,8 @@
             <div class="modal-body">
                 <div class="profile-modal">
                     <div class="avatar-change mb-3 text-center">
-                        <img src="{{url_for('userava')}}" alt="" class="profile-avatar">
-                        <form action="{{url_for('upload')}}" method="post" enctype="multipart/form-data">
+                        <img src="{{url_for('.userava')}}" alt="" class="profile-avatar">
+                        <form action="{{url_for('.upload')}}" method="post" enctype="multipart/form-data">
                             <input type="file" name="file">
                             <input type="submit" value="Загрузить">
                         </form>
@@ -141,11 +141,11 @@
 
                     <div class="mb-3">
                         <p>ФИО:</p>
-                        <p>{{ data[2] }} {{ data[3] }} {{ data[4] }}</p>
+                        <p>{{ data['surname'] }} {{ data['name'] }} {{ data['patronymic'] }}</p>
                     </div>
                     <hr>
                     <div>
-                        <p>Логин: {{data[0]}}</p>
+                        <p>Логин: {{data['username']}}</p>
                     </div>
                     <hr>
                     <div class="">
@@ -153,7 +153,7 @@
                     </div>
                     <hr>
                     <div class="">
-                        <p>Почта: {{ data[1] }}</p>
+                        <p>Почта: {{ data['email'] }}</p>
                     </div>
 
                 </div>
@@ -162,8 +162,8 @@
                 <div class="container-fluid">
                     <div class="row text-center">
                         <div class="col-8 offset-2">
-                            <a class="btn btn-warning" href="/changes">Внести изменения</a>
-                            <a class="btn btn-danger" href="/logout">Выйти</a>
+                            <a class="btn btn-warning" href="./changes">Внести изменения</a>
+                            <a class="btn btn-danger" href="./logout">Выйти</a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,9 @@
         </div>
     </div>
 </div>
-<script src="../../static/js/bootstrap.bundle.min.js"></script>
-<script src="../../static/js/homework.js"></script>
+
+<script src="{{url_for('.static', filename='js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{url_for('.static', filename='js/homework.js')}}"></script>
+
 </body>
 </html>
