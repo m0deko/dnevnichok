@@ -89,14 +89,14 @@ def marks():
     all_les = all_les_data.lessons.decode().split('\n')
     all_les = [line.rstrip() for line in all_les]
     print(all_les)
-    all_les_dict = {}
+    all_les_dict = []
     for les in all_les:
         les_id = Lesson.query.filter(Lesson.lesson == les).first().id
         marks = Mark.query.filter(Mark.user_id == session['id'] or Mark.lesson_id == les_id).all()
         mid_mark = middle_mark([[mark.mark, mark.coefficient] for mark in marks])
         marks = [[mark.mark, mark.coefficient, mark.reason, mark.date] for mark in marks]
-        all_les_dict[les] = [marks, mid_mark]
-    print(all_les_dict)
+        all_les_dict += [[les, [marks, mid_mark]]]
+
     data = User_data.query.filter(User_data.id == session['id']).first()
     # with open('dnevnik.json', encoding='utf-8') as f:
     #     all_lessons = json.load(f)['class_id'][session['group_id']]['all_lessons']
