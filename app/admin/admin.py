@@ -132,8 +132,7 @@ def list_group():
                 db.session.delete(dl)
                 db.session.commit()
             all = Group_data.query.all()
-            # if request.method == 'POST':
-            #     all.filter()
+
         except Exception as ex:
             print(ex)
     return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=all)
@@ -168,15 +167,21 @@ def remake_group():
     if not isLogged():
         return redirect(url_for('.login'))
     if db:
-        try:
-            if request.method == 'POST':
-                db.session.query(Group_data).filter(Group_data.id == all_group_data.id).update(
-                    {Group_data.school: request.form['school'], Group_data.grade: request.form['grade']})
-                db.session.commit()
-                return redirect(url_for('.list_group'))
-        except Exception as ex:
-            print(ex)
-            db.session.rollback()
+
+        if request.method == 'POST':
+            file = request.files['file']
+            if file and txt_check(file.filename):
+                try:
+                    les = file.read()
+                    db.session.query(Group_data).filter(Group_data.id == all_group_data.id).update(
+                        {Group_data.school: request.form['school'], Group_data.grade: request.form['grade'],
+                         Group_data.lessons: les})
+                    db.session.flush()
+                    db.session.commit()
+                    return redirect(url_for('.list_group'))
+                except Exception as ex:
+                    print(ex)
+                    db.session.rollback()
 
     return render_template('admin/remake_group.html', menu=menu, title='Переназначение класса', data=all_group_data)
 
