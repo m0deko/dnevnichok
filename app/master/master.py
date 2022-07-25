@@ -13,8 +13,16 @@ master = Blueprint('master', __name__, template_folder='templates', static_folde
 def getstids(grade_id):
     ids = []
     students = []
-    print(User_data.query.filter(User_data.group_id == grade_id).all())
+    users = User_data.query.filter(User_data.group_id == int(grade_id)).all()
+    for user in users:
+        ids.append(user.id)
+        students.append(user.surname + " " + user.name + " " + user.patronymic)
     return ids, students
+
+def getgrade(grade_id):
+    return Group_data.query.filter(User_data.group_id == int(grade_id)).first().grade
+
+def getmarks():
 
 @master.route('/')
 def index():
@@ -31,9 +39,8 @@ def gradeselect():
 def marks(grade):
     dates = [12, 15, 18]
     s_ids, students = getstids(grade)
-    _grades = ['9О', '7Ш', '11Б']
-    _grade = _grades[int(grade)-1]
-    s_marks = [[3, 4, 5], [3, 5, 3], [3, 2, 3]]
+    _grade = getgrade(grade)
+    s_marks = getmarks()
     return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
