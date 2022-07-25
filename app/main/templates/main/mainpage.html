@@ -134,6 +134,30 @@
             </div>
         </div>
     </section>
+    <section class="lessons">
+        <div class="container lesson-table">
+            <div class="row lessons-menu">
+                <div class="col-lg-10 offset-lg-1">
+                    {% for x in range(timetable|length) %}
+                    <div class="row lesson-info" data-bs-toggle="modal" data-bs-target="#lessonModal{{x}}">
+                        <div class="col-2">
+                            <div class="les-num">
+                                <span>Урок</span><span>{{x + 1}}</span>
+                            </div>
+                            <div class="les-time">
+                                {{timetable[x][1]}}
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h2 class="text-center">{{timetable[x][0]}}</h2>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 <footer>
@@ -170,24 +194,22 @@
             д)</p>
     </div>
 </div>
-
-<div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
+{% for x in range(timetable|length()) %}
+<div class="modal fade" id="lessonModal{{x}}" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="lessonModalLabel">Заголовок модального окна</h5>
+                <h5 class="modal-title" id="lessonModalLabel">{{timetable[x][0]}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                <h6>Преподаватель: {{timetable[x][3]}}</h6>
+                <h6>Кабинет: {{timetable[x][2]}}</h6>
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
 
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
