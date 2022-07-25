@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>ЭЖД</title>
+    <title>Р­Р–Р”</title>
     <script>
         function show(id, id2)
         {
@@ -106,21 +106,23 @@
 </head>
 <body>
     <div class="header">
-        <p class="logo">ЭЖД</p>
-        <a class="but" style="background-color: #333333; color: #FFFFFF">Главная</a>
+        <p class="logo">Р­Р–Р”</p>
+        <a class="but" style="background-color: #333333; color: #FFFFFF">Р“Р»Р°РІРЅР°СЏ</a>
     </div>
 
     <div class="content">
-        <h1 class="title">Мои классы</h1>
-        <!--{% for grade in grades %}-->
-            <div href="/{{grade}}" class="grade">
-                <p class="text"><strong>9 О<!--{{grade}}--></strong></p>
-            </div>
-            <!--{% endfor %}-->
+        <h1 class="title">РњРѕРё РєР»Р°СЃСЃС‹</h1>
+        {% for i in range(ids|length()) %}
+            <a href="/master/{{ids[i]}}/marks">
+                <div class="grade">
+                    <p class="text"><strong>{{grades[i]}}</strong></p>
+                </div>
+            </a>
+        {% endfor %}
     </div>
 
     <div class="footer">
-        <p class="title" style="font-size: 15px">Все права защищены</p>
+        <p class="title" style="font-size: 15px">Р’СЃРµ РїСЂР°РІР° Р·Р°С‰РёС‰РµРЅС‹</p>
     </div>
 </body>
 </html>
