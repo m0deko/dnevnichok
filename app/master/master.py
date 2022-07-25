@@ -23,12 +23,16 @@ def getstids(grade_id):
 def getgrade(grade_id):
     return Group_data.query.filter(Group_data.id == int(grade_id)).first().grade
 
-def getmarks(s_ids):
+def check(str):
+    return True
+
+def getmarks(s_ids, dates):
     marks = []
     for id in s_ids:
         _marks = []
         for mark in Mark.query.filter(Mark.user_id == int(id)).all():
-             _marks.append(mark.mark)
+             if(check(mark.date)):
+                 _marks.append(mark.mark)
         marks.append(_marks)
     return marks
 
@@ -48,7 +52,7 @@ def marks(grade):
     dates = [12, 15, 18]
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
-    s_marks = getmarks(s_ids)
+    s_marks = getmarks(s_ids, dates)
     return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
