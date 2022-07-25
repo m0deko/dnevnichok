@@ -82,7 +82,7 @@ def marks(grade):
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
     session['selected_grade'] = grade
-    dates = ['12.11.2022', '15.11.2022', '16.11.2022']
+    dates = ['12.11.2022', '15.11.2022', '16.11.2022']#getdates()
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
     s_marks = getmarks(s_ids, dates, getlid())
