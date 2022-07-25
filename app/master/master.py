@@ -1,4 +1,5 @@
 from flask import request, session, redirect, url_for, render_template, Blueprint, make_response
+import datetime
 
 from ..database import db
 from ..models.user_data import User_data
@@ -43,6 +44,9 @@ def getmarks(s_ids, dates, l_id):
 
 def getlid():
     return Master_data.query.filter(Master_data.user_id == session['id']).first().subject
+
+def getdates():
+    pass
 
 
 @master.route('/')
