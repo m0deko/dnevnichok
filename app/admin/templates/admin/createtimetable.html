@@ -1,0 +1,31 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/styles_for_users.css')}}">
+<h1>{{title}}</h1>
+
+<div class="mt-3 mb-3">
+    <a href="./list-timetable" class="btn btn-primary">Список расписаний</a>
+    <a href="#" class="btn btn-secondary">Создать расписание</a>
+</div>
+<form action="./create-timetable" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="group_id" class="form-label">ID класса, к которому применится данное расписание</label>
+        <input type="text" class="form-control" id="group_id" aria-describedby="emailHelp" name="group_id">
+
+        <h2>Дата расписания</h2>
+        <input type="text" class="form-control" id="year" aria-describedby="emailHelp" name="year">
+        <input type="text" class="form-control" id="month" aria-describedby="emailHelp" name="month">
+        <input type="text" class="form-control" id="day" aria-describedby="emailHelp" name="day">
+
+        <label for="lessons" class="form-label">Файл с расписанием</label>
+        <input id="lessons" type="file" name="file" class="form-control">
+
+        <button type="submit" class="mt-3">Создать</button>
+    </div>
+</form>
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash mt-3 {{cat}}">{{msg}}</div>
+{% endfor %}
+{% endblock %}

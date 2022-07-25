@@ -31,7 +31,8 @@ menu = [
     {'url': '.list_users', 'title': 'Список пользователей'},
     {'url': '.list_group', 'title': 'Список классов'},
     {'url': '.list_lesson', 'title': 'Список уроков'},
-    {'url': '.logout', 'title': 'Выйти'},
+    {'url': '.list_timetable', 'title': 'Расписание'},
+    {'url': '.logout', 'title': 'Выйти'}
 ]
 
 
@@ -167,7 +168,6 @@ def remake_group():
     if not isLogged():
         return redirect(url_for('.login'))
     if db:
-
         if request.method == 'POST':
             file = request.files['file']
             if file and txt_check(file.filename):
@@ -177,6 +177,7 @@ def remake_group():
                         {Group_data.school: request.form['school'], Group_data.grade: request.form['grade'],
                          Group_data.lessons: les})
                     db.session.flush()
+
                     db.session.commit()
                     return redirect(url_for('.list_group'))
                 except Exception as ex:
@@ -264,3 +265,76 @@ def commit_lesson():
         all_lesson_data = Lesson.query.filter(Lesson.id == g.cur_id).first()
 
     return redirect(url_for('.remake_lesson'))
+
+#========================timetable==============================
+@admin.route('/list-timetable', methods=['GET', 'POST'])
+def list_timetable():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    all = []
+    if db:
+        try:
+            if request.method == 'POST':
+                dl = db.session.query(Timetable).get(request.form['delete'])
+                db.session.delete(dl)
+                db.session.commit()
+            all = Timetable.query.all()
+        except Exception as ex:
+            print(ex)
+    return render_template('admin/timetable.html', menu=menu, title='Создание расписания', list=all)
+
+@admin.route('/create-timetable', methods=['GET', 'POST'])
+def create_timetable():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            file = request.files['file']
+            if file and txt_check(file.filename):
+                try:
+                    timetable = file.read()
+                    date = request.form['year'] + '-' + request.form['month'] + '-' + request.form['day']
+                    lesson = Timetable(group_id = request.form['group_id'], timetable_file=timetable, data=date)
+                    db.session.add(lesson)
+                    db.session.flush()
+
+                    db.session.commit()
+                    flash('Урок создан', category='success')
+                except Exception as ex:
+                    print(ex)
+                    flash('Упс... Возникла ошибка', category='error')
+                    db.session.rollback()
+
+    return render_template('admin/createtimetable.html', menu=menu, title='Создание расписания')
+
+@admin.route('/remake-timetable', methods=['GET', 'POST'])
+def remake_timetable():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            file = request.files['file']
+            if file and txt_check(file.filename):
+                try:
+                    timetable = file.read()
+                    db.session.query(Timetable).filter(Timetable.id == all_timetable_data.id).update(
+                        {Timetable.group_id: request.form['group_id'], Timetable.timetable_file: timetable, Timetable.data: request.form['date']})
+                    db.session.commit()
+                    return redirect(url_for('.list_timetable'))
+                except Exception as ex:
+                    print(ex)
+                    db.session.rollback()
+    return render_template('admin/remake_timetable.html', menu=menu, title='Переназначение расписания', data=all_timetable_data)
+
+
+@admin.route('/commit-timetable', methods=['GET', 'POST'])
+def commit_timetable():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_timetable_data
+        all_timetable_data = Timetable.query.filter(Timetable.id == g.cur_id).first()
+
+    return redirect(url_for('.remake_timetable'))
+
