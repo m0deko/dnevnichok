@@ -1,4 +1,4 @@
-from flask import request, session, redirect, url_for, render_template, Blueprint, make_response
+from flask import request, session, redirect, url_for, render_template, Blueprint, make_response, g
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from ..database import db
@@ -18,7 +18,6 @@ main = Blueprint('main', __name__, template_folder='templates', static_folder='s
 def login():
     if ('logged' not in session):
         if request.method == 'POST':
-
             data = User_data.query.filter(
                 (User_data.username == request.form['identification']) and (
                         User_data.email == request.form['identification'])).first()
@@ -30,8 +29,10 @@ def login():
                         session.permanent = False
                     session['logged'] = 1
                     session['id'] = data.id
+                    session['law'] = data.law
+                    if session['law'] == 1:
+                        return redirect(url_for('master.index'))
                     session['group_id'] = data.group_id
-
                     return redirect(url_for('.mainpage'))
     elif session['logged']:
         return redirect(url_for('.mainpage'))
@@ -60,6 +61,8 @@ def register():
 def mainpage():
     if ('logged' not in session):
         return redirect(url_for('.login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
     session['cur_page'] = 'mainpage'
     data = User_data.query.filter(User_data.id == session['id']).first()
     path = request.full_path
@@ -73,7 +76,8 @@ def mainpage():
     mas_date = generateWeekMas(getting_date, weekday)
     timetable_data = []
     try:
-        preres = Timetable.query.filter(Timetable.group_id == session['group_id'] or Timetable.data == getting_date).first()
+        preres = Timetable.query.filter(
+            Timetable.group_id == session['group_id'] or Timetable.data == getting_date).first()
         timetable_data = preres.timetable_file.decode().split('\n')
         timetable_data = [line.rstrip() for line in timetable_data]
         timetable_data = [line.split() for line in timetable_data]
@@ -87,6 +91,9 @@ def mainpage():
 def marks():
     if ('logged' not in session):
         return redirect(url_for('login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
+
     session['cur_page'] = 'marks'
     all_les_data = Group_data.query.first()
     all_les = []
@@ -112,6 +119,8 @@ def marks():
 def lessons():
     if ('logged' not in session):
         return redirect(url_for('login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
     session['cur_page'] = 'lessons'
     data = User_data.query.filter(User_data.id == session['id']).first()
 
@@ -122,7 +131,8 @@ def lessons():
     for date in mas_date:
         try:
             date = date.rstrip()
-            preres = Timetable.query.filter(Timetable.data == date).first().timetable_file
+            preres = Timetable.query.filter(
+                Timetable.data == date and Timetable.group_id == session['group_id']).first().timetable_file
             timetable_data = preres.decode().split('\n')
             timetable_data = [line.rstrip() for line in timetable_data]
             timetable_data = [line.split() for line in timetable_data]
@@ -130,13 +140,15 @@ def lessons():
         except Exception as ex:
             print(ex)
     weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресение']
-    return render_template("main/timetable.html", data=data, timetable_data=result, wd = weekdays)
+    return render_template("main/timetable.html", data=data, timetable_data=result, wd=weekdays)
 
 
 @main.route('/homework', methods=['GET', 'POST'])
 def homework():
     if ('logged' not in session):
         return redirect(url_for('login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
     session['cur_page'] = 'homework'
     data = User_data.query.filter(User_data.id == session['id']).first()
 
@@ -147,6 +159,8 @@ def homework():
 def userava():
     if ('logged' not in session):
         return redirect(url_for('login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
     avatar = User_data.query.filter(User_data.id == session['id']).first().avatar
     img = getAvatar(avatar)
     if not img:
@@ -158,6 +172,10 @@ def userava():
 
 @main.route('/upload', methods=['POST', 'GET'])
 def upload():
+    if ('logged' not in session):
+        return redirect(url_for('login'))
+    if session['law'] == 1:
+        return redirect(url_for('master.index'))
     if request.method == 'POST':
         file = request.files['file']
         if file and png_check(file.filename):

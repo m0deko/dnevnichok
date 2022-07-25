@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>���</title>
+    <title>ЭЖД</title>
     <script>
         function show_m(str)
         {
@@ -177,28 +177,29 @@
 </head>
 <body>
     <div class="header">
-        <p class="logo">���</p>
-        <a class="but" href="gradeChoose.html">�������</a>
-        <a class="but" style="background-color: #333333; color: #FFFFFF">����������� ������</a>
-        <a class="but" href="createHomework.html">�������� �������</a>
+        <p class="logo">ЭЖД</p>
+        <a class="but" href="/master/gradeselect">Главная</a>
+        <a class="but" style="background-color: #333333; color: #FFFFFF">Выставление оценок</a>
+        <a class="but" href="/master/{{grade}}/homework">Домашнее задание</a>
     </div>
 
     <div class="content">
-        <p class="title"><strong>����������� ������ ������ 7�<!--{{grade}}--></strong></p>
+        <p class="title"><strong>Выставление оценок классу {{_grade}}</strong></p>
         <table class="table" border="1">
             <tr>
-                <!--{%for date in dates-->
-                <td>val<!--{{date}}--></td>
-                <!--{% endfor %}-->
+                <td>ФИО ученика</td>
+                {%for date in dates%}
+                <td>{{date}}</td>
+                {% endfor %}
             </tr>
-            <!--{% for student in students%}-->
+            {% for i in range(len)%}
             <tr>
-                <td>val<!--{{student}}--></td>
-                <!--{%for s_mark in s_marks-->
-                <td onclick=show_m("{{student}}")>val<!--{{s_mark}}--></td>
-                <!--{% endfor %}-->
+                <td>{{students[i]}}</td>
+                {%for s_mark in s_marks[s_ids[i] - 1]%}
+                <td onclick=show_m("{{s_ids[i]}}")>{{s_mark}}</td>
+                {% endfor %}
             </tr>
-            <!--{% endfor %}-->
+            {% endfor %}
 
         </table>
         <br />
@@ -212,32 +213,32 @@
                 <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" stroke="#333333" />
             </svg>
             <form id="mark_place">
-                <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">����������� ������</p>
-                <p style="color: #333333; font-size: 15px; margin-left: 10px;">������:</p>
+                <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Выставление оценок</p>
+                <p style="color: #333333; font-size: 15px; margin-left: 10px;">Оценка:</p>
                 <select class="select">
                     <option>5</option>
                     <option>4</option>
                     <option>3</option>
                     <option>2</option>
-                    <option>�</option>
+                    <option>н</option>
                 </select>
                 <select style="margin-left: 10px;">
-                    <option>������ �� �����</option>
-                    <option>������ �����</option>
-                    <option>����������� ������</option>
-                    <option>��������������� ������</option>
-                    <option>����</option>
+                    <option>Работа на уроке</option>
+                    <option>Контрольная работа</option>
+                    <option>Устный ответ</option>
+                    <option>Самостоятельная работа</option>
+                    <option>Тест</option>
                 </select>
                 <br />
-                <input style="margin-top: 10px; margin-left: 10px;" placeholder="����������� � ������" />
-                <button class="btn" onclick="submit()">��������� ������</button>
+                <input style="margin-top: 10px; margin-left: 10px;" placeholder="Комментарий к оценке"/>
+                <button class="btn" onclick="submit()">Выставить оценку</button>
                 <input id ="ident" type="hidden"/>
             </form>
         </div>
     </div>
 
     <div class="footer">
-        <p class="title" style="font-size: 15px">��� ����� ��������</p>
+        <p class="title" style="font-size: 15px">Все права защищены</p>
     </div>
 </body>
 </html>
