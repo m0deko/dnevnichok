@@ -19,7 +19,7 @@ def getstids(grade_id):
 @master.route('/')
 def index():
     print(url_for('.index'))
-    return "<h1>Hello world</h1>"
+    return "<h1>Hey</h1>"
 
 @master.route('/gradeselect', methods=['GET', 'POST'])
 def gradeselect():
