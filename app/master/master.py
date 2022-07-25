@@ -23,8 +23,23 @@ def getstids(grade_id):
 def getgrade(grade_id):
     return Group_data.query.filter(User_data.group_id == int(grade_id)).first().grade
 
-def getmarks():
-   pass
+def check(str, dates):
+    i = 0
+    for i in range(len(dates)):
+        if(str == dates[i]):
+            return i
+    return None
+
+def getmarks(s_ids, dates, l_id):
+    marks = []
+    for id in s_ids:
+        _marks = [' ']*len(dates)
+        for mark in Mark.query.filter(Mark.user_id == int(id) and Mark.lesson_id == int(l_id)).all():
+             k = check(mark.date, dates)
+             if(k != None):
+                 _marks[k] = str(mark.mark)
+        marks.append(_marks)
+    return marks
 
 
 @master.route('/')
