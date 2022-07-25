@@ -32,7 +32,6 @@ def login():
                     session['id'] = data.id
                     session['group_id'] = data.group_id
 
-
                     return redirect(url_for('.mainpage'))
     elif session['logged']:
         return redirect(url_for('.mainpage'))
@@ -72,11 +71,16 @@ def mainpage():
     weekday = getWeekday(getting_date)
     actives[weekday] = 'active'
     mas_date = generateWeekMas(getting_date, weekday)
-
-    # with open('dnevnik.json', encoding='utf-8') as f:
-    #     timetable = json.load(f)['class_id'][session['group_id']]['timetable'][week_string]
-    return render_template('main/mainpage.html', data=data, activate = actives, days=mas_date, left=minusDate(mas_date[0]), right=plusDate(mas_date[0]))
-    # return render_template('mainpage.html', date_info=date_mas, cur_day_time=timetable, data=session['data'])
+    timetable_data = []
+    try:
+        preres = Timetable.query.filter(Timetable.group_id == session['group_id'] or Timetable.data == getting_date).first()
+        timetable_data = preres.timetable_file.decode().split('\n')
+        timetable_data = [line.rstrip() for line in timetable_data]
+        timetable_data = [line.split() for line in timetable_data]
+    except AttributeError as ex:
+        print('Расписание не найдено ', ex)
+    return render_template('main/mainpage.html', data=data, activate=actives, days=mas_date,
+                           left=minusDate(mas_date[0]), right=plusDate(mas_date[0]), timetable=timetable_data)
 
 
 @main.route('/marks', methods=['GET', 'POST'])
@@ -98,13 +102,6 @@ def marks():
         all_les_dict += [[les, [marks, mid_mark]]]
 
     data = User_data.query.filter(User_data.id == session['id']).first()
-    # with open('dnevnik.json', encoding='utf-8') as f:
-    #     all_lessons = json.load(f)['class_id'][session['group_id']]['all_lessons']
-    # student_mark = []
-    # for les in all_lessons:
-    #     mark_res = dbase.getMarks(1, les)
-    #     student_mark.append([les, mark_res])
-    # sred_marks = middle_marks(student_mark)
     return render_template('main/markpage.html', data=data, all_les=all_les_dict)
 
 
@@ -114,7 +111,24 @@ def lessons():
         return redirect(url_for('login'))
     session['cur_page'] = 'lessons'
     data = User_data.query.filter(User_data.id == session['id']).first()
-    return render_template("main/timetable.html", data=data)
+
+    getting_date = getDate()
+    weekday = getWeekday(getting_date)
+    mas_date = generateWeekMas(getting_date, weekday)
+    result = []
+    for date in mas_date:
+        try:
+            date = date.rstrip()
+            preres = Timetable.query.filter(Timetable.data == date).first().timetable_file
+            timetable_data = preres.decode().split('\n')
+            timetable_data = [line.rstrip() for line in timetable_data]
+            timetable_data = [line.split() for line in timetable_data]
+
+            result.append(timetable_data)
+        except Exception as ex:
+            print(ex)
+    weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресение']
+    return render_template("main/timetable.html", data=data, timetable_data=result, wd = weekdays)
 
 
 @main.route('/homework', methods=['GET', 'POST'])
@@ -122,7 +136,6 @@ def homework():
     if ('logged' not in session):
         return redirect(url_for('login'))
     session['cur_page'] = 'homework'
-
     data = User_data.query.filter(User_data.id == session['id']).first()
 
     return render_template("main/homework.html", data=data)

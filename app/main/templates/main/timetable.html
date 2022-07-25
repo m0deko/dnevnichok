@@ -66,7 +66,44 @@
             </div>
         </nav>
     </header>
-
+    <section class="timetable">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center mb-3">Расписание на текущую неделю</h2>
+                </div>
+            </div>
+            {% for x in range(timetable_data|length()) %}
+            <div id="monday" class="row timetable-week">
+                <div class="col-12">
+                    <h3 class="text-center">{{wd[x]}}</h3>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Номер</th>
+                            <th scope="col">Время</th>
+                            <th scope="col">Предмет</th>
+                            <th scope="col">Кабинет</th>
+                            <th scope="col">Преподаватель</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for y in range(timetable_data[x]|length()) %}
+                        <tr>
+                            <th scope="row">{{y + 1}}</th>
+                            <td>{{timetable_data[x][y][0]}}</td>
+                            <td>{{timetable_data[x][y][1]}}</td>
+                            <td>{{timetable_data[x][y][2]}}</td>
+                            <td>{{timetable_data[x][y][3]}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </div>
 
 <footer>
