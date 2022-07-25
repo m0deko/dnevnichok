@@ -133,7 +133,6 @@ def list_group():
                 db.session.delete(dl)
                 db.session.commit()
             all = Group_data.query.all()
-
         except Exception as ex:
             print(ex)
     return render_template('admin/listgroup.html', menu=menu, title='Список классов', list=all)
