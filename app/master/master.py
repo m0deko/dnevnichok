@@ -30,6 +30,7 @@ def getmarks(s_ids):
         for mark in Mark.query.filter(Mark.user_id == int(id)).all():
              _marks.append(mark.mark)
         marks.append(_marks)
+    return marks
 
 @master.route('/')
 def index():
