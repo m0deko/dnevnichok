@@ -7,6 +7,7 @@ from ..models.lesson import Lesson
 from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
+from ..models.master_data import Master_data
 
 master = Blueprint('master', __name__, template_folder='templates', static_folder='static')
 
@@ -20,9 +21,15 @@ def getstids(grade_id):
     return ids, students
 
 def getgrade(grade_id):
-    return Group_data.query.filter(User_data.group_id == int(grade_id)).first().grade
+    return Group_data.query.filter(Group_data.id == int(grade_id)).first().grade
 
-def getmarks():
+def getmarks(s_ids):
+    marks = []
+    for id in s_ids:
+        _marks = []
+        for mark in Mark.query.filter(Mark.user_id == int(id)).all():
+             _marks.append(mark.mark)
+        marks.append(_marks)
 
 @master.route('/')
 def index():
@@ -40,7 +47,7 @@ def marks(grade):
     dates = [12, 15, 18]
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
-    s_marks = getmarks()
+    s_marks = getmarks(s_ids)
     return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
