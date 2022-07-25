@@ -8,4 +8,3 @@ class Master_data(db.Model):
     groups_id = db.Column(db.String, default=None)
     subject = db.Column(db.String)
     date = db.Column(db.DateTime, default=datetime.utcnow)
-    
