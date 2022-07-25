@@ -90,6 +90,7 @@ def marks(grade):
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
     s_marks = getmarks(s_ids, dates, getlid())
+    print(s_marks)
     return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
