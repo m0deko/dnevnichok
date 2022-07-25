@@ -41,6 +41,9 @@ def getmarks(s_ids, dates, l_id):
         marks.append(_marks)
     return marks
 
+def getlid():
+    return Master_data.query.filter(Master_data.user_id == session['id']).first().subject
+
 
 @master.route('/')
 def index():
@@ -82,7 +85,7 @@ def marks(grade):
     dates = ['12.11.2022', '15.11.2022', '16.11.2022']
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
-    s_marks = getmarks()
+    s_marks = getmarks(s_ids, dates, getlid())
     return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
