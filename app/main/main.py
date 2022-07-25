@@ -89,9 +89,12 @@ def marks():
         return redirect(url_for('login'))
     session['cur_page'] = 'marks'
     all_les_data = Group_data.query.first()
-
-    all_les = all_les_data.lessons.decode().split('\n')
-    all_les = [line.rstrip() for line in all_les]
+    all_les = []
+    try:
+        all_les = all_les_data.lessons.decode().split('\n')
+        all_les = [line.rstrip() for line in all_les]
+    except Exception as ex:
+        print(ex)
     print(all_les)
     all_les_dict = []
     for les in all_les:
@@ -123,7 +126,6 @@ def lessons():
             timetable_data = preres.decode().split('\n')
             timetable_data = [line.rstrip() for line in timetable_data]
             timetable_data = [line.split() for line in timetable_data]
-
             result.append(timetable_data)
         except Exception as ex:
             print(ex)
