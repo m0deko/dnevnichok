@@ -24,13 +24,17 @@ def getgrade(grade_id):
     return Group_data.query.filter(Group_data.id == int(grade_id)).first().grade
 
 def check(str, dates):
-    return 1
+    i = 0
+    for i in range(len(dates)):
+        if(str == dates[i]):
+            return i
+    return None
 
-def getmarks(s_ids, dates):
+def getmarks(s_ids, dates, l_id):
     marks = []
     for id in s_ids:
         _marks = [' ']*len(dates)
-        for mark in Mark.query.filter(Mark.user_id == int(id)).all():
+        for mark in Mark.query.filter(Mark.user_id == int(id) and Mark.lesson_id == int(l_id)).all():
              k = check(mark.date, dates)
              if(k != None):
                  _marks[k] = str(mark.mark)
@@ -50,11 +54,14 @@ def gradeselect():
 
 @master.route('/<grade>/marks', methods=['GET', 'POST'])
 def marks(grade):
-    dates = [12, 15, 18]
+    dates = ['2022-07-25', '2022-07-18', '2022-07-11']#getdates()
+    _dates = []
+    for date in dates:
+        _dates.append(date[date.rfind('-') + 1:] + '.' + date[date.find('-') + 1: date.rfind('-')])
     s_ids, students = getstids(grade)
     _grade = getgrade(grade)
-    s_marks = getmarks(s_ids, dates)
-    return render_template('markInput.html', dates=dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
+    s_marks = getmarks(s_ids, dates, 1)
+    return render_template('markInput.html', dates=_dates, grade=grade, students=students, s_marks=s_marks, len=len(s_ids), s_ids=s_ids, _grade=_grade)
 
 @master.route('/<grade>/homework', methods=['GET', 'POST'])
 def homework(grade):

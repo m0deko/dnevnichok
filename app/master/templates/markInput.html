@@ -196,7 +196,7 @@
             <tr>
                 <td>{{students[i]}}</td>
                 {%for s_mark in s_marks[s_ids[i] - 1]%}
-                <td onclick=show_m("{{s_ids[i]}}")>{{s_mark}}</td>
+                <td style = "text-align: center;" onclick=show_m("{{s_ids[i]}}")>{{s_mark}}</td>
                 {% endfor %}
             </tr>
             {% endfor %}
