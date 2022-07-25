@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="../main/static/css/styles_for_reg.css">
+</head>
+<body>
+    <form action="/register_teacher" method="post" class="form_contact">
+
+        <div class="container">
+            <h1>Регистрация</h1>
+            <p>Заполните форму для регистрации</p>
+                <hr>
+                    {% for cat, msg in get_flashed_messages(True) %}
+                    <div class="flash {{cat}}">{{msg}}</div>
+                    {% endfor %}
+                    <label for="FIO"><b>ФИО</b></label>
+                    <input type="text" placeholder="Введите фамилию" name="surname" value="" required>
+                    <input type="text" placeholder="Введите имя" name="name" value="" required>
+                    <input type="text" placeholder="Введите отчество" name="second_name" value="" required>
+
+
+                    <label for="login"><b>Логин</b></label>
+                    <input type="text" placeholder="Введите логин" name="username" value="" required>
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Введите Email" name="email" value="" required>
+
+                    <label for="psw"><b>Пароль</b></label>
+                    <input type="password" placeholder="Введите пароль" name="psw" value="" required>
+
+                    <label for="psw"><b>Повторите пароль</b></label>
+                    <input type="password" placeholder="Повторите пароль" name="psw-repeat" value="" required>
+
+
+                    <label for="city"><b>Город</b></label>
+                    <input type="text" placeholder="Введите город проживания" name="city" value="" required>
+
+                    <label for="school"><b>Школа</b></label>
+                    <input type="text" placeholder="Введите школу" name="school_num" value="" required>
+
+                    <label for="class_school"><b>Классы с которыми работаете</b></label>
+                    <input type="text" placeholder="Введите номера с буквами классов через пробел" name="school_class" value="" required>
+
+                    <label for="subj"><b>Предмет, который преподаете</b></label>
+                    <select name="subject">
+                        <option value="Математика">Математика</option>
+                        <option value="Русский_язык">Русский язык</option>
+                        <option value="Литература">Литература</option>
+                        <option value="История">История</option>
+                        <option value="Английский_язык">Английский язык</option>
+                        <option value="Физкультура">Физкультура</option>
+                        <option value="Технология">Технология</option>
+                        <option value="Биология">Биология</option>
+                        <option value="Информатика">Информатика</option>
+                        <option value="Обществознание">Обществознание</option>
+                        <option value="Черчение">Черчение</option>
+                        <option value="Физика">Физика</option>
+                        <option value="Химия">Химия</option>
+                    </select>
+
+
+                <hr>
+            <input type="submit" class="registerbtn" value="Отправить">
+        </div>
+
+        <div class="container signin">
+            <p>Уже зарегистрированы? <a href="/login">Вход</a>.</p>
+        </div>
+    </form>
+</body>
+</html>
