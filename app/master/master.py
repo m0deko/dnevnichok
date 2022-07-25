@@ -13,4 +13,4 @@ master = Blueprint('master', __name__, template_folder='templates', static_folde
 
 @master.route('/')
 def index():
-    return "<h1>Hella</h1>"
+    return "<h1>Hello</h1>"
