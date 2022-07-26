@@ -112,12 +112,14 @@
 
     <div class="content">
         <h1 class="title">Мои классы</h1>
-        {% for i in range(ids|length()) %}
-            <a href="/master/{{ids[i]}}/marks">
-                <div class="grade">
-                    <p class="text"><strong>{{grades[i]}}</strong></p>
-                </div>
-            </a>
+        {% for i in range(grades|length()) %}
+            {% for j in range(lessons|length()) %}
+                <a href="{{'./marks' + '/' + grades_id[i] + '/' + lessons_id[j]}}">
+                    <div class="grade">
+                        <p class="text"><strong>{{grades[i]}} {{lessons[j]}}</strong></p>
+                    </div>
+                </a>
+            {% endfor %}
         {% endfor %}
     </div>
 

@@ -178,9 +178,9 @@
 <body>
     <div class="header">
         <p class="logo">ЭЖД</p>
-        <a class="but" href="/master/gradeselect">Главная</a>
+        <a class="but" href="./mainpage">Главная</a>
         <a class="but" style="background-color: #333333; color: #FFFFFF">Выставление оценок</a>
-        <a class="but" href="/master/{{grade}}/homework">Домашнее задание</a>
+        <a class="but" href="./{{grade}}/homework">Домашнее задание</a>
     </div>
 
     <div class="content">
@@ -192,11 +192,11 @@
                 <td>{{date}}</td>
                 {% endfor %}
             </tr>
-            {% for i in range(len)%}
+            {% for i in range(students| length())%}
             <tr>
                 <td>{{students[i]}}</td>
-                {%for s_mark in s_marks[s_ids[i] - 1]%}
-                <td onclick=show_m("{{s_ids[i]}}")>{{s_mark}}</td>
+                {% for s_mark in range(dates|length()) %}
+                <td onclick=show_m("{{s_ids[i]}}")></td>
                 {% endfor %}
             </tr>
             {% endfor %}
