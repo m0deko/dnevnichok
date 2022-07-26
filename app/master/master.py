@@ -23,6 +23,8 @@ def getstids(grade_id):
 def getgrade(grade_id):
     return Group_data.query.filter(User_data.group_id == int(grade_id)).first().grade
 
+
+
 def getmarks():
    pass
 
