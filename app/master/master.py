@@ -63,29 +63,61 @@ def marks():
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
     if request.method == 'POST':
-        session['curGradeID'] = request.form['grade_les'][0]
-        session['curLessonID'] = request.form['grade_les'][1]
+        session['curGradeID'] = request.form['grade_les'].split()[0]
+        session['curLessonID'] = request.form['grade_les'].split()[1]
+        print(session['curLessonID'])
     dates = [11, 12]
     students = []
 
     students_id, students = getstids(session['curGradeID'])
     _grade = getgrade(session['curGradeID'])
     s_marks = getmarks()
-    return render_template('master_mark.html', dates=dates, grade=session['curGradeID'], students=students, s_marks=s_marks,
+    return render_template('master_mark.html', dates=dates, grade=session['curGradeID'], students=students,
+                           s_marks=s_marks,
                            s_ids=students_id, _grade=_grade)
 
 
 @master.route('/homework', methods=['GET', 'POST'])
-def homework(gradeID, lessonID):
+def homework():
     if 'logged' not in session:
         return redirect(url_for('main.login'))
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
-    dates = ['12.11.2022', '15.11.2022', '16.11.2022']
-    cur_grade = Master_data.query.filter(Master_data.groups_id == gradeID).first()
+    dates = []
+    cur_grade = ''
+    cur_lesson = ''
 
+    if request.method == 'POST':
+        file = request.files['file']
+        if Homework.query.filter(Homework.date == request.form['secret_date']).first() == None:
+            if file and txt_check(file.filename):
+                try:
+                    les = file.read()
+                    crt = Homework(group_id=session['curGradeID'], lesson_id=session['curLessonID'],
+                                   homeworkText=request.form['com'], homeworkFile=les, date=request.form['secret_date'])
+                    db.session.add(crt)
+                    db.session.flush()
 
-    return render_template('master_homework.html', grade_id=gradeID, dates=dates)
+                    db.session.commit()
+
+                except Exception as ex:
+                    db.session.rollback()
+                    print(ex)
+
+    try:
+        cur_grade = Group_data.query.filter(Group_data.id == session['curGradeID']).first().grade
+        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson
+        data = Timetable.query.filter(Timetable.group_id == session['curGradeID']).all()
+        for item in data:
+            if checkMonth(item.data):
+                file = item.timetable_file.decode('utf-8')
+                if cur_lesson in file:
+                    dates.append(item.data)
+    except Exception as ex:
+        print(ex)
+
+    return render_template('master_homework.html', grade_id=session['curGradeID'], dates=dates, grade=cur_grade,
+                           lesson=cur_lesson)
 
 
 @master.route('/logout')

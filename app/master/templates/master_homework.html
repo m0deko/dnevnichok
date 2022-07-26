@@ -2,70 +2,97 @@
 <html lang="ru">
 <head>
     <title>ЭЖД</title>
-    <script>
-        function show_m(str) {
-            date.value = str;
-            document.getElementById("mb1").style.visibility = "visible";
-            document.getElementById("mc1").style.visibility = "visible";
-            document.body.style.overflow = "hidden";
-        }
+    <meta charset="utf-8">
 
-        function hide_m() {
-            document.getElementById("mb1").style.visibility = "hidden";
-            document.getElementById("mc1").style.visibility = "hidden";
-            document.body.style.overflow = "";
-        }
-
-        function submit() {
-            if (inp.value == "" || date.value == "") {
-                alert("Заполните все необходимые поля");
-            } else {
-                document.getElementById("hw").submit();
-            }
-        }
-    </script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/styles_for_homework.css')}}">
 </head>
-
 <body>
-<div class="header">
-    <p class="logo">ЭЖД</p>
-    <a class="but" href="./mainpage">Главная</a>
-    <a class="but" href="/master/{{grade}}/marks">Выставление оценок</a>
-    <a class="but" style="background-color: #333333; color: #FFFFFF">Домашнее задание</a>
+<div class="wrap">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <p class="navbar-brand" href="#">ЭЖД</p>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Переключатель навигации">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./mainpage">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./marks">Выставление оценок</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Домашнее задание
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="data_buttons">
+        <div class="container">
+
+            {% for x in range(dates| length()) %}
+            <div class="row">
+                <div class="col-9 offset-3">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#HomeworkModal{{x}}">
+                        {{dates[x]}}
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </div>
 
+{% for x in range(dates| length()) %}
+<div class="modal fade" id="HomeworkModal{{x}}" tabindex="-1" aria-labelledby="modalHead{{x}}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modalHead{{x}}">Выставление домашнего задания на {{dates[x]}} по
+                    предмету: {{lesson}}</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form action="./homework" enctype="multipart/form-data" method="post">
+                    <input type="hidden" value="{{dates[x]}}" name="secret_date">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="floatingTextarea2" name="com"></textarea>
+                        <label for="floatingTextarea2">Домашнее задание</label>
+                    </div>
 
-<div class="content">
-    <h2>Назначение ДЗ для {{grade}} по {{lesson}}</h2>
-    {% for date in dates %}
-    <div onclick=show_m("{{date}}") class="grade">
-        <p class="text">{{date}}</p>
+                    <label for="lessons" class="form-label">Файл с расписанием</label>
+                    <input id="lessons" type="file" name="file" class="form-control mb-3">
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+        </div>
     </div>
-    {% endfor %}
 </div>
+{% endfor %}
 
-<div id="mb1" class="modal_body">
-    <a onclick=hide_m()></a>
-    <div id="mc1" class="modal_content">
-        <svg class="cross" onclick="hide_m()" width="10" height="10" viewBox="0 0 10 10"
-             xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="10" x2="10" y2="0" stroke-width="2" stroke="#333333"/>
-            <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" stroke="#333333"/>
-        </svg>
-        <form id="hw">
-            <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Задать домашнее задание</p>
-            <input type="text" id="date" style="margin-left: 10px;" placeholder="Дата" required/>
-            <input type="text" id="inp" style="margin-left: 10px; margin-top: 10px;" placeholder="Домашнее задание"
-                   required/>
-            <p style="color: #333333; font-size: 15px; margin-top: 10px; margin-left: 10px;">Прикрепить файл</p>
-        </form>
-        <button class="btn" onclick="submit()">Отправить</button>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3 pb-1 pt-1 text-center">
+                <h2>Все права защищены</h2>
+            </div>
+        </div>
     </div>
-</div>
+</footer>
 
-<div class="footer">
-    <p class="title" style="font-size: 15px">Все права защищены</p>
-</div>
+<script src="{{url_for('.static', filename='js/bootstrap.bundle.min.js')}}"></script>
+
 </body>
 </html>
