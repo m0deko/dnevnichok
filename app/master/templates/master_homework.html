@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>ЭЖД</title>
+    <script>
+        function show_m(str) {
+            date.value = str;
+            document.getElementById("mb1").style.visibility = "visible";
+            document.getElementById("mc1").style.visibility = "visible";
+            document.body.style.overflow = "hidden";
+        }
+
+        function hide_m() {
+            document.getElementById("mb1").style.visibility = "hidden";
+            document.getElementById("mc1").style.visibility = "hidden";
+            document.body.style.overflow = "";
+        }
+
+        function submit() {
+            if (inp.value == "" || date.value == "") {
+                alert("Заполните все необходимые поля");
+            } else {
+                document.getElementById("hw").submit();
+            }
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/styles_for_homework.css')}}">
+</head>
+
+<body>
+<div class="header">
+    <p class="logo">ЭЖД</p>
+    <a class="but" href="./mainpage">Главная</a>
+    <a class="but" href="/master/{{grade}}/marks">Выставление оценок</a>
+    <a class="but" style="background-color: #333333; color: #FFFFFF">Домашнее задание</a>
+</div>
+
+
+<div class="content">
+    <h2>Назначение ДЗ для {{grade}} по {{lesson}}</h2>
+    {% for date in dates %}
+    <div onclick=show_m("{{date}}") class="grade">
+        <p class="text">{{date}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="mb1" class="modal_body">
+    <a onclick=hide_m()></a>
+    <div id="mc1" class="modal_content">
+        <svg class="cross" onclick="hide_m()" width="10" height="10" viewBox="0 0 10 10"
+             xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="10" x2="10" y2="0" stroke-width="2" stroke="#333333"/>
+            <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" stroke="#333333"/>
+        </svg>
+        <form id="hw">
+            <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Задать домашнее задание</p>
+            <input type="text" id="date" style="margin-left: 10px;" placeholder="Дата" required/>
+            <input type="text" id="inp" style="margin-left: 10px; margin-top: 10px;" placeholder="Домашнее задание"
+                   required/>
+            <p style="color: #333333; font-size: 15px; margin-top: 10px; margin-left: 10px;">Прикрепить файл</p>
+        </form>
+        <button class="btn" onclick="submit()">Отправить</button>
+    </div>
+</div>
+
+<div class="footer">
+    <p class="title" style="font-size: 15px">Все права защищены</p>
+</div>
+</body>
+</html>

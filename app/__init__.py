@@ -3,7 +3,7 @@ from .database import db
 from .main.main import main
 from .admin.admin import admin
 from .master.master import master
-
+import datetime
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +13,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = '89cc5d9cb82627334e1af8b5ed890c116378c55d652160277b4f445ec7c5e37e'
     app.config['FLASK_ENV'] = 'development'
+    app.permanent_session_lifetime = datetime.timedelta(hours=4)
 
     db.init_app(app)
 
