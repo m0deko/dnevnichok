@@ -24,140 +24,21 @@
             }
         }
     </script>
-    <style>
-        body {
-            background-color: #333333;
-        }
-
-        .header {
-            top: 0;
-            left: 0;
-            background-color: #FFFFFF;
-            width: 100%;
-            height: 50px;
-            position: fixed;
-        }
-
-        .content {
-            position: absolute;
-            top: 60px;
-            left: calc(50% - 300px);
-            width: 600px;
-            background-color: #FFFFFF;
-            border-radius: 30px;
-        }
-
-        .grade {
-            margin: 20px;
-            border-radius: 15px;
-            background-color: #333333;
-            color: #FFFFFF;
-        }
-
-        .text {
-            margin: 20px 0px 5px 15px;
-            text-align: center;
-            font-size: 20px;
-            height: 25px;
-        }
-
-        .title {
-            margin: 20px 0px 5px 25px;
-            text-align: left;
-            font-size: 20px;
-            height: 25px;
-            color: #333333;
-        }
-
-        .footer {
-            top: calc(100% - 50px);
-            left: 0;
-            background-color: #FFFFFF;
-            width: 100%;
-            height: 50px;
-            position: fixed;
-        }
-
-        .modal_body {
-            background-color: rgba(0, 0, 0, 0.8);
-            position: absolute;
-            left: 0;
-            top: 50px;
-            width: 100%;
-            height: calc(100% - 100px);
-            visibility: hidden;
-        }
-
-        .modal_content {
-            position: absolute;
-            top: 70px;
-            left: calc(50% - 75px);
-            width: 250px;
-            height: 180px;
-            background-color: #FFFFFF;
-            border-radius: 15px;
-            visibility: hidden;
-        }
-
-        .cross {
-            position: absolute;
-            top: 10px;
-            left: 230px;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .logo {
-            position: relative;
-            top: -13px;
-            left: 15px;
-            color: #333333;
-            font-size: 20px;
-            width: 45px;
-            border: 2px solid #333333;
-            padding: 5px;
-            border-radius: 10px;
-            background-color: #FFFFFF;
-        }
-
-        .but {
-            margin-right: 20px;
-            padding: 5px;
-            position: relative;
-            top: -61px;
-            left: 150px;
-            background-color: #FFFFFF;
-            border: 2px solid #333333;
-            font-size: 15px;
-            border-radius: 15px;
-            color: #333333;
-        }
-
-        .btn {
-            margin-left: 10px;
-            background-color: #333333;
-            color: #FFFFFF;
-            border: solid #333333 2px;
-            border-radius: 5px;
-        }
-
-        .inv {
-            visibility: hidden;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/styles_for_homework.css')}}">
 </head>
+
 <body>
 <div class="header">
     <p class="logo">ЭЖД</p>
-    <a class="but" href="/master/gradeselect">Главная</a>
+    <a class="but" href="./mainpage">Главная</a>
     <a class="but" href="/master/{{grade}}/marks">Выставление оценок</a>
     <a class="but" style="background-color: #333333; color: #FFFFFF">Домашнее задание</a>
 </div>
 
+
 <div class="content">
-    {% for date in dates%}
+    <h2>Назначение ДЗ для {{grade}} по {{lesson}}</h2>
+    {% for date in dates %}
     <div onclick=show_m("{{date}}") class="grade">
         <p class="text">{{date}}</p>
     </div>
@@ -174,8 +55,8 @@
         </svg>
         <form id="hw">
             <p style="color: #333333; font-size: 15px; margin-top: 25px; margin-left: 10px;">Задать домашнее задание</p>
-            <input type="text" id="date" style="margin-left: 10px; margin-bottom: 10px;" placeholder="Дата" required/>
-            <input type="text" id="inp" style="margin-left: 10px;" margin-top="10px" ; placeholder="Домашнее задание"
+            <input type="text" id="date" style="margin-left: 10px;" placeholder="Дата" required/>
+            <input type="text" id="inp" style="margin-left: 10px; margin-top: 10px;" placeholder="Домашнее задание"
                    required/>
             <p style="color: #333333; font-size: 15px; margin-top: 10px; margin-left: 10px;">Прикрепить файл</p>
         </form>

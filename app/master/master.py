@@ -56,31 +56,36 @@ def mainpage():
                            lessons_id=session['lessonsID'])
 
 
-@master.route('/marks/<gradeID>/<lessonID>', methods=['GET', 'POST'])
-def marks(gradeID, lessonID):
+@master.route('/marks', methods=['GET', 'POST'])
+def marks():
     if 'logged' not in session:
         return redirect(url_for('main.login'))
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
-    session['curGradeID'] = gradeID
+    if request.method == 'POST':
+        session['curGradeID'] = request.form['grade_les'][0]
+        session['curLessonID'] = request.form['grade_les'][1]
     dates = [11, 12]
     students = []
 
-    students_id, students = getstids(gradeID)
-    _grade = getgrade(gradeID)
+    students_id, students = getstids(session['curGradeID'])
+    _grade = getgrade(session['curGradeID'])
     s_marks = getmarks()
-    return render_template('master_mark.html', dates=dates, grade=gradeID, students=students, s_marks=s_marks,
+    return render_template('master_mark.html', dates=dates, grade=session['curGradeID'], students=students, s_marks=s_marks,
                            s_ids=students_id, _grade=_grade)
 
 
-@master.route('/<grade>/homework', methods=['GET', 'POST'])
-def homework(grade):
+@master.route('/homework', methods=['GET', 'POST'])
+def homework(gradeID, lessonID):
     if 'logged' not in session:
         return redirect(url_for('main.login'))
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
     dates = ['12.11.2022', '15.11.2022', '16.11.2022']
-    return render_template('master_homework.html', grade=grade, dates=dates)
+    cur_grade = Master_data.query.filter(Master_data.groups_id == gradeID).first()
+
+
+    return render_template('master_homework.html', grade_id=gradeID, dates=dates)
 
 
 @master.route('/logout')
