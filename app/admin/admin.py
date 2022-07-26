@@ -357,12 +357,10 @@ def list_master():
             db.session.delete(_master)
             db.session.flush()
 
-            db.session.query(User_data).filter(User_data.id == deleted_ids[1]).update()
+            db.session.query(User_data).filter(User_data.id == deleted_ids[1]).update({User_data.law : 0})
             db.session.flush()
 
             db.session.commit()
-
-            print(_master)
 
         except Exception as ex:
             db.session.rollback()
@@ -396,3 +394,31 @@ def create_master():
             db.session.rollback()
             print(ex)
     return render_template('admin/createmaster.html', menu=menu, title='Создать учителя')
+
+@admin.route('/remake-master', methods=['GET', 'POST'])
+def remake_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            try:
+                db.session.query(Master_data).filter(Master_data.id == all_master_data.id).update(
+                    {Master_data.groups_id: request.form['groups_id'], Master_data.subject: request.form['subject']})
+                db.session.commit()
+                return redirect(url_for('.list_master'))
+            except Exception as ex:
+                print(ex)
+                db.session.rollback()
+    return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
+                           data=all_master_data)
+
+@admin.route('/commit-master', methods=['GET', 'POST'])
+def commit_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_master_data
+        all_master_data = Master_data.query.filter(Master_data.id == g.cur_id).first()
+    return redirect(url_for('.remake_master'))
+

@@ -77,7 +77,7 @@ def mainpage():
     timetable_data = []
     try:
         preres = Timetable.query.filter(
-            Timetable.group_id == session['group_id'] or Timetable.data == getting_date).first()
+            Timetable.group_id == session['group_id']).filter(Timetable.data == getting_date).first()
         timetable_data = preres.timetable_file.decode().split('\n')
         timetable_data = [line.rstrip() for line in timetable_data]
         timetable_data = [line.split() for line in timetable_data]
@@ -132,7 +132,7 @@ def lessons():
         try:
             date = date.rstrip()
             preres = Timetable.query.filter(
-                Timetable.data == date and Timetable.group_id == session['group_id']).first().timetable_file
+                Timetable.data == date).filter(Timetable.group_id == session['group_id']).first().timetable_file
             timetable_data = preres.decode().split('\n')
             timetable_data = [line.rstrip() for line in timetable_data]
             timetable_data = [line.split() for line in timetable_data]
