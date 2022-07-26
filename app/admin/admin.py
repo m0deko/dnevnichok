@@ -8,6 +8,7 @@ from ..models.lesson import Lesson
 from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
+from ..models.master_data import Master_data
 
 from .action import txt_check
 
@@ -32,6 +33,7 @@ menu = [
     {'url': '.list_group', 'title': 'Список классов'},
     {'url': '.list_lesson', 'title': 'Список уроков'},
     {'url': '.list_timetable', 'title': 'Расписание'},
+    {'url': '.list_master', 'title': 'Учителя'},
     {'url': '.logout', 'title': 'Выйти'}
 ]
 
@@ -265,7 +267,8 @@ def commit_lesson():
 
     return redirect(url_for('.remake_lesson'))
 
-#========================timetable==============================
+
+# ========================timetable==============================
 @admin.route('/list-timetable', methods=['GET', 'POST'])
 def list_timetable():
     if not isLogged():
@@ -282,6 +285,7 @@ def list_timetable():
             print(ex)
     return render_template('admin/timetable.html', menu=menu, title='Создание расписания', list=all)
 
+
 @admin.route('/create-timetable', methods=['GET', 'POST'])
 def create_timetable():
     if not isLogged():
@@ -293,7 +297,7 @@ def create_timetable():
                 try:
                     timetable = file.read()
                     date = request.form['year'] + '-' + request.form['month'] + '-' + request.form['day']
-                    lesson = Timetable(group_id = request.form['group_id'], timetable_file=timetable, data=date)
+                    lesson = Timetable(group_id=request.form['group_id'], timetable_file=timetable, data=date)
                     db.session.add(lesson)
                     db.session.flush()
 
@@ -306,6 +310,7 @@ def create_timetable():
 
     return render_template('admin/createtimetable.html', menu=menu, title='Создание расписания')
 
+
 @admin.route('/remake-timetable', methods=['GET', 'POST'])
 def remake_timetable():
     if not isLogged():
@@ -317,13 +322,15 @@ def remake_timetable():
                 try:
                     timetable = file.read()
                     db.session.query(Timetable).filter(Timetable.id == all_timetable_data.id).update(
-                        {Timetable.group_id: request.form['group_id'], Timetable.timetable_file: timetable, Timetable.data: request.form['date']})
+                        {Timetable.group_id: request.form['group_id'], Timetable.timetable_file: timetable,
+                         Timetable.data: request.form['date']})
                     db.session.commit()
                     return redirect(url_for('.list_timetable'))
                 except Exception as ex:
                     print(ex)
                     db.session.rollback()
-    return render_template('admin/remake_timetable.html', menu=menu, title='Переназначение расписания', data=all_timetable_data)
+    return render_template('admin/remake_timetable.html', menu=menu, title='Переназначение расписания',
+                           data=all_timetable_data)
 
 
 @admin.route('/commit-timetable', methods=['GET', 'POST'])
@@ -336,4 +343,82 @@ def commit_timetable():
         all_timetable_data = Timetable.query.filter(Timetable.id == g.cur_id).first()
 
     return redirect(url_for('.remake_timetable'))
+
+
+# =======================master==============================
+@admin.route('/list-master', methods=['GET', 'POST'])
+def list_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        try:
+            deleted_ids = request.form['delete'].split()
+            _master = db.session.query(Master_data).get(deleted_ids[0])
+            db.session.delete(_master)
+            db.session.flush()
+
+            db.session.query(User_data).filter(User_data.id == deleted_ids[1]).update({User_data.law : 0})
+            db.session.flush()
+
+            db.session.commit()
+
+        except Exception as ex:
+            db.session.rollback()
+            print(ex)
+
+    pr = db.session.query(User_data, Master_data).join(Master_data, User_data.id == Master_data.user_id).all()
+    return render_template('admin/listmaster.html', menu=menu, title='Учителя', list=pr)
+
+
+@admin.route('/create-master', methods=['GET', 'POST'])
+def create_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        try:
+            _user_id = request.form['user_id']
+            _group_id = request.form['group_id']
+            _lessons_id = request.form['lesson_id']
+            db.session.query(User_data).filter(User_data.id == _user_id).update(
+                {User_data.law: 1, User_data.group_id: 0})
+            db.session.flush()
+
+            _master = Master_data(user_id=_user_id, groups_id=_group_id, subject=_lessons_id)
+            db.session.add(_master)
+            db.session.flush()
+
+            db.session.commit()
+
+            return redirect(url_for('.list_master'))
+        except Exception as ex:
+            db.session.rollback()
+            print(ex)
+    return render_template('admin/createmaster.html', menu=menu, title='Создать учителя')
+
+@admin.route('/remake-master', methods=['GET', 'POST'])
+def remake_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if db:
+        if request.method == 'POST':
+            try:
+                db.session.query(Master_data).filter(Master_data.id == all_master_data.id).update(
+                    {Master_data.groups_id: request.form['groups_id'], Master_data.subject: request.form['subject']})
+                db.session.commit()
+                return redirect(url_for('.list_master'))
+            except Exception as ex:
+                print(ex)
+                db.session.rollback()
+    return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
+                           data=all_master_data)
+
+@admin.route('/commit-master', methods=['GET', 'POST'])
+def commit_master():
+    if not isLogged():
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        g.cur_id = request.form['remake']
+        global all_master_data
+        all_master_data = Master_data.query.filter(Master_data.id == g.cur_id).first()
+    return redirect(url_for('.remake_master'))
 
