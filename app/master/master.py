@@ -26,7 +26,6 @@ def getgrade(grade_id):
 def getmarks():
    pass
 
-
 @master.route('/')
 def index():
     if 'logged' not in session:
