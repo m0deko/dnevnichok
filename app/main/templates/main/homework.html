@@ -67,44 +67,46 @@
         </nav>
     </header>
     <section class="homework-table">
-        {% for x in range(homework | length()) %}
-        <div class="homework-label">
-            <h2>Домашняя работа на {{ homework[x][0] }}</h2>
-            <div class="accordion" id="accodion{{x}}">
-                {% for y in homework[x][1].keys() %}
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="collapseHeading1_{{x}}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapsePanel1_{{x}}" aria-expanded="false"
-                                aria-controls="collapsePanel1_{{x}}">
-                            {{y}}
-                        </button>
-                    </h2>
-                    <div id="collapsePanel1_{{x}}" class="accordion-collapse collapse"
-                         aria-labelledby="collapseHeading1_{{x}}">
-                        <div class="accordion-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-9 accordion-text">
-                                        {{homework[x][1][y][0]}}
-                                    </div>
-                                    <div class="col-3 text-center accordion-files">
-                                        <h5>Приложенные файлы</h5>
-                                        {% for z in homework[x][1][y][1]%}
-                                        <a download href="../main/static/txt_files/{{z}}" class="btn btn-primary">
-                                            {{z}}
-                                        </a>
-                                        {% endfor %}
+        <div class="container">
+            {% for item in homework.keys() %}
+            <div class="homework-label mb-3">
+                <h2>Домашняя работа на {{ item }}</h2>
+                <div class="accordion" id="accodion{{x}}">
+                    {% for x in range(homework[item]|length()) %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="collapseHeading{{item}}_{{x}}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapsePanel{{item}}_{{x}}" aria-expanded="false"
+                                    aria-controls="collapsePanel{{item}}_{{x}}">
+                                {{homework[item][x][0]}}
+                            </button>
+                        </h2>
+                        <div id="collapsePanel{{item}}_{{x}}" class="accordion-collapse collapse"
+                             aria-labelledby="collapseHeading{{item}}_{{x}}">
+                            <div class="accordion-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-9 accordion-text">
+                                            {{homework[item][x][1]}}
+                                        </div>
+                                        <div class="col-3 text-center accordion-files">
+                                            <h5>Приложенные файлы</h5>
+
+                                            <a download href="static\txt_files\{{homework[item][x][2]}}"
+                                               class="btn btn-primary">
+                                                {{homework[item][x][2]}}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </section>
 </div>
 

@@ -1,7 +1,9 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 
 def checkMonth(getting_date):
-    if str(datetime.datetime.now())[:10][5:7] == str(getting_date[5:7]):
+    date = datetime.datetime(int(getting_date[0:4]), int(getting_date[5:7]), int(getting_date[8:10]))
+    if datetime.datetime.now() < date and date - relativedelta(months=1) < datetime.datetime.now():
         return True
     return False
 

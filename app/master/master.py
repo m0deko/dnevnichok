@@ -89,7 +89,9 @@ def homework():
 
     if request.method == 'POST':
         file = request.files['file']
-        if Homework.query.filter(Homework.date == request.form['secret_date']).first() == None:
+        if Homework.query.filter(Homework.date == request.form['secret_date']).filter(
+                Homework.group_id == session['curGradeID']).filter(
+            Homework.lesson_id == session['curLessonID']).first() is None:
             if file and txt_check(file.filename):
                 try:
                     les = file.read()
@@ -99,14 +101,12 @@ def homework():
                     db.session.flush()
 
                     db.session.commit()
-
                 except Exception as ex:
                     db.session.rollback()
                     print(ex)
-
     try:
         cur_grade = Group_data.query.filter(Group_data.id == session['curGradeID']).first().grade
-        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson
+        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson.split()[0]
         data = Timetable.query.filter(Timetable.group_id == session['curGradeID']).all()
         for item in data:
             if checkMonth(item.data):
