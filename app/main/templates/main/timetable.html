@@ -76,7 +76,7 @@
             {% for x in range(timetable_data|length()) %}
             <div id="monday" class="row timetable-week">
                 <div class="col-12">
-                    <h3 class="text-center">{{wd[x]}}</h3>
+                    <h3 class="text-center">{{wd[timetable_data[x][-1]]}}</h3>
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -88,7 +88,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for y in range(timetable_data[x]|length()) %}
+                        {% for y in range(timetable_data[x]|length() - 1) %}
                         <tr>
                             <th scope="row">{{y + 1}}</th>
                             <td>{{timetable_data[x][y][0]}}</td>
