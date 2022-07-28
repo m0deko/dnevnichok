@@ -9,7 +9,9 @@ from ..models.mark import Mark
 from ..models.timetable import Timetable
 from ..models.homework import Homework
 
-from .action import middle_mark, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate
+from .action import middle_mark, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate, \
+    getDateObject, checkRange
+from datetime import datetime
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
@@ -97,22 +99,67 @@ def marks():
     session['cur_page'] = 'marks'
     all_les_data = Group_data.query.first()
     all_les = []
+    date_corners = ['2020-09-01', '2020-10-29']
+    quarter_string = 'Никакая'
+    date_corners1 = ['2022-09-01', '2022-10-29']
+    date_corners2 = ['2022-11-08', '2022-12-29']
+    date_corners3 = ['2023-01-10', '2023-03-23']
+    date_corners4 = ['2023-04-01', '2023-06-26']
+
+    if checkRange(date_corners1, str(datetime.now())):
+        date_corners = date_corners1
+        quarter_string = 'Первая'
+    elif checkRange(date_corners2, str(datetime.now())):
+        date_corners = date_corners2
+        quarter_string = 'Вторая'
+
+    elif checkRange(date_corners3, str(datetime.now())):
+        date_corners = date_corners3
+        quarter_string = 'Третья'
+    elif checkRange(date_corners4, str(datetime.now())):
+        date_corners = date_corners4
+        quarter_string = 'Четвертая'
+
+    if request.method == 'POST':
+        if request.form['quarter'] == '1':
+            date_corners = date_corners1
+            quarter_string = 'Первая'
+        elif request.form['quarter'] == '2':
+            date_corners = date_corners2
+            quarter_string = 'Вторая'
+        elif request.form['quarter'] == '3':
+            date_corners = date_corners3
+            quarter_string = 'Третья'
+        elif request.form['quarter'] == '4':
+            date_corners = date_corners4
+            quarter_string = 'Четвертая'
     try:
         all_les = all_les_data.lessons.decode().split('\n')
         all_les = [line.rstrip() for line in all_les]
     except Exception as ex:
         print(ex)
-    print(all_les)
     all_les_dict = []
     for les in all_les:
         les_id = Lesson.query.filter(Lesson.lesson == les).first().id
-        marks = Mark.query.filter(Mark.user_id == session['id'] or Mark.lesson_id == les_id).all()
+        preres = Mark.query.filter(Mark.user_id == session['id']).filter(Mark.lesson_id == les_id).all()
+        print(preres)
+        print(date_corners)
+        marks = []
+        for mrk in preres:
+            if checkRange(date_corners, mrk.date):
+                marks.append(mrk)
         mid_mark = middle_mark([[mark.mark, mark.coefficient] for mark in marks])
-        marks = [[mark.mark, mark.coefficient, mark.reason, mark.date] for mark in marks]
-        all_les_dict += [[les, [marks, mid_mark]]]
+        if mid_mark >= 4.5:
+            col = 'good'
+        elif mid_mark >= 3.5:
+            col = 'normal'
+        else:
+            col = 'bad'
+        _marks = [[mark.mark, mark.coefficient, mark.reason, mark.date] for mark in marks]
+        all_les_dict += [[les, [_marks, mid_mark, col]]]
 
     data = User_data.query.filter(User_data.id == session['id']).first()
-    return render_template('main/markpage.html', data=data, all_les=all_les_dict)
+    return render_template('main/markpage.html', data=data, all_les=all_les_dict, quarter_str = quarter_string)
 
 
 @main.route('/lessons', methods=['GET', 'POST'])
@@ -136,6 +183,7 @@ def lessons():
             timetable_data = preres.decode().split('\n')
             timetable_data = [line.rstrip() for line in timetable_data]
             timetable_data = [line.split() for line in timetable_data]
+            timetable_data.append(getWeekday(date))
             result.append(timetable_data)
         except Exception as ex:
             print(ex)
@@ -151,8 +199,21 @@ def homework():
         return redirect(url_for('master.index'))
     session['cur_page'] = 'homework'
     data = User_data.query.filter(User_data.id == session['id']).first()
-
-    return render_template("main/homework.html", data=data)
+    hw_data = Homework.query.filter(Homework.group_id == data.group_id).all()
+    hw_date_dict = {}
+    for hw in hw_data:
+        if getDateObject(hw.date) > datetime.now() and getDateObject(minusDate(hw.date)) < datetime.now():
+            if hw.date not in hw_date_dict.keys():
+                hw_date_dict[hw.date] = []
+            route = r'C:\Users\sterl\PycharmProjects\dnevnikProject\app\main\static\txt_files\hwfile_' + str(
+                hw.group_id) + '_' + str(hw.lesson_id) + '_' + str(hw.date) + '.txt'
+            filename = 'hwfile_' + str(hw.group_id) + '_' + str(hw.lesson_id) + '_' + str(hw.date) + '.txt'
+            with open(route, 'w', encoding='utf-8') as f:
+                f.write(hw.homeworkFile.decode('utf-8'))
+            hw_date_dict[hw.date] += [
+                [Lesson.query.filter(Lesson.id == hw.lesson_id).first().lesson, hw.homeworkText, filename]]
+    print(hw_date_dict)
+    return render_template("main/homework.html", data=data, homework=hw_date_dict)
 
 
 @main.route('/userava')

@@ -65,3 +65,17 @@ def plusDate(monday):
     date += relativedelta(days=7)
     string = str(date)[:10]
     return string
+
+def getDateObject(getting_date):
+    date = datetime.datetime(int(getting_date[0:4]), int(getting_date[5:7]), int(getting_date[8:10]))
+    return date
+
+def checkRange(date_corners:list, date:str):
+    corner1 = datetime.datetime(int(date_corners[0][0:4]), int(date_corners[0][5:7]), int(date_corners[0][8:10]))
+    corner2 = datetime.datetime(int(date_corners[1][0:4]), int(date_corners[1][5:7]), int(date_corners[1][8:10]))
+    checking_date = datetime.datetime(int(date[0:4]), int(date[5:7]), int(date[8:10]))
+
+    if corner1 <= checking_date and corner2 >= checking_date:
+        return True
+    return False
+
