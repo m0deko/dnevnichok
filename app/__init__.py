@@ -3,6 +3,7 @@ from .database import db
 from .main.main import main
 from .admin.admin import admin
 from .master.master import master
+from .change.change import change
 import datetime
 
 def create_app():
@@ -20,5 +21,6 @@ def create_app():
     app.register_blueprint(main, url_prefix='/main')
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(master, url_prefix='/master')
-
+    app.register_blueprint(change, url_prefix='/change')
+    
     return app

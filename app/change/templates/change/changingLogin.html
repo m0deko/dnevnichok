@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменения в профиле</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/fontello.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/styles_for_changingLogin.css')}}">
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-10 offset-1 firstRow">
+                    <div class="firstElem">
+                        <a href="/main/" class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                 class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                            </svg>
+                        </a>
+                        <img src="../../../main/static/images/logo.png" alt="logo">
+                    </div>
+                    <a href="./" class="btn cross">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                             class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                        </svg>
+                    </a>
+
+                    <img src="{{url_for('.userava')}}" alt="" class="avatar-img">
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="content">
+        <div class="container">
+            <div class="row mt-5 text-center">
+                <div class="col-6 offset-3 confirming">
+                    <form action="./changingLogin" method="post">
+                        <div class="psw_confirm mb-3">
+                            <label for="inputPassword5" class="form-label">Пароль для подтверждения</label>
+                            <input type="password" id="inputPassword5" class="form-control"
+                                   aria-describedby="passwordHelpBlock" name="confirmpsw">
+                        </div>
+                        <div class="changeLog mb-3">
+                            <label for="InputLogin" class="form-label">Новый логин</label>
+                            <input type="text" class="form-control" id="InputLogin"
+                                   aria-describedby="emailHelp" name="newLogin">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mb-3">Отправить</button>
+
+                        {% for cat, msg in get_flashed_messages(True) %}
+                        <div class="flash {{cat}}">{{msg}}</div>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -5,9 +5,7 @@ from ..database import db
 from ..models.user_data import User_data
 from ..models.group_data import Group_data
 from ..models.lesson import Lesson
-from ..models.mark import Mark
 from ..models.timetable import Timetable
-from ..models.homework import Homework
 from ..models.master_data import Master_data
 
 from .action import txt_check

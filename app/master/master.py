@@ -29,8 +29,6 @@ def index():
 
         session['curGradeID'] = session['gradesID'][0]
         session['curLessonID'] = session['lessonsID'][0]
-
-
     except Exception as ex:
         print(ex)
 
@@ -43,17 +41,19 @@ def mainpage():
         return redirect(url_for('main.login'))
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
-    g.grades = []
-    g.lessons = []
+    grades = []
+    lessons = []
     try:
-        g.grades = [Group_data.query.filter(Group_data.id == grade_id).first().grade for grade_id in
+        data = User_data.query.filter(User_data.id == session['id']).first()
+        grades = [Group_data.query.filter(Group_data.id == grade_id).first().grade for grade_id in
                     session['gradesID']]
-        g.lessons = [Lesson.query.filter(Lesson.id == int(lesson_id)).first().lesson for lesson_id in
+        lessons = [Lesson.query.filter(Lesson.id == int(lesson_id)).first().lesson for lesson_id in
                      session['lessonsID']]
+
     except Exception as ex:
         print(ex)
-    return render_template('master_mainmenu.html', grades=g.grades, lessons=g.lessons, grades_id=session['gradesID'],
-                           lessons_id=session['lessonsID'])
+    return render_template('master_mainmenu.html', grades=grades, lessons=lessons, grades_id=session['gradesID'],
+                           lessons_id=session['lessonsID'], data=data)
 
 
 @master.route('/marks', methods=['GET', 'POST'])
@@ -65,7 +65,6 @@ def marks():
     if request.method == 'POST':
         session['curGradeID'] = request.form['grade_les'].split()[0]
         session['curLessonID'] = request.form['grade_les'].split()[1]
-        print(session['curLessonID'])
     dates = [11, 12]
     students = []
 
@@ -86,7 +85,7 @@ def homework():
     dates = []
     cur_grade = ''
     cur_lesson = ''
-
+    user_data = User_data.query.filter(User_data.id == session['id']).first()
     if request.method == 'POST':
         file = request.files['file']
         if Homework.query.filter(Homework.date == request.form['secret_date']).filter(
@@ -117,7 +116,43 @@ def homework():
         print(ex)
 
     return render_template('master_homework.html', grade_id=session['curGradeID'], dates=dates, grade=cur_grade,
-                           lesson=cur_lesson)
+                           lesson=cur_lesson, data=user_data)
+
+
+@master.route('/userava')
+def userava():
+    if 'logged' not in session:
+        return redirect(url_for('main.login'))
+    if session['law'] == 0:
+        return redirect(url_for('main.mainpage'))
+    avatar = User_data.query.filter(User_data.id == session['id']).first().avatar
+    img = getAvatar(avatar)
+    if not img:
+        return ""
+    h = make_response(img)
+    h.headers['Content-Type'] = 'image/png'
+    return h
+
+
+@master.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if 'logged' not in session:
+        return redirect(url_for('main.login'))
+    if session['law'] == 0:
+        return redirect(url_for('main.mainpage'))
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and png_check(file.filename):
+            try:
+                img = file.read()
+                db.session.query(User_data).filter(User_data.id == session['id']).update({User_data.avatar: img})
+                db.session.flush()
+
+                db.session.commit()
+            except Exception as ex:
+                print(ex)
+                db.session.rollback()
+    return redirect(url_for('.mainpage'))
 
 
 @master.route('/logout')

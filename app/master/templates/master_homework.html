@@ -10,9 +10,11 @@
 <body>
 <div class="wrap">
     <header>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-lg bg-light p-0">
             <div class="container-fluid">
-                <div class="navbar-brand">ЭЖД</div>
+                <div class="navbar-brand">
+                    <img src="{{url_for('.static', filename='images/logo.png')}}" alt="logo">
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                         aria-label="Переключатель навигации">
@@ -21,19 +23,29 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="./mainpage">Главная</a>
+                            <a class="nav-link btn btn-dark" aria-current="page" href="./mainpage">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./marks">Выставление оценок</a>
+                            <a class="nav-link btn btn-dark" href="./marks">Выставление оценок</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link btn btn-dark active" href="#">
                                 Домашнее задание
                             </a>
                         </li>
                     </ul>
                 </div>
-                <a class="btn btn-danger" href="./logout">Выйти</a>
+
+                <div class="notCollapseSecond order-lg-1">
+                    <ul class="navbar-nav right-nav">
+
+                        <li class="nav-item">
+                            <div class="avatar text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                <img src="{{url_for('.userava')}}" alt="" class="avatar-img">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -96,6 +108,57 @@
         </div>
     </div>
 </footer>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ваш профиль</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-modal">
+                    <div class="avatar-change mb-3 text-center">
+                        <img src="{{url_for('.userava')}}" alt="" class="profile-avatar">
+                        <form action="{{url_for('.upload')}}" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file">
+                            <input type="submit" value="Загрузить">
+                        </form>
+                    </div>
+
+                    <div class="mb-3">
+                        <p>ФИО:</p>
+                        <p>{{ data['surname'] }} {{ data['name'] }} {{ data['patronymic'] }}</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <p>Логин: {{data['username']}}</p>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <p>Пароль: ***********</p>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <p>Почта: {{ data['email'] }}</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container-fluid">
+                    <div class="row text-center">
+                        <div class="col-8 offset-2">
+                            <a class="btn btn-warning" href="/change/">Внести изменения</a>
+                            <a class="btn btn-danger" href="./logout">Выйти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="{{url_for('.static', filename='js/bootstrap.bundle.min.js')}}"></script>
 

@@ -1,0 +1,73 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #eee;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*===============================header================================*/
+header .container .firstRow {
+    background-color: #fff;
+    border-radius: 10px;
+}
+header .container .firstRow {
+    display: flex;
+    justify-content: space-around;
+}
+
+.avatar-img {
+    position: relative;
+    right: -15px;
+    background-position: center center;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    border-radius: 50%;
+}
+
+header .container .row .col-10 {
+    display: flex;
+}
+
+header .container .row a.cross {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+header .container .row svg {
+    transition: .3s;
+}
+
+header .container .row svg:hover {
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+/*===========================content============================*/
+.content .container .row .confirming {
+    background-color: #fff;
+}
+
+.flash {padding: 10px;}
+.flash.success {
+         border: 1px solid #21DB56;
+         background: #AEFFC5;
+}
+.flash.error {
+         border: 1px solid #FF4343;
+         background: #FF9C9C;
+}

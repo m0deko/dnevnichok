@@ -1,4 +1,4 @@
-from flask import request, session, redirect, url_for, render_template, Blueprint, make_response, g
+from flask import request, session, redirect, url_for, render_template, Blueprint, make_response, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from ..database import db
@@ -10,8 +10,9 @@ from ..models.timetable import Timetable
 from ..models.homework import Homework
 
 from .action import middle_mark, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate, \
-    getDateObject, checkRange
+    getDateObject, checkRange, checkLogin, codeSend, checkEmail
 from datetime import datetime
+import os
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
@@ -159,7 +160,7 @@ def marks():
         all_les_dict += [[les, [_marks, mid_mark, col]]]
 
     data = User_data.query.filter(User_data.id == session['id']).first()
-    return render_template('main/markpage.html', data=data, all_les=all_les_dict, quarter_str = quarter_string)
+    return render_template('main/markpage.html', data=data, all_les=all_les_dict, quarter_str=quarter_string)
 
 
 @main.route('/lessons', methods=['GET', 'POST'])
