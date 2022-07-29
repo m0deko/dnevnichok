@@ -420,6 +420,7 @@ def create_master():
             return redirect(url_for('.list_master'))
         except Exception as ex:
             db.session.rollback()
+            flash('Возникла какая-то ошибка', category='error')
             print(ex)
     return render_template('admin/createmaster.html', menu=menu, title='Создать учителя')
 
@@ -431,12 +432,26 @@ def remake_master():
     if db:
         if request.method == 'POST':
             try:
+                sub_mas = request.form['subject'].split()
+                for item in sub_mas:
+                    if Lesson.query.filter(Lesson.id == int(item)).first() is None:
+                        flash('Введен несуществующий id предмета', category='error')
+                        return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
+                                               data=all_master_data)
+                sub_mas = request.form['groups_id'].split()
+                for item in sub_mas:
+                    if Group_data.query.filter(Group_data.id == int(item)).first() is None:
+                        flash('Введен несуществующий id класса', category='error')
+                        return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
+                                               data=all_master_data)
+
                 db.session.query(Master_data).filter(Master_data.id == all_master_data.id).update(
                     {Master_data.groups_id: request.form['groups_id'], Master_data.subject: request.form['subject']})
                 db.session.commit()
                 return redirect(url_for('.list_master'))
             except Exception as ex:
                 print(ex)
+                flash('Возникли неполадки', category='error')
                 db.session.rollback()
     return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
                            data=all_master_data)
