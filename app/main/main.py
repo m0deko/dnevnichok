@@ -10,7 +10,7 @@ from ..models.timetable import Timetable
 from ..models.homework import Homework
 
 from .action import middle_mark, png_check, getAvatar, getDate, getWeekday, generateWeekMas, minusDate, plusDate, \
-    getDateObject, checkRange, checkLogin, codeSend, checkEmail
+    getDateObject, checkRange, checkLogin, codeSend, checkEmail, checkPassword
 from datetime import datetime
 import os
 
@@ -19,6 +19,8 @@ main = Blueprint('main', __name__, template_folder='templates', static_folder='s
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'reg_data' in session:
+        session.pop('reg_data')
     if ('logged' not in session):
         if request.method == 'POST':
             data = User_data.query.filter(
@@ -44,20 +46,71 @@ def login():
 
 @main.route('/register', methods=['POST', 'GET'])
 def register():
+    if 'logged' in session:
+        return redirect(url_for('.mainpage'))
+    if 'reg_data' in session:
+        session.pop('reg_data')
     if request.method == 'POST':
         try:
+            if not request.form['surname'].isalpha() or not request.form['name'].isalpha() or not request.form[
+                'patronymic'].isalpha():
+                flash('ФИО введено некорректно', category='error')
+                return render_template('main/register.html')
+            elif not checkLogin(request.form['username']):
+                flash('Неверная форма логина', category='error')
+                return render_template('main/register.html')
+            elif User_data.query.filter(
+                    User_data.username == request.form['username'] and User_data.email == request.form['email']):
+                flash('Данный Email или логин уже существуют', category='error')
+                return render_template('main/register.html')
+            elif not checkEmail(request.form['email']):
+                flash('Неверная форма email', category='error')
+                return render_template('main/register.html')
+            elif not checkPassword(request.form['password']):
+                flash('Пароль не соответствует требованиям', category='error')
+                return render_template('main/register.html')
+            elif request.form['password'] != request.form['password_repeat']:
+                flash('Пароли не совпадают', category='error')
+                return render_template('main/register.html')
+            elif not request.form['city'].isalpha():
+                flash('Несуществующий город', category='error')
+                return render_template('main/register.html')
             hash = generate_password_hash(request.form['password'])
-            u = User_data(username=request.form['username'], email=request.form['email'], psw=hash,
-                          surname=request.form['surname'], name=request.form['name'],
-                          patronymic=request.form['patronymic'], city=request.form['city'], law=0)
-            db.session.add(u)
-            db.session.flush()
-
-            db.session.commit()
+            session['reg_data'] = [request.form['username'], request.form['email'], hash, request.form['surname'],
+                                   request.form['name'], request.form['patronymic'], request.form['city'], 0,
+                                   os.urandom(5).hex()]
+            codeSend(session['reg_data'][1], session['reg_data'][-1])
+            return redirect(url_for('.confirm'))
         except Exception as ex:
             db.session.rollback()
             print(ex)
     return render_template('main/register.html')
+
+
+@main.route('/confirm', methods=['GET', 'POST'])
+def confirm():
+    if 'reg_data' not in session:
+        return redirect(url_for('.login'))
+    if request.method == 'POST':
+        if request.form['confirm_code'] == session['reg_data'][-1]:
+            try:
+                u = User_data(username=session['reg_data'][0], email=session['reg_data'][1], psw=session['reg_data'][2],
+                              surname=session['reg_data'][3], name=session['reg_data'][4],
+                              patronymic=session['reg_data'][5], city=session['reg_data'][6],
+                              law=session['reg_data'][7])
+                db.session.add(u)
+                db.session.flush()
+
+                db.session.commit()
+                session.pop('reg_data')
+                return redirect(url_for('.login'))
+            except Exception as ex:
+                print(ex)
+                db.session.rollback()
+                flash('Возникли какие-то неполадки. Попробуйте еще раз', category='error')
+        else:
+            flash('Коды не совпадают', category='error')
+    return render_template('main/confirmEmail.html')
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -98,7 +151,8 @@ def marks():
         return redirect(url_for('master.index'))
 
     session['cur_page'] = 'marks'
-    all_les_data = Group_data.query.first()
+    all_les_string = Group_data.query.filter(Group_data.id == session['group_id']).first().lessons.decode(
+        'utf-8')
     all_les = []
     date_corners = ['2020-09-01', '2020-10-29']
     quarter_string = 'Никакая'
@@ -135,16 +189,14 @@ def marks():
             date_corners = date_corners4
             quarter_string = 'Четвертая'
     try:
-        all_les = all_les_data.lessons.decode().split('\n')
-        all_les = [line.rstrip() for line in all_les]
+        all_les = all_les_string.split('\n')
     except Exception as ex:
         print(ex)
     all_les_dict = []
     for les in all_les:
-        les_id = Lesson.query.filter(Lesson.lesson == les).first().id
+        les = les.rstrip()
+        les_id = Lesson.query.filter(Lesson.lesson == les.lower()).first().id
         preres = Mark.query.filter(Mark.user_id == session['id']).filter(Mark.lesson_id == les_id).all()
-        print(preres)
-        print(date_corners)
         marks = []
         for mrk in preres:
             if checkRange(date_corners, mrk.date):
@@ -213,7 +265,6 @@ def homework():
                 f.write(hw.homeworkFile.decode('utf-8'))
             hw_date_dict[hw.date] += [
                 [Lesson.query.filter(Lesson.id == hw.lesson_id).first().lesson, hw.homeworkText, filename]]
-    print(hw_date_dict)
     return render_template("main/homework.html", data=data, homework=hw_date_dict)
 
 

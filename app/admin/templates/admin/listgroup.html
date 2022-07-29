@@ -43,7 +43,7 @@
             <td>{{p.id}}</td>
             <td>{{ p.school }}</td>
             <td>{{p.grade}}</td>
-            <td>{{p.lessons}}</td>
+            <td>{{p.lessons.decode('utf-8')}}</td>
         </tr>
         {% endfor %}
         </tbody>

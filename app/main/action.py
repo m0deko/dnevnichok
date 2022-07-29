@@ -115,8 +115,34 @@ def checkEmail(email: str):
     if '@' not in email and '.' not in email:
         return False
     for char in email:
-        if char in '!@#$%^&*()"№;:?-_+=/|<>`~ ,_аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ':
+        if char in '!#$%^&*()"№;:?-_+=/|<>`~ ,_аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ':
             return False
+    return True
+
+
+def checkPassword(psw:str):
+    if not psw.isalnum() or psw.isspace():
+        return False
+    if len(psw) < 6:
+        return False
+    counter = 1
+    past_preres = -99999
+    max_counter = 1
+    for x in range(1, len(psw)):
+        char_last = ord(psw[x - 1])
+        char_code = ord(psw[x])
+        preres = char_code - char_last
+        if preres == past_preres:
+            counter += 1
+        else:
+            if max_counter < counter:
+                max_counter = counter
+            counter = 1
+        past_preres = preres
+
+    max_counter = counter
+    if max_counter > 4:
+        return False
     return True
 
 

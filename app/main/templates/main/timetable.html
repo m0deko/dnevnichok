@@ -91,7 +91,7 @@
                         {% for y in range(timetable_data[x]|length() - 1) %}
                         <tr>
                             <th scope="row">{{y + 1}}</th>
-                            <td>{{timetable_data[x][y][0]}}</td>
+                            <td>{{timetable_data[x][y][0].replace('.', ' ')}}</td>
                             <td>{{timetable_data[x][y][1]}}</td>
                             <td>{{timetable_data[x][y][2]}}</td>
                             <td>{{timetable_data[x][y][3]}}</td>

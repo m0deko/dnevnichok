@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Подтверждение рагистрации</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="{{url_for('.static', filename='images/favicon-96x96.png')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/fontello.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/styles_for_confirm.css')}}">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 offset-3 bg-light p-5">
+            <h2>Подтвердите свою почту для регистрации</h2>
+            <form action="./confirm" method="post" class="mb-3">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Код проверки</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           name="confirm_code">
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+                <button type="submit" value="repeat"></button>
+            </form>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{cat}}">{{msg}}</div>
+            {% endfor %}
+            <a href="./login">Вернуться на страницу логина</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -8,7 +8,7 @@ from ..models.lesson import Lesson
 from ..models.timetable import Timetable
 from ..models.master_data import Master_data
 
-from .action import txt_check
+from .action import *
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
@@ -148,6 +148,9 @@ def create_group():
             if file and txt_check(file.filename):
                 try:
                     les = file.read()
+                    if not checkAdminGroup(les.decode('utf-8'), Lesson, request.form['grade']):
+                        flash('Неверный формат введенных данных', category='error')
+                        return render_template('admin/creategroup.html', menu=menu, title='Создание класса')
                     group = Group_data(school=request.form['school'], grade=request.form['grade'], lessons=les)
                     db.session.add(group)
                     db.session.flush()
@@ -172,6 +175,10 @@ def remake_group():
             if file and txt_check(file.filename):
                 try:
                     les = file.read()
+                    if not checkAdminGroup(les.decode('utf-8'), Lesson, request.form['grade']):
+                        flash('Неверный формат введенных данных', category='error')
+                        return render_template('admin/remake_group.html', menu=menu, title='Переназначение класса',
+                                               data=all_group_data)
                     db.session.query(Group_data).filter(Group_data.id == all_group_data.id).update(
                         {Group_data.school: request.form['school'], Group_data.grade: request.form['grade'],
                          Group_data.lessons: les})
@@ -181,6 +188,7 @@ def remake_group():
                     return redirect(url_for('.list_group'))
                 except Exception as ex:
                     print(ex)
+                    flash('Упс... Возникла ошибка', category='error')
                     db.session.rollback()
 
     return render_template('admin/remake_group.html', menu=menu, title='Переназначение класса', data=all_group_data)
@@ -223,7 +231,7 @@ def create_lesson():
     if db:
         if request.method == 'POST':
             try:
-                lesson = Lesson(lesson=request.form['lesson'])
+                lesson = Lesson(lesson=request.form['lesson'].rstrip().lower())
                 db.session.add(lesson)
                 db.session.flush()
 
@@ -231,7 +239,7 @@ def create_lesson():
                 flash('Урок создан', category='success')
             except Exception as ex:
                 print(ex)
-                flash('Упс... Возникла ошибка', category='error')
+                flash('Вы пытаетесь создать уже существующий урок', category='error')
                 db.session.rollback()
     return render_template('admin/createlesson.html', menu=menu, title='Форма для создания урока')
 
@@ -244,11 +252,12 @@ def remake_lesson():
         try:
             if request.method == 'POST':
                 db.session.query(Lesson).filter(Lesson.id == all_lesson_data.id).update(
-                    {Lesson.lesson: request.form['lesson']})
+                    {Lesson.lesson: request.form['lesson'].rstrip().lower()})
                 db.session.commit()
                 return redirect(url_for('.list_lesson'))
         except Exception as ex:
             print(ex)
+            flash('Вы пытаетесь переименовать урок на ныне существующий', category='error')
             db.session.rollback()
 
     return render_template('admin/remake_lesson.html', menu=menu, title='Переназначение урока', data=all_lesson_data)
@@ -294,16 +303,21 @@ def create_timetable():
             if file and txt_check(file.filename):
                 try:
                     timetable = file.read()
+                    if not checkAdminTimetable(timetable.decode('utf-8'), request.form['year'], request.form['month'],
+                                           request.form['day'], request.form['group_id'], Group_data, Lesson):
+                        flash('Неверный формат формы', category='error')
+                        return render_template('admin/createtimetable.html', menu=menu, title='Создание расписания')
                     date = request.form['year'] + '-' + request.form['month'] + '-' + request.form['day']
                     lesson = Timetable(group_id=request.form['group_id'], timetable_file=timetable, data=date)
                     db.session.add(lesson)
                     db.session.flush()
 
                     db.session.commit()
-                    flash('Урок создан', category='success')
+
+                    flash('Расписание создано', category='success')
                 except Exception as ex:
                     print(ex)
-                    flash('Упс... Возникла ошибка', category='error')
+                    flash('Вы неправильно ввели данные', category='error')
                     db.session.rollback()
 
     return render_template('admin/createtimetable.html', menu=menu, title='Создание расписания')
@@ -319,6 +333,21 @@ def remake_timetable():
             if file and txt_check(file.filename):
                 try:
                     timetable = file.read()
+                    if not checkAdminTimetableOnly(timetable.decode('utf-8'), Lesson):
+                        flash('Неверный формат расписания', category='error')
+                        return render_template('admin/remake_timetable.html', menu=menu,
+                                               title='Переназначение расписания',
+                                               data=all_timetable_data)
+                    if not checkAdminDateOnly(request.form['date']):
+                        flash('Неверный формат даты', category='error')
+                        return render_template('admin/remake_timetable.html', menu=menu,
+                                               title='Переназначение расписания',
+                                               data=all_timetable_data)
+                    if Group_data.query.filter(Group_data.id == request.form['group_id']).first() is None:
+                        flash('Расписание применено к несуществующему классу')
+                        return render_template('admin/remake_timetable.html', menu=menu,
+                                               title='Переназначение расписания',
+                                               data=all_timetable_data)
                     db.session.query(Timetable).filter(Timetable.id == all_timetable_data.id).update(
                         {Timetable.group_id: request.form['group_id'], Timetable.timetable_file: timetable,
                          Timetable.data: request.form['date']})
@@ -326,6 +355,7 @@ def remake_timetable():
                     return redirect(url_for('.list_timetable'))
                 except Exception as ex:
                     print(ex)
+                    flash('Возникли какие-то неполадки', category='error')
                     db.session.rollback()
     return render_template('admin/remake_timetable.html', menu=menu, title='Переназначение расписания',
                            data=all_timetable_data)
@@ -355,7 +385,7 @@ def list_master():
             db.session.delete(_master)
             db.session.flush()
 
-            db.session.query(User_data).filter(User_data.id == deleted_ids[1]).update({User_data.law : 0})
+            db.session.query(User_data).filter(User_data.id == deleted_ids[1]).update({User_data.law: 0})
             db.session.flush()
 
             db.session.commit()
@@ -393,6 +423,7 @@ def create_master():
             print(ex)
     return render_template('admin/createmaster.html', menu=menu, title='Создать учителя')
 
+
 @admin.route('/remake-master', methods=['GET', 'POST'])
 def remake_master():
     if not isLogged():
@@ -410,6 +441,7 @@ def remake_master():
     return render_template('admin/remake_master.html', menu=menu, title='Переназначение учителя',
                            data=all_master_data)
 
+
 @admin.route('/commit-master', methods=['GET', 'POST'])
 def commit_master():
     if not isLogged():
@@ -419,4 +451,3 @@ def commit_master():
         global all_master_data
         all_master_data = Master_data.query.filter(Master_data.id == g.cur_id).first()
     return redirect(url_for('.remake_master'))
-

@@ -94,6 +94,7 @@ def homework():
             if file and txt_check(file.filename):
                 try:
                     les = file.read()
+
                     crt = Homework(group_id=session['curGradeID'], lesson_id=session['curLessonID'],
                                    homeworkText=request.form['com'], homeworkFile=les, date=request.form['secret_date'])
                     db.session.add(crt)
@@ -105,16 +106,16 @@ def homework():
                     print(ex)
     try:
         cur_grade = Group_data.query.filter(Group_data.id == session['curGradeID']).first().grade
-        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson.split()[0]
+        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson.capitalize().split()[0]
         data = Timetable.query.filter(Timetable.group_id == session['curGradeID']).all()
         for item in data:
             if checkMonth(item.data):
                 file = item.timetable_file.decode('utf-8')
+
                 if cur_lesson in file:
                     dates.append(item.data)
     except Exception as ex:
         print(ex)
-
     return render_template('master_homework.html', grade_id=session['curGradeID'], dates=dates, grade=cur_grade,
                            lesson=cur_lesson, data=user_data)
 
