@@ -43,12 +43,13 @@ def mainpage():
         return redirect(url_for('main.mainpage'))
     grades = []
     lessons = []
+    data = []
     try:
         data = User_data.query.filter(User_data.id == session['id']).first()
         grades = [Group_data.query.filter(Group_data.id == grade_id).first().grade for grade_id in
-                    session['gradesID']]
+                  session['gradesID']]
         lessons = [Lesson.query.filter(Lesson.id == int(lesson_id)).first().lesson for lesson_id in
-                     session['lessonsID']]
+                   session['lessonsID']]
 
     except Exception as ex:
         print(ex)
@@ -62,18 +63,64 @@ def marks():
         return redirect(url_for('main.login'))
     if session['law'] == 0:
         return redirect(url_for('main.mainpage'))
+    user_data = User_data.query.filter(User_data.id == session['id']).first()
     if request.method == 'POST':
-        session['curGradeID'] = request.form['grade_les'].split()[0]
-        session['curLessonID'] = request.form['grade_les'].split()[1]
-    dates = [11, 12]
-    students = []
+        try:
+            u_id = request.form['hid'].split()[0]
+            m_date = request.form['hid'].split()[1]
+            if 'delete' in request.form:
+                deleted_id = Mark.query.filter(Mark.date == m_date).filter(Mark.user_id == u_id).first().id
+                _mark = db.session.query(Mark).get(deleted_id)
+
+                db.session.delete(_mark)
+                db.session.flush()
+
+                db.session.commit()
+            else:
+                if Mark.query.filter(Mark.date == m_date).filter(Mark.user_id == u_id).first() is None:
+                    new_mark = Mark(user_id=u_id, date=m_date,
+                                    coefficient=request.form['coefficient'], mark=request.form['mark'],
+                                    lesson_id=session['curLessonID'], reason=request.form['comment'])
+                    db.session.add(new_mark)
+                    db.session.flush()
+
+                    db.session.commit()
+                else:
+                    db.session.query(Mark).filter(Mark.date == m_date).filter(Mark.user_id == u_id).update(
+                        {'coefficient': request.form['coefficient'], 'mark': request.form['mark'],
+                         'reason': request.form['comment']})
+        except Exception as ex:
+            print(ex)
+            db.session.rollback()
+    dates = []
+    mark_mas = {}
+    try:
+        cur_lesson = Lesson.query.filter(Lesson.id == session['curLessonID']).first().lesson.capitalize().split()[0]
+        data = Timetable.query.filter(Timetable.group_id == session['curGradeID']).all()
+        for item in data:
+            if checkMonth(item.data):
+                file = item.timetable_file.decode('utf-8')
+                if cur_lesson in file:
+                    dates.append(item.data)
+    except Exception as ex:
+        print(ex)
 
     students_id, students = getstids(session['curGradeID'])
-    _grade = getgrade(session['curGradeID'])
-    s_marks = getmarks()
-    return render_template('master_mark.html', dates=dates, grade=session['curGradeID'], students=students,
-                           s_marks=s_marks,
-                           s_ids=students_id, _grade=_grade)
+
+    for stud_id in students_id:
+        for date in dates:
+            mark = Mark.query.filter(Mark.user_id == stud_id).filter(Mark.date == date).filter(
+                Mark.lesson_id == session['curLessonID']).first()
+            if mark is None:
+                mark = ''
+            else:
+                mark = mark.mark
+            if stud_id not in mark_mas:
+                mark_mas[stud_id] = []
+            mark_mas[stud_id].append(mark)
+
+    return render_template('master_mark.html', data=user_data, dates=dates, student_name=students, marks=mark_mas,
+                           student_id=students_id)
 
 
 @master.route('/homework', methods=['GET', 'POST'])
@@ -111,7 +158,6 @@ def homework():
         for item in data:
             if checkMonth(item.data):
                 file = item.timetable_file.decode('utf-8')
-
                 if cur_lesson in file:
                     dates.append(item.data)
     except Exception as ex:

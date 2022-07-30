@@ -1,0 +1,135 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #444444;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0
+}
+
+/*=============================header==================================*/
+.wrap header .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap header .container-fluid ul li a.active {
+    background-color: #777777;
+    border-color: #777777;
+}
+
+.wrap header .container-fluid ul li {
+    margin-right: 20px;
+
+}
+
+.wrap header .container-fluid ul li a {
+    border-radius: 10px;
+}
+
+.avatar:hover {
+    cursor: pointer;
+}
+
+nav {
+    background-color: #ffffff;
+    height: 60px;
+}
+
+header .navbar .container-fluid {
+    padding: 0;
+    background-color: #eeeeee;
+}
+
+header {
+    height: 60px !important;
+}
+
+.navbar .container-fluid img {
+    margin-right: 30px;
+}
+
+/*.avatar {*/
+/*    border-radius: 50%;*/
+/*    height: 60px;*/
+/*    width: 60px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin-left: 20px;*/
+/*}*/
+
+.navbar .container-fluid svg {
+    position: relative;
+    top: 12px;
+}
+
+.navbar .container-fluid ul.collapse-left li {
+    margin-right: 30px;
+}
+
+.navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {
+    justify-content: center !important;
+}
+
+.nav-item {
+    display: flex;
+}
+
+header {
+    margin-bottom: 50px;
+}
+
+.container-fluid {
+    height: 60px;
+}
+
+.avatar-img {
+    position: relative;
+    right: -15px;
+    background-position: center center;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.bell {
+    color: #999;
+}
+
+.bell:hover {
+    color: #444;
+    cursor: pointer;
+}
+
+/*========================================content========================================*/
+
+.content .container table span.mark {
+    color: #fff;
+    background: none;
+}
+
+/*=============================footer==================================*/
+footer {
+    background-color: #000;
+}
+
+footer .row h2 {
+    color: #fff;
+    font-size: 15px;
+}
